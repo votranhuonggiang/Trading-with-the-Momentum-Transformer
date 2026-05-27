@@ -99,12 +99,11 @@ def evaluate_on_split(
         exit_threshold=cfg["trading"]["exit_threshold"],
         reverse_threshold=cfg["trading"]["reverse_threshold"],
     )
-    base_cost = cfg["trading"]["base_round_trip_cost_points"]
     rows = []
     cost_tables = []
     preds = []
     for model_name, sig in signals.items():
-        strat = run_strategy(test_df, sig, tc, base_cost)
+        strat = run_strategy(test_df, sig, tc, cfg["trading"])
         m = summarize(strat["net_return"], strat["net_pnl_points"], strat["turnover"])
         m["window"] = window_name
         m["model"] = model_name

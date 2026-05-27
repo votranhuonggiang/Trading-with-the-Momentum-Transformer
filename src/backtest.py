@@ -8,7 +8,6 @@ from typing import Dict, Iterable
 import numpy as np
 import pandas as pd
 
-from costs import cost_points, net_pnl_points
 from metrics import summarize
 
 
@@ -58,18 +57,43 @@ def run_strategy(
     df: pd.DataFrame,
     raw_signal: pd.Series,
     thresholds: ThresholdConfig,
-    round_trip_cost_points: float,
+    trading_cfg: dict,
 ) -> pd.DataFrame:
     out = df.copy()
     out["signal"] = raw_signal.clip(-1.0, 1.0).fillna(0.0)
     out["position"] = _threshold_position(out["signal"], out["trade_allowed"].astype(bool), thresholds)
     out["position"] = apply_intraday_close(out["position"], out["trade_date"], out["is_last_5min"])
-    out["turnover"] = (out["position"] - out["position"].shift(1).fillna(0.0)).abs()
-    out["cost_points"] = cost_points(out["position"], round_trip_cost_points)
+
+    contract_multiplier = float(trading_cfg.get("contract_multiplier", 100000.0))
+    fee_vsdc = float(trading_cfg.get("fee_vsdc_vnd_per_contract_per_side", 5000.0))
+    fee_hnx = float(trading_cfg.get("fee_hnx_vnd_per_contract_per_side", 2700.0))
+    fee_ctck = float(trading_cfg.get("fee_ctck_vnd_per_contract_per_side", 2700.0))
+    margin_rate = float(trading_cfg.get("margin_rate", 0.1848))
+    tax_rate = float(trading_cfg.get("tax_rate", 0.17))
+    transfer_tax_rate = float(trading_cfg.get("transfer_tax_rate", 0.001))
+
+    out["position_prev"] = out["position"].shift(1).fillna(0.0)
+    out["position_delta"] = out["position"] - out["position_prev"]
+    out["turnover"] = out["position_delta"].abs()
+
+    out["open_units"] = out["position_delta"].clip(lower=0.0)
+    out["close_units"] = (-out["position_delta"]).clip(lower=0.0)
+    per_side_fixed_fee = fee_vsdc + fee_hnx + fee_ctck
+
+    # Tax is applied only on close side following user-provided formula:
+    # margin_rate * contract_multiplier * transfer_tax_rate * close_price * tax_rate
+    out["tax_vnd_per_contract"] = margin_rate * contract_multiplier * transfer_tax_rate * out["close"] * tax_rate
+    out["open_cost_vnd"] = out["open_units"] * per_side_fixed_fee
+    out["close_fixed_cost_vnd"] = out["close_units"] * per_side_fixed_fee
+    out["close_tax_cost_vnd"] = out["close_units"] * out["tax_vnd_per_contract"]
+    out["close_cost_vnd"] = out["close_fixed_cost_vnd"] + out["close_tax_cost_vnd"]
+    out["cost_vnd"] = out["open_cost_vnd"] + out["close_cost_vnd"]
+    out["cost_points"] = out["cost_vnd"] / contract_multiplier
+
     out["gross_pnl_points"] = out["position"].shift(1).fillna(0.0) * out["price_change"]
-    out["net_pnl_points"] = net_pnl_points(out["position"], out["price_change"], round_trip_cost_points)
+    out["net_pnl_points"] = out["gross_pnl_points"] - out["cost_points"]
     out["gross_return"] = out["position"].shift(1).fillna(0.0) * out["simple_return"]
-    out["cost_return"] = out["cost_points"] / out["close"].replace(0, np.nan)
+    out["cost_return"] = out["cost_vnd"] / (out["close"].replace(0, np.nan) * contract_multiplier)
     out["net_return"] = (out["gross_return"] - out["cost_return"]).fillna(0.0)
     return out
 
@@ -113,6 +137,24 @@ def cost_sensitivity(
     strat_df: pd.DataFrame,
     cost_scenarios: Iterable[float],
 ) -> pd.DataFrame:
+    if "cost_vnd" in strat_df.columns:
+        metrics = summarize(strat_df["net_return"], strat_df["net_pnl_points"], strat_df["turnover"])
+        return pd.DataFrame(
+            [
+                {
+                    "round_trip_cost_points": np.nan,
+                    "net_total_return": metrics["total_return"],
+                    "net_sharpe": metrics["sharpe_ratio"],
+                    "net_max_drawdown": metrics["max_drawdown"],
+                    "net_profit_factor": metrics["profit_factor"],
+                    "net_average_trade_pnl": metrics["average_trade_pnl"],
+                }
+            ]
+        )
+
+    # Legacy fallback for flat-point cost model.
+    from costs import cost_points, net_pnl_points
+
     rows = []
     for c in cost_scenarios:
         net_points = net_pnl_points(strat_df["position"], strat_df["price_change"], c)
