@@ -1,0 +1,46 @@
+data:
+  raw_path: "data/raw/vn30f1m.csv"
+  processed_path: "data/processed/vn30f1m_5min.csv"
+  features_path: "data/features/features_5min.parquet"
+  timestamp_col: "timestamp"
+  timeframe: "5min"
+
+trading:
+  intraday_only: true
+  close_before_end_of_day: true
+  no_overnight: true
+  entry_threshold: 0.20
+  exit_threshold: 0.05
+  reverse_threshold: 0.35
+  base_round_trip_cost_points: 0.20
+  cost_scenarios_points: [0.20]
+
+features:
+  return_horizons: [1, 2, 3, 6, 12, 24, 48, 78]
+  volatility_windows: [12, 24, 48, 78, 390]
+  macd_pairs:
+    - [8, 24]
+    - [16, 48]
+    - [32, 96]
+
+models:
+  sequence_lengths: [78, 156, 390]
+  main_models:
+    - "lstm_dmn"
+    - "decoder_transformer"
+    - "decoder_tft"
+
+walk_forward:
+  method: "expanding"
+  validation_months: 6
+  test_months: 6
+  max_windows: 1
+
+training:
+  objective: "net_sharpe"
+  max_epochs: 100
+  max_epochs_per_window: 1
+  max_train_rows_per_window: 5000
+  max_valid_rows_per_window: 2000
+  early_stopping_patience: 10
+  device: "auto"

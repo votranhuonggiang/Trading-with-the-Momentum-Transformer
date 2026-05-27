@@ -1,0 +1,237 @@
+"""Walk-forward training and test orchestration entrypoint."""
+
+from __future__ import annotations
+
+import argparse
+from dataclasses import dataclass
+from pathlib import Path
+from typing import List
+
+import numpy as np
+import pandas as pd
+import torch
+from torch.utils.data import DataLoader
+
+from backtest import ThresholdConfig, baseline_signals, cost_sensitivity, run_strategy
+from common import abs_path, ensure_parent, load_config
+from datasets import FeaturePack, SequenceDataset, default_feature_columns
+from metrics import summarize
+from train import TrainConfig, fit_model
+
+
+@dataclass
+class Window:
+    train_end: str
+    valid_start: str
+    valid_end: str
+    test_start: str
+    test_end: str
+
+
+def default_windows() -> List[Window]:
+    return [
+        Window("2020-12-31", "2021-01-01", "2021-06-30", "2021-07-01", "2021-12-31"),
+        Window("2021-12-31", "2022-01-01", "2022-06-30", "2022-07-01", "2022-12-31"),
+        Window("2022-12-31", "2023-01-01", "2023-06-30", "2023-07-01", "2023-12-31"),
+        Window("2023-12-31", "2024-01-01", "2024-06-30", "2024-07-01", "2024-12-31"),
+        Window("2024-12-31", "2025-01-01", "2025-06-30", "2025-07-01", "2025-12-31"),
+        Window("2025-12-31", "2026-01-01", "2026-03-31", "2026-04-01", "2026-05-11"),
+    ]
+
+
+def split_df(df: pd.DataFrame, ts_col: str, w: Window) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    train = df[df[ts_col] <= pd.Timestamp(w.train_end)]
+    valid = df[(df[ts_col] >= pd.Timestamp(w.valid_start)) & (df[ts_col] <= pd.Timestamp(w.valid_end))]
+    test = df[(df[ts_col] >= pd.Timestamp(w.test_start)) & (df[ts_col] <= pd.Timestamp(w.test_end))]
+    return train, valid, test
+
+
+def evaluate_on_split(
+    test_df: pd.DataFrame, cfg: dict, window_name: str, out_root: Path, signals: dict[str, pd.Series]
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    tc = ThresholdConfig(
+        entry_threshold=cfg["trading"]["entry_threshold"],
+        exit_threshold=cfg["trading"]["exit_threshold"],
+        reverse_threshold=cfg["trading"]["reverse_threshold"],
+    )
+    base_cost = cfg["trading"]["base_round_trip_cost_points"]
+    rows = []
+    cost_tables = []
+    preds = []
+    for model_name, sig in signals.items():
+        strat = run_strategy(test_df, sig, tc, base_cost)
+        m = summarize(strat["net_return"], strat["net_pnl_points"], strat["turnover"])
+        m["window"] = window_name
+        m["model"] = model_name
+        rows.append(m)
+
+        cs = cost_sensitivity(strat, cfg["trading"]["cost_scenarios_points"])
+        cs["window"] = window_name
+        cs["model"] = model_name
+        cost_tables.append(cs)
+
+        p = strat[[cfg["data"]["timestamp_col"], "signal", "position", "turnover", "net_return", "net_pnl_points"]].copy()
+        p["window"] = window_name
+        p["model"] = model_name
+        preds.append(p)
+
+    metrics_df = pd.DataFrame(rows)
+    cost_df = pd.concat(cost_tables, ignore_index=True)
+    preds_df = pd.concat(preds, ignore_index=True)
+
+    metrics_file = out_root / "outputs" / "metrics" / f"metrics_{window_name}.csv"
+    preds_file = out_root / "outputs" / "predictions" / f"predictions_{window_name}.csv"
+    cost_file = out_root / "outputs" / "tables" / f"cost_sensitivity_{window_name}.csv"
+    ensure_parent(metrics_file)
+    ensure_parent(preds_file)
+    ensure_parent(cost_file)
+    metrics_df.to_csv(metrics_file, index=False)
+    preds_df.to_csv(preds_file, index=False)
+    cost_df.to_csv(cost_file, index=False)
+    return metrics_df, cost_df, preds_df
+
+
+def _scale_with_train_stats(
+    train_df: pd.DataFrame, valid_df: pd.DataFrame, test_df: pd.DataFrame, feature_cols: list[str]
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    mu = train_df[feature_cols].mean()
+    sigma = train_df[feature_cols].std().replace(0, 1.0)
+    tr = train_df.copy()
+    va = valid_df.copy()
+    te = test_df.copy()
+    tr[feature_cols] = (tr[feature_cols] - mu) / sigma
+    va[feature_cols] = (va[feature_cols] - mu) / sigma
+    te[feature_cols] = (te[feature_cols] - mu) / sigma
+    tr[feature_cols] = tr[feature_cols].replace([np.inf, -np.inf], 0).fillna(0)
+    va[feature_cols] = va[feature_cols].replace([np.inf, -np.inf], 0).fillna(0)
+    te[feature_cols] = te[feature_cols].replace([np.inf, -np.inf], 0).fillna(0)
+    return tr, va, te
+
+
+def _infer_signals_from_model(
+    model: torch.nn.Module,
+    data_df: pd.DataFrame,
+    fp: FeaturePack,
+    seq_len: int,
+    device: str,
+) -> pd.Series:
+    ds = SequenceDataset(data_df, fp, sequence_length=seq_len)
+    if len(ds) == 0:
+        return pd.Series(0.0, index=data_df.index)
+    loader = DataLoader(ds, batch_size=512, shuffle=False)
+    model.eval()
+    preds: list[float] = []
+    with torch.no_grad():
+        for xb, _ in loader:
+            xb = xb.to(device)
+            out = model(xb).detach().cpu().numpy().tolist()
+            preds.extend(out)
+
+    signal = pd.Series(0.0, index=data_df.index)
+    valid_indices = ds.indices
+    for i, end_idx in enumerate(valid_indices):
+        signal.iloc[end_idx] = float(np.clip(preds[i], -1.0, 1.0))
+    return signal
+
+
+def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.DataFrame, cfg: dict) -> dict[str, pd.Series]:
+    max_tr = int(cfg.get("training", {}).get("max_train_rows_per_window", 0) or 0)
+    max_va = int(cfg.get("training", {}).get("max_valid_rows_per_window", 0) or 0)
+    if max_tr > 0 and len(train) > max_tr:
+        train = train.tail(max_tr).copy()
+    if max_va > 0 and len(valid) > max_va:
+        valid = valid.tail(max_va).copy()
+
+    feature_cols = default_feature_columns(train)
+    tr, va, te = _scale_with_train_stats(train, valid, test, feature_cols)
+    fp = FeaturePack(feature_cols=feature_cols)
+    seq_len = int(cfg["models"]["sequence_lengths"][0])
+    batch_size = int(cfg.get("training", {}).get("batch_size", 256))
+    epochs = int(cfg.get("training", {}).get("max_epochs_per_window", cfg.get("training", {}).get("max_epochs", 100)))
+    epochs = min(epochs, 8)
+    lr = float(cfg.get("training", {}).get("learning_rate", 1e-3))
+    device = "cuda" if torch.cuda.is_available() and cfg["training"]["device"] == "auto" else "cpu"
+
+    tr_ds = SequenceDataset(tr, fp, sequence_length=seq_len)
+    va_ds = SequenceDataset(va, fp, sequence_length=seq_len)
+    if len(tr_ds) == 0 or len(va_ds) == 0:
+        return {}
+    tr_loader = DataLoader(tr_ds, batch_size=batch_size, shuffle=True)
+    va_loader = DataLoader(va_ds, batch_size=batch_size, shuffle=False)
+
+    out: dict[str, pd.Series] = {}
+    for model_name in cfg["models"]["main_models"]:
+        tcfg = TrainConfig(
+            model_name=model_name,
+            lr=lr,
+            epochs=epochs,
+            batch_size=batch_size,
+            hidden_size=64,
+            num_layers=2 if model_name == "lstm_dmn" else 1,
+            num_heads=4,
+            dropout=0.2,
+            device=device,
+        )
+        model, _ = fit_model(tr_loader, va_loader, input_size=len(feature_cols), cfg=tcfg)
+        out[model_name] = _infer_signals_from_model(model, te, fp, seq_len=seq_len, device=device)
+    return out
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", required=True)
+    args = parser.parse_args()
+
+    cfg = load_config(args.config)
+    out_root = abs_path(".")
+    ts_col = cfg["data"]["timestamp_col"]
+    feat = pd.read_parquet(abs_path(cfg["data"]["features_path"])).sort_values(ts_col)
+
+    all_metrics = []
+    all_cost = []
+    all_preds = []
+    windows = default_windows()
+    max_windows = int(cfg.get("walk_forward", {}).get("max_windows", 0) or 0)
+    if max_windows > 0:
+        windows = windows[:max_windows]
+
+    for i, w in enumerate(windows, start=1):
+        train, valid, test = split_df(feat, ts_col, w)
+        if len(train) == 0 or len(valid) == 0 or len(test) == 0:
+            continue
+        window_name = f"wf_{i}_{w.test_start}_{w.test_end}"
+        signals = baseline_signals(test)
+        signals.update(model_signals_for_split(train, valid, test, cfg))
+        m, c, p = evaluate_on_split(test, cfg, window_name, out_root, signals=signals)
+        all_metrics.append(m)
+        all_cost.append(c)
+        all_preds.append(p)
+
+    if not all_metrics:
+        raise RuntimeError("No valid walk-forward windows found with non-empty train/valid/test.")
+
+    metrics_all = pd.concat(all_metrics, ignore_index=True)
+    cost_all = pd.concat(all_cost, ignore_index=True)
+    preds_all = pd.concat(all_preds, ignore_index=True)
+
+    tables_dir = out_root / "outputs" / "tables"
+    metrics_dir = out_root / "outputs" / "metrics"
+    ensure_parent(tables_dir / "x.csv")
+    ensure_parent(metrics_dir / "x.csv")
+
+    metrics_all.to_csv(metrics_dir / "walk_forward_results.csv", index=False)
+    cost_all.to_csv(tables_dir / "cost_sensitivity_table.csv", index=False)
+    preds_all.to_csv(out_root / "outputs" / "predictions" / "all_predictions.csv", index=False)
+
+    model_cmp = (
+        metrics_all.groupby("model")[["total_return", "sharpe_ratio", "max_drawdown", "profit_factor"]]
+        .mean()
+        .reset_index()
+        .sort_values("sharpe_ratio", ascending=False)
+    )
+    model_cmp.to_csv(tables_dir / "model_comparison_metrics.csv", index=False)
+    print("Saved walk-forward metrics, predictions, and cost sensitivity tables.")
+
+
+if __name__ == "__main__":
+    main()
