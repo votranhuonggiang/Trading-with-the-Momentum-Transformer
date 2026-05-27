@@ -75,9 +75,9 @@ def run_strategy(
 
 
 def baseline_long_only(df: pd.DataFrame) -> pd.Series:
-    signal = pd.Series(1.0, index=df.index)
-    signal[df["trade_allowed"] == 0] = 0.0
-    return signal
+    # True long-only intent: always long signal; execution engine still enforces
+    # no-trade/open filters and forced end-of-day flattening.
+    return pd.Series(1.0, index=df.index)
 
 
 def baseline_tsmom(df: pd.DataFrame, lookback: int, threshold: float = 0.0) -> pd.Series:

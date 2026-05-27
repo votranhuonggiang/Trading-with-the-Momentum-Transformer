@@ -8,6 +8,7 @@ from pathlib import Path
 import pandas as pd
 
 from common import abs_path, ensure_parent, load_config
+from visualization import plot_model_cumulative_returns
 
 
 def main() -> None:
@@ -52,7 +53,8 @@ def main() -> None:
 
     # Mirror existing files requested in instruction with a baseline mapping.
     wf.to_csv(tables / "walk_forward_results.csv", index=False)
-    print("Saved evaluation tables: yearly, monthly, trade stats.")
+    plot_model_cumulative_returns(ts, root / "outputs" / "figures" / "model_cumulative_returns.png")
+    print("Saved evaluation tables: yearly, monthly, trade stats, and model line chart.")
 
 
 if __name__ == "__main__":

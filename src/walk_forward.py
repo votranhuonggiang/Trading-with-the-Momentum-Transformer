@@ -21,6 +21,7 @@ from train import TrainConfig, fit_model
 
 @dataclass
 class Window:
+    train_start: str
     train_end: str
     valid_start: str
     valid_end: str
@@ -28,19 +29,63 @@ class Window:
     test_end: str
 
 
-def default_windows() -> List[Window]:
-    return [
-        Window("2020-12-31", "2021-01-01", "2021-06-30", "2021-07-01", "2021-12-31"),
-        Window("2021-12-31", "2022-01-01", "2022-06-30", "2022-07-01", "2022-12-31"),
-        Window("2022-12-31", "2023-01-01", "2023-06-30", "2023-07-01", "2023-12-31"),
-        Window("2023-12-31", "2024-01-01", "2024-06-30", "2024-07-01", "2024-12-31"),
-        Window("2024-12-31", "2025-01-01", "2025-06-30", "2025-07-01", "2025-12-31"),
-        Window("2025-12-31", "2026-01-01", "2026-03-31", "2026-04-01", "2026-05-11"),
-    ]
+def _windows_from_config(
+    feat: pd.DataFrame,
+    ts_col: str,
+    validation_months: int,
+    test_months: int,
+    method: str = "expanding",
+    train_months: int | None = None,
+    initial_train_end: str = "2020-12-31",
+) -> List[Window]:
+    if validation_months <= 0 or test_months <= 0:
+        raise ValueError("validation_months and test_months must be positive integers.")
+    if feat.empty:
+        return []
+
+    max_ts = pd.Timestamp(feat[ts_col].max()).normalize()
+    train_end = pd.Timestamp(initial_train_end).normalize()
+    windows: list[Window] = []
+
+    while True:
+        valid_start = (train_end + pd.Timedelta(days=1)).normalize()
+        valid_end = (valid_start + pd.DateOffset(months=validation_months) - pd.Timedelta(days=1)).normalize()
+        test_start = (valid_end + pd.Timedelta(days=1)).normalize()
+        test_end = (test_start + pd.DateOffset(months=test_months) - pd.Timedelta(days=1)).normalize()
+
+        if valid_start > max_ts or test_start > max_ts:
+            break
+        if test_end > max_ts:
+            test_end = max_ts
+        if test_end < test_start:
+            break
+
+        if method == "rolling":
+            if not train_months or train_months <= 0:
+                raise ValueError("walk_forward.train_months must be set for rolling mode.")
+            train_start = (valid_start - pd.DateOffset(months=train_months)).normalize()
+        else:
+            train_start = pd.Timestamp(feat[ts_col].min()).normalize()
+
+        windows.append(
+            Window(
+                train_start=train_start.strftime("%Y-%m-%d"),
+                train_end=train_end.strftime("%Y-%m-%d"),
+                valid_start=valid_start.strftime("%Y-%m-%d"),
+                valid_end=valid_end.strftime("%Y-%m-%d"),
+                test_start=test_start.strftime("%Y-%m-%d"),
+                test_end=test_end.strftime("%Y-%m-%d"),
+            )
+        )
+        train_end = test_end
+        if train_end >= max_ts:
+            break
+
+    return windows
 
 
 def split_df(df: pd.DataFrame, ts_col: str, w: Window) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    train = df[df[ts_col] <= pd.Timestamp(w.train_end)]
+    train = df[(df[ts_col] >= pd.Timestamp(w.train_start)) & (df[ts_col] <= pd.Timestamp(w.train_end))]
     valid = df[(df[ts_col] >= pd.Timestamp(w.valid_start)) & (df[ts_col] <= pd.Timestamp(w.valid_end))]
     test = df[(df[ts_col] >= pd.Timestamp(w.test_start)) & (df[ts_col] <= pd.Timestamp(w.test_end))]
     return train, valid, test
@@ -190,7 +235,20 @@ def main() -> None:
     all_metrics = []
     all_cost = []
     all_preds = []
-    windows = default_windows()
+    wf_cfg = cfg.get("walk_forward", {})
+    validation_months = int(wf_cfg.get("validation_months", 6))
+    test_months = int(wf_cfg.get("test_months", 6))
+    method = str(wf_cfg.get("method", "expanding")).lower()
+    train_months = wf_cfg.get("train_months")
+    train_months = int(train_months) if train_months is not None else None
+    windows = _windows_from_config(
+        feat,
+        ts_col,
+        validation_months,
+        test_months,
+        method=method,
+        train_months=train_months,
+    )
     max_windows = int(cfg.get("walk_forward", {}).get("max_windows", 0) or 0)
     if max_windows > 0:
         windows = windows[:max_windows]
@@ -223,12 +281,21 @@ def main() -> None:
     cost_all.to_csv(tables_dir / "cost_sensitivity_table.csv", index=False)
     preds_all.to_csv(out_root / "outputs" / "predictions" / "all_predictions.csv", index=False)
 
-    model_cmp = (
-        metrics_all.groupby("model")[["total_return", "sharpe_ratio", "max_drawdown", "profit_factor"]]
-        .mean()
-        .reset_index()
-        .sort_values("sharpe_ratio", ascending=False)
-    )
+    # Instruction-aligned model comparison: compute metrics from the full
+    # concatenated out-of-sample return series per model, not mean of window stats.
+    rows = []
+    for model_name, g in preds_all.groupby("model"):
+        sm = summarize(g["net_return"], g["net_pnl_points"], g["turnover"])
+        rows.append(
+            {
+                "model": model_name,
+                "total_return": sm["total_return"],
+                "sharpe_ratio": sm["sharpe_ratio"],
+                "max_drawdown": sm["max_drawdown"],
+                "profit_factor": sm["profit_factor"],
+            }
+        )
+    model_cmp = pd.DataFrame(rows).sort_values("sharpe_ratio", ascending=False)
     model_cmp.to_csv(tables_dir / "model_comparison_metrics.csv", index=False)
     print("Saved walk-forward metrics, predictions, and cost sensitivity tables.")
 

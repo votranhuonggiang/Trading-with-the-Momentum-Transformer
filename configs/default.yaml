@@ -31,10 +31,11 @@ models:
     - "decoder_tft"
 
 walk_forward:
-  method: "expanding"
-  validation_months: 6
-  test_months: 6
-  max_windows: 1
+  method: "rolling"
+  train_months: 6
+  validation_months: 3
+  test_months: 3
+  max_windows: 0
 
 training:
   objective: "net_sharpe"
