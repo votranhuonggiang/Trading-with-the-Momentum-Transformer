@@ -710,21 +710,41 @@ Train: 2017-11-06 to 2020-12-31
 Validation: 2021-01-01 to 2021-06-30
 Test: 2021-07-01 to 2021-12-31
 
+Train: 2017-11-06 to 2021-06-30
+Validation: 2021-07-01 to 2021-12-31
+Test: 2022-01-01 to 2022-06-30
+
 Train: 2017-11-06 to 2021-12-31
 Validation: 2022-01-01 to 2022-06-30
 Test: 2022-07-01 to 2022-12-31
+
+Train: 2017-11-06 to 2022-06-30
+Validation: 2022-07-01 to 2022-12-31
+Test: 2023-01-01 to 2023-06-30
 
 Train: 2017-11-06 to 2022-12-31
 Validation: 2023-01-01 to 2023-06-30
 Test: 2023-07-01 to 2023-12-31
 
+Train: 2017-11-06 to 2023-06-30
+Validation: 2023-07-01 to 2023-12-31
+Test: 2024-01-01 to 2024-06-30
+
 Train: 2017-11-06 to 2023-12-31
 Validation: 2024-01-01 to 2024-06-30
 Test: 2024-07-01 to 2024-12-31
 
+Train: 2017-11-06 to 2024-06-30
+Validation: 2024-07-01 to 2024-12-31
+Test: 2025-01-01 to 2025-06-30
+
 Train: 2017-11-06 to 2024-12-31
 Validation: 2025-01-01 to 2025-06-30
 Test: 2025-07-01 to 2025-12-31
+
+Train: 2017-11-06 to 2025-06-30
+Validation: 2025-07-01 to 2025-12-31
+Test: 2026-01-01 to 2026-03-31
 
 Train: 2017-11-06 to 2025-12-31
 Validation: 2026-01-01 to 2026-03-31
@@ -1018,6 +1038,7 @@ walk_forward:
   method: "expanding"
   validation_months: 6
   test_months: 6
+  step_months: 6
 
 training:
   objective: "net_sharpe"

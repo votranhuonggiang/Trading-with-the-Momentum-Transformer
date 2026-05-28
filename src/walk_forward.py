@@ -34,12 +34,17 @@ def _windows_from_config(
     ts_col: str,
     validation_months: int,
     test_months: int,
+    step_months: int | None = None,
     method: str = "expanding",
     train_months: int | None = None,
     initial_train_end: str = "2020-12-31",
 ) -> List[Window]:
     if validation_months <= 0 or test_months <= 0:
         raise ValueError("validation_months and test_months must be positive integers.")
+    if step_months is None:
+        step_months = validation_months + test_months
+    if step_months <= 0:
+        raise ValueError("step_months must be a positive integer.")
     if feat.empty:
         return []
 
@@ -77,7 +82,7 @@ def _windows_from_config(
                 test_end=test_end.strftime("%Y-%m-%d"),
             )
         )
-        train_end = test_end
+        train_end = (train_end + pd.DateOffset(months=step_months)).normalize()
         if train_end >= max_ts:
             break
 
@@ -237,6 +242,7 @@ def main() -> None:
     wf_cfg = cfg.get("walk_forward", {})
     validation_months = int(wf_cfg.get("validation_months", 6))
     test_months = int(wf_cfg.get("test_months", 6))
+    step_months = int(wf_cfg.get("step_months", validation_months + test_months))
     method = str(wf_cfg.get("method", "expanding")).lower()
     train_months = wf_cfg.get("train_months")
     train_months = int(train_months) if train_months is not None else None
@@ -245,6 +251,7 @@ def main() -> None:
         ts_col,
         validation_months,
         test_months,
+        step_months=step_months,
         method=method,
         train_months=train_months,
     )

@@ -38,10 +38,10 @@ models:
     - "decoder_tft"
 
 walk_forward:
-  method: "rolling"
-  train_months: 6
+  method: "expanding"
   validation_months: 6
   test_months: 6
+  step_months: 6
   max_windows: 0
 
 training:
