@@ -100,9 +100,12 @@ def evaluate_on_split(
     test_df: pd.DataFrame, cfg: dict, window_name: str, out_root: Path, signals: dict[str, pd.Series]
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     tc = ThresholdConfig(
-        entry_threshold=cfg["trading"]["entry_threshold"],
-        exit_threshold=cfg["trading"]["exit_threshold"],
-        reverse_threshold=cfg["trading"]["reverse_threshold"],
+        long_entry_threshold=cfg["trading"]["long_entry_threshold"],
+        short_entry_threshold=cfg["trading"]["short_entry_threshold"],
+        long_exit_threshold=cfg["trading"]["long_exit_threshold"],
+        short_exit_threshold=cfg["trading"]["short_exit_threshold"],
+        long_to_short_reverse_threshold=cfg["trading"]["long_to_short_reverse_threshold"],
+        short_to_long_reverse_threshold=cfg["trading"]["short_to_long_reverse_threshold"],
     )
     rows = []
     cost_tables = []

@@ -9,9 +9,12 @@ trading:
   intraday_only: true
   close_before_end_of_day: true
   no_overnight: true
-  entry_threshold: 0.20
-  exit_threshold: 0.05
-  reverse_threshold: 0.35
+  long_entry_threshold: 0.20
+  short_entry_threshold: 0.25
+  long_exit_threshold: 0.04
+  short_exit_threshold: 0.06
+  long_to_short_reverse_threshold: 0.45
+  short_to_long_reverse_threshold: 0.35
   contract_multiplier: 100000
   margin_rate: 0.1848
   transfer_tax_rate: 0.001

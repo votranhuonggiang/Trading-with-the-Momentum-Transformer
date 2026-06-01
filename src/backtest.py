@@ -13,9 +13,12 @@ from metrics import summarize
 
 @dataclass
 class ThresholdConfig:
-    entry_threshold: float
-    exit_threshold: float
-    reverse_threshold: float
+    long_entry_threshold: float
+    short_entry_threshold: float
+    long_exit_threshold: float
+    short_exit_threshold: float
+    long_to_short_reverse_threshold: float
+    short_to_long_reverse_threshold: float
 
 
 def _threshold_position(signal: pd.Series, allowed: pd.Series, cfg: ThresholdConfig) -> pd.Series:
@@ -24,21 +27,21 @@ def _threshold_position(signal: pd.Series, allowed: pd.Series, cfg: ThresholdCon
     for i, val in enumerate(signal.fillna(0.0).values):
         can_open = bool(allowed.iloc[i])
         if current == 0.0:
-            if can_open and val > cfg.entry_threshold:
+            if can_open and val > cfg.long_entry_threshold:
                 current = float(np.clip(val, 0.0, 1.0))
-            elif can_open and val < -cfg.entry_threshold:
+            elif can_open and val < -cfg.short_entry_threshold:
                 current = float(np.clip(val, -1.0, 0.0))
         elif current > 0.0:
-            if abs(val) < cfg.exit_threshold:
+            if val < cfg.long_exit_threshold:
                 current = 0.0
-            elif val < -cfg.reverse_threshold and can_open:
+            elif val < -cfg.long_to_short_reverse_threshold and can_open:
                 current = float(np.clip(val, -1.0, 0.0))
             else:
                 current = float(np.clip(val, 0.0, 1.0))
         else:
-            if abs(val) < cfg.exit_threshold:
+            if val > -cfg.short_exit_threshold:
                 current = 0.0
-            elif val > cfg.reverse_threshold and can_open:
+            elif val > cfg.short_to_long_reverse_threshold and can_open:
                 current = float(np.clip(val, 0.0, 1.0))
             else:
                 current = float(np.clip(val, -1.0, 0.0))

@@ -163,18 +163,21 @@ Even though the model outputs a continuous value, the backtest must include prac
 Recommended initial thresholds:
 
 ```yaml
-entry_threshold: 0.20
-exit_threshold: 0.05
-reverse_threshold: 0.35
+long_entry_threshold: 0.20
+short_entry_threshold: 0.25
+long_exit_threshold: 0.04
+short_exit_threshold: 0.06
+long_to_short_reverse_threshold: 0.45
+short_to_long_reverse_threshold: 0.35
 ```
 
 Rules:
-1. If current position is flat and `z_t > entry_threshold`, enter long.
-2. If current position is flat and `z_t < -entry_threshold`, enter short.
-3. If current position is long and `abs(z_t) < exit_threshold`, exit to flat.
-4. If current position is short and `abs(z_t) < exit_threshold`, exit to flat.
-5. If current position is long and `z_t < -reverse_threshold`, allow reversal from long to short.
-6. If current position is short and `z_t > reverse_threshold`, allow reversal from short to long.
+1. If current position is flat and `z_t > long_entry_threshold`, enter long.
+2. If current position is flat and `z_t < -short_entry_threshold`, enter short.
+3. If current position is long and `z_t < long_exit_threshold`, exit to flat.
+4. If current position is short and `z_t > -short_exit_threshold`, exit to flat.
+5. If current position is long and `z_t < -long_to_short_reverse_threshold`, allow reversal from long to short.
+6. If current position is short and `z_t > short_to_long_reverse_threshold`, allow reversal from short to long.
 7. Reversal is allowed, but it requires a stronger threshold than normal entry.
 8. If the signal is weak, keep the current position unless exit rules are triggered.
 
@@ -1013,9 +1016,12 @@ trading:
   intraday_only: true
   close_before_end_of_day: true
   no_overnight: true
-  entry_threshold: 0.20
-  exit_threshold: 0.05
-  reverse_threshold: 0.35
+  long_entry_threshold: 0.20
+  short_entry_threshold: 0.25
+  long_exit_threshold: 0.04
+  short_exit_threshold: 0.06
+  long_to_short_reverse_threshold: 0.45
+  short_to_long_reverse_threshold: 0.35
   base_round_trip_cost_points: 0.20
   cost_scenarios_points: [0.20]
   # base_round_trip_cost_points and cost_scenarios_points are legacy compatibility
