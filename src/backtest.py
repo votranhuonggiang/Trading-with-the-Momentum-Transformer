@@ -75,31 +75,20 @@ def run_strategy(
     out["position_delta"] = out["position"] - out["position_prev"]
     out["turnover"] = out["position_delta"].abs()
 
-    same_sign = np.sign(out["position"]) == np.sign(out["position_prev"])
-    out["open_units"] = np.where(
-        same_sign,
-        np.maximum(np.abs(out["position"]) - np.abs(out["position_prev"]), 0.0),
-        np.abs(out["position"]),
-    )
-    out["close_units"] = np.where(
-        same_sign,
-        np.maximum(np.abs(out["position_prev"]) - np.abs(out["position"]), 0.0),
-        np.abs(out["position_prev"]),
-    )
+    out["buy_units"] = (out["position"] - out["position_prev"]).clip(lower=0.0)
+    out["sell_units"] = (out["position_prev"] - out["position"]).clip(lower=0.0)
     per_side_fixed_fee = fee_vsdc + fee_hnx + fee_ctck
 
-    # Derivatives transfer tax is applied on each matched side using the
-    # transfer value proxy: price * multiplier * initial margin rate / 2.
+    # Tax applies on sell/short-side turnover only. Buy/long-side turnover
+    # pays fixed fees without tax.
     out["tax_vnd_per_contract"] = (
         margin_rate * contract_multiplier * transfer_tax_rate * out["close"] / 2.0
     )
-    out["open_cost_vnd"] = out["open_units"] * per_side_fixed_fee
-    out["open_tax_cost_vnd"] = out["open_units"] * out["tax_vnd_per_contract"]
-    out["open_cost_vnd"] = out["open_cost_vnd"] + out["open_tax_cost_vnd"]
-    out["close_fixed_cost_vnd"] = out["close_units"] * per_side_fixed_fee
-    out["close_tax_cost_vnd"] = out["close_units"] * out["tax_vnd_per_contract"]
-    out["close_cost_vnd"] = out["close_fixed_cost_vnd"] + out["close_tax_cost_vnd"]
-    out["cost_vnd"] = out["open_cost_vnd"] + out["close_cost_vnd"]
+    out["buy_cost_vnd"] = out["buy_units"] * per_side_fixed_fee
+    out["sell_fixed_cost_vnd"] = out["sell_units"] * per_side_fixed_fee
+    out["sell_tax_cost_vnd"] = out["sell_units"] * out["tax_vnd_per_contract"]
+    out["sell_cost_vnd"] = out["sell_fixed_cost_vnd"] + out["sell_tax_cost_vnd"]
+    out["cost_vnd"] = out["buy_cost_vnd"] + out["sell_cost_vnd"]
     out["cost_points"] = out["cost_vnd"] / contract_multiplier
 
     out["gross_pnl_points"] = out["position"].shift(1).fillna(0.0) * out["price_change"]
