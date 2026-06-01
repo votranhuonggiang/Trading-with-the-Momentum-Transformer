@@ -1018,6 +1018,12 @@ trading:
   reverse_threshold: 0.35
   base_round_trip_cost_points: 0.20
   cost_scenarios_points: [0.20]
+  # base_round_trip_cost_points and cost_scenarios_points are legacy compatibility
+  # fields only. The active backtest cost model uses fixed fees plus transfer tax below.
+  # Derivatives transfer tax uses 0.1% on transfer value proxy:
+  # tax_per_side = close_price * 100000 * margin_rate * 0.001 / 2
+  margin_rate: 0.1848
+  transfer_tax_rate: 0.001
 
 features:
   return_horizons: [1, 2, 3, 6, 12, 24, 48, 78]

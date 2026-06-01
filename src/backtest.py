@@ -69,21 +69,33 @@ def run_strategy(
     fee_hnx = float(trading_cfg.get("fee_hnx_vnd_per_contract_per_side", 2700.0))
     fee_ctck = float(trading_cfg.get("fee_ctck_vnd_per_contract_per_side", 2700.0))
     margin_rate = float(trading_cfg.get("margin_rate", 0.1848))
-    tax_rate = float(trading_cfg.get("tax_rate", 0.17))
     transfer_tax_rate = float(trading_cfg.get("transfer_tax_rate", 0.001))
 
     out["position_prev"] = out["position"].shift(1).fillna(0.0)
     out["position_delta"] = out["position"] - out["position_prev"]
     out["turnover"] = out["position_delta"].abs()
 
-    out["open_units"] = out["position_delta"].clip(lower=0.0)
-    out["close_units"] = (-out["position_delta"]).clip(lower=0.0)
+    same_sign = np.sign(out["position"]) == np.sign(out["position_prev"])
+    out["open_units"] = np.where(
+        same_sign,
+        np.maximum(np.abs(out["position"]) - np.abs(out["position_prev"]), 0.0),
+        np.abs(out["position"]),
+    )
+    out["close_units"] = np.where(
+        same_sign,
+        np.maximum(np.abs(out["position_prev"]) - np.abs(out["position"]), 0.0),
+        np.abs(out["position_prev"]),
+    )
     per_side_fixed_fee = fee_vsdc + fee_hnx + fee_ctck
 
-    # Tax is applied only on close side following user-provided formula:
-    # margin_rate * contract_multiplier * transfer_tax_rate * close_price * tax_rate
-    out["tax_vnd_per_contract"] = margin_rate * contract_multiplier * transfer_tax_rate * out["close"] * tax_rate
+    # Derivatives transfer tax is applied on each matched side using the
+    # transfer value proxy: price * multiplier * initial margin rate / 2.
+    out["tax_vnd_per_contract"] = (
+        margin_rate * contract_multiplier * transfer_tax_rate * out["close"] / 2.0
+    )
     out["open_cost_vnd"] = out["open_units"] * per_side_fixed_fee
+    out["open_tax_cost_vnd"] = out["open_units"] * out["tax_vnd_per_contract"]
+    out["open_cost_vnd"] = out["open_cost_vnd"] + out["open_tax_cost_vnd"]
     out["close_fixed_cost_vnd"] = out["close_units"] * per_side_fixed_fee
     out["close_tax_cost_vnd"] = out["close_units"] * out["tax_vnd_per_contract"]
     out["close_cost_vnd"] = out["close_fixed_cost_vnd"] + out["close_tax_cost_vnd"]

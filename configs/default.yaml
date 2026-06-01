@@ -14,7 +14,6 @@ trading:
   reverse_threshold: 0.35
   contract_multiplier: 100000
   margin_rate: 0.1848
-  tax_rate: 0.17
   transfer_tax_rate: 0.001
   fee_vsdc_vnd_per_contract_per_side: 5000
   fee_hnx_vnd_per_contract_per_side: 2700
