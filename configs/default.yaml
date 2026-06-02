@@ -10,10 +10,10 @@ trading:
   close_before_end_of_day: true
   no_overnight: true
   long_entry_threshold: 0.20
-  short_entry_threshold: 0.33
+  short_entry_threshold: 0.30
   long_exit_threshold: 0.03
   short_exit_threshold: 0.08
-  long_to_short_reverse_threshold: 0.50
+  long_to_short_reverse_threshold: 0.55
   short_to_long_reverse_threshold: 0.35
   contract_multiplier: 100000
   margin_rate: 0.1848
