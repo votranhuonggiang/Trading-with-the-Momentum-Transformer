@@ -33,7 +33,7 @@ features:
     - [32, 96]
 
 models:
-  sequence_lengths: [78, 156, 390]
+  sequence_lengths: [156]
   main_models:
     - "lstm_dmn"
     - "decoder_transformer"
@@ -48,6 +48,8 @@ walk_forward:
 
 training:
   objective: "net_sharpe"
+  batch_size: 64
+  learning_rate: 0.0001
   max_epochs: 100
   max_epochs_per_window: 1
   max_train_rows_per_window: 5000
