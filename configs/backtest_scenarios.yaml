@@ -1,0 +1,137 @@
+cost_model_version: fixed_v1_locked
+notes:
+  - Do not change transaction cost assumptions across scenarios.
+  - Keep the full pipeline unchanged except for the fields explicitly listed in each scenario.
+  - Primary optimization target is decoder_tft.
+  - Report all models as usual, but scenario decisions are driven by decoder_tft.
+  - Never overwrite a completed scenario definition. Add a new scenario_id for every new setting set.
+  - If a previous scenario is rerun, reuse the exact same scenario_id and mark a new run in the registry.
+  - Every scenario row must store the full execution settings, even if only one field changed.
+
+scenario_columns:
+  - scenario_id
+  - status
+  - family
+  - description
+  - long_entry_threshold
+  - short_entry_threshold
+  - long_exit_threshold
+  - short_exit_threshold
+  - long_to_short_reverse_threshold
+  - short_to_long_reverse_threshold
+  - minimum_holding_bars
+  - avoid_open_first_5m
+  - avoid_open_last_5m
+  - model_scope
+  - expected_effect
+  - compare_to
+  - change_summary
+
+scenarios:
+  - scenario_id: s00_baseline_current
+    status: completed
+    family: execution
+    description: Current baseline after latest agreed threshold tightening.
+    long_entry_threshold: 0.20
+    short_entry_threshold: 0.30
+    long_exit_threshold: 0.03
+    short_exit_threshold: 0.08
+    long_to_short_reverse_threshold: 0.50
+    short_to_long_reverse_threshold: 0.35
+    minimum_holding_bars: 0
+    avoid_open_first_5m: true
+    avoid_open_last_5m: true
+    model_scope: all_models_reported_decoder_tft_targeted
+    expected_effect: Baseline reference only.
+    compare_to: none
+    change_summary: Reference baseline for all future comparisons.
+
+  - scenario_id: s01_short_entry_033
+    status: active
+    family: execution
+    description: Increase short entry threshold only.
+    long_entry_threshold: 0.20
+    short_entry_threshold: 0.33
+    long_exit_threshold: 0.03
+    short_exit_threshold: 0.08
+    long_to_short_reverse_threshold: 0.50
+    short_to_long_reverse_threshold: 0.35
+    minimum_holding_bars: 0
+    avoid_open_first_5m: true
+    avoid_open_last_5m: true
+    model_scope: all_models_reported_decoder_tft_targeted
+    expected_effect: Reduce taxed short entries.
+    compare_to: s00_baseline_current
+    change_summary: Changes short_entry_threshold from 0.30 to 0.33 only.
+
+  - scenario_id: s02_l2s_reverse_055
+    status: planned
+    family: execution
+    description: Increase long-to-short reversal threshold only.
+    long_entry_threshold: 0.20
+    short_entry_threshold: 0.30
+    long_exit_threshold: 0.03
+    short_exit_threshold: 0.08
+    long_to_short_reverse_threshold: 0.55
+    short_to_long_reverse_threshold: 0.35
+    minimum_holding_bars: 0
+    avoid_open_first_5m: true
+    avoid_open_last_5m: true
+    model_scope: all_models_reported_decoder_tft_targeted
+    expected_effect: Reduce the most expensive reversal path.
+    compare_to: s00_baseline_current
+    change_summary: Changes long_to_short_reverse_threshold from 0.50 to 0.55 only.
+
+  - scenario_id: s03_short033_l2s055
+    status: planned
+    family: execution
+    description: Combine stricter short entry and stricter long-to-short reversal.
+    long_entry_threshold: 0.20
+    short_entry_threshold: 0.33
+    long_exit_threshold: 0.03
+    short_exit_threshold: 0.08
+    long_to_short_reverse_threshold: 0.55
+    short_to_long_reverse_threshold: 0.35
+    minimum_holding_bars: 0
+    avoid_open_first_5m: true
+    avoid_open_last_5m: true
+    model_scope: all_models_reported_decoder_tft_targeted
+    expected_effect: Combine both sell-side controls.
+    compare_to: s00_baseline_current
+    change_summary: Changes short_entry_threshold to 0.33 and long_to_short_reverse_threshold to 0.55.
+
+  - scenario_id: s04_short_exit_010
+    status: planned
+    family: execution
+    description: Exit weak shorts earlier.
+    long_entry_threshold: 0.20
+    short_entry_threshold: 0.30
+    long_exit_threshold: 0.03
+    short_exit_threshold: 0.10
+    long_to_short_reverse_threshold: 0.50
+    short_to_long_reverse_threshold: 0.35
+    minimum_holding_bars: 0
+    avoid_open_first_5m: true
+    avoid_open_last_5m: true
+    model_scope: all_models_reported_decoder_tft_targeted
+    expected_effect: Exit fading shorts earlier.
+    compare_to: s00_baseline_current
+    change_summary: Changes short_exit_threshold from 0.08 to 0.10 only.
+
+  - scenario_id: s05_short033_l2s055_exit010
+    status: planned
+    family: execution
+    description: Combine all threshold-only sell-side controls.
+    long_entry_threshold: 0.20
+    short_entry_threshold: 0.33
+    long_exit_threshold: 0.03
+    short_exit_threshold: 0.10
+    long_to_short_reverse_threshold: 0.55
+    short_to_long_reverse_threshold: 0.35
+    minimum_holding_bars: 0
+    avoid_open_first_5m: true
+    avoid_open_last_5m: true
+    model_scope: all_models_reported_decoder_tft_targeted
+    expected_effect: Strongest threshold-only sell-side filter.
+    compare_to: s00_baseline_current
+    change_summary: Changes short_entry_threshold to 0.33, short_exit_threshold to 0.10, and long_to_short_reverse_threshold to 0.55.

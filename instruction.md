@@ -164,7 +164,7 @@ Recommended initial thresholds:
 
 ```yaml
 long_entry_threshold: 0.20
-short_entry_threshold: 0.30
+short_entry_threshold: 0.33
 long_exit_threshold: 0.03
 short_exit_threshold: 0.08
 long_to_short_reverse_threshold: 0.50
@@ -1017,7 +1017,7 @@ trading:
   close_before_end_of_day: true
   no_overnight: true
   long_entry_threshold: 0.20
-  short_entry_threshold: 0.30
+  short_entry_threshold: 0.33
   long_exit_threshold: 0.03
   short_exit_threshold: 0.08
   long_to_short_reverse_threshold: 0.50
