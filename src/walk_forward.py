@@ -231,6 +231,12 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             num_heads=4,
             dropout=0.2,
             turnover_penalty_lambda=turnover_penalty_lambda,
+            valid_selection_turnover_lambda=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_valid_selection_turnover_lambda" if model_name == "decoder_tft" else "valid_selection_turnover_lambda",
+                    0.0,
+                )
+            ),
             device=device,
         )
         model, _ = fit_model(tr_loader, va_loader, input_size=len(feature_cols), cfg=tcfg)

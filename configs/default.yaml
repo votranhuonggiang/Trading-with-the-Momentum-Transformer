@@ -51,6 +51,7 @@ walk_forward:
 training:
   objective: "net_sharpe"
   decoder_tft_turnover_penalty_lambda: 0.0
+  decoder_tft_valid_selection_turnover_lambda: 0.05
   batch_size: 64
   learning_rate: 0.0001
   max_epochs: 100

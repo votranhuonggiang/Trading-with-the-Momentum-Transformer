@@ -26,6 +26,7 @@ class TrainConfig:
     num_heads: int = 4
     dropout: float = 0.2
     turnover_penalty_lambda: float = 0.0
+    valid_selection_turnover_lambda: float = 0.0
     device: str = "cpu"
 
 
@@ -95,6 +96,32 @@ def _run_epoch(
     return float(np.mean(losses)) if losses else 0.0
 
 
+def _validation_score(
+    model: nn.Module,
+    loader: DataLoader,
+    device: str,
+    turnover_penalty_lambda: float = 0.0,
+) -> tuple[float, float, float]:
+    losses = []
+    turnover_terms = []
+    model.eval()
+    with torch.no_grad():
+        for xb, yb in loader:
+            xb = xb.to(device)
+            yb = yb.to(device)
+            pred = model(xb)
+            loss = sharpe_loss(pred, yb, turnover_penalty_lambda=0.0)
+            turnover_proxy = 0.0
+            if pred.numel() > 1:
+                turnover_proxy = float(torch.mean(torch.abs(pred[1:] - pred[:-1])).detach().cpu().item())
+            losses.append(float(loss.detach().cpu().item()))
+            turnover_terms.append(turnover_proxy)
+    valid_loss = float(np.mean(losses)) if losses else 0.0
+    valid_turnover_proxy = float(np.mean(turnover_terms)) if turnover_terms else 0.0
+    valid_score = valid_loss + turnover_penalty_lambda * valid_turnover_proxy
+    return valid_loss, valid_turnover_proxy, valid_score
+
+
 def fit_model(
     train_loader: DataLoader,
     valid_loader: DataLoader,
@@ -105,8 +132,8 @@ def fit_model(
     optimizer = torch.optim.Adam(model.parameters(), lr=cfg.lr)
 
     best_state = None
-    best_valid = float("inf")
-    history = {"train_loss": [], "valid_loss": []}
+    best_valid_score = float("inf")
+    history = {"train_loss": [], "valid_loss": [], "valid_turnover_proxy": [], "valid_score": []}
 
     for _ in range(cfg.epochs):
         tr = _run_epoch(
@@ -116,11 +143,18 @@ def fit_model(
             cfg.device,
             turnover_penalty_lambda=cfg.turnover_penalty_lambda,
         )
-        va = _run_epoch(model, valid_loader, None, cfg.device)
+        va, va_turnover_proxy, va_score = _validation_score(
+            model,
+            valid_loader,
+            cfg.device,
+            turnover_penalty_lambda=cfg.valid_selection_turnover_lambda,
+        )
         history["train_loss"].append(tr)
         history["valid_loss"].append(va)
-        if va < best_valid:
-            best_valid = va
+        history["valid_turnover_proxy"].append(va_turnover_proxy)
+        history["valid_score"].append(va_score)
+        if va_score < best_valid_score:
+            best_valid_score = va_score
             best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
 
     if best_state is not None:
