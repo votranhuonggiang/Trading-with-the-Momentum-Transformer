@@ -25,15 +25,24 @@ class TrainConfig:
     num_layers: int = 1
     num_heads: int = 4
     dropout: float = 0.2
+    turnover_penalty_lambda: float = 0.0
     device: str = "cpu"
 
 
-def sharpe_loss(positions: torch.Tensor, future_returns: torch.Tensor) -> torch.Tensor:
+def sharpe_loss(
+    positions: torch.Tensor,
+    future_returns: torch.Tensor,
+    turnover_penalty_lambda: float = 0.0,
+) -> torch.Tensor:
     captured = positions * future_returns
     mean = captured.mean()
     var = captured.var(unbiased=False)
     sharpe = mean / torch.sqrt(var + 1e-9)
-    return -sharpe
+    loss = -sharpe
+    if turnover_penalty_lambda > 0 and positions.numel() > 1:
+        turnover_proxy = torch.mean(torch.abs(positions[1:] - positions[:-1]))
+        loss = loss + turnover_penalty_lambda * turnover_proxy
+    return loss
 
 
 def model_factory(input_size: int, cfg: TrainConfig) -> nn.Module:
@@ -68,6 +77,7 @@ def _run_epoch(
     loader: DataLoader,
     optimizer: torch.optim.Optimizer | None,
     device: str,
+    turnover_penalty_lambda: float = 0.0,
 ) -> float:
     losses = []
     model.train(optimizer is not None)
@@ -75,7 +85,7 @@ def _run_epoch(
         xb = xb.to(device)
         yb = yb.to(device)
         pred = model(xb)
-        loss = sharpe_loss(pred, yb)
+        loss = sharpe_loss(pred, yb, turnover_penalty_lambda=turnover_penalty_lambda)
         if optimizer is not None:
             optimizer.zero_grad()
             loss.backward()
@@ -99,7 +109,13 @@ def fit_model(
     history = {"train_loss": [], "valid_loss": []}
 
     for _ in range(cfg.epochs):
-        tr = _run_epoch(model, train_loader, optimizer, cfg.device)
+        tr = _run_epoch(
+            model,
+            train_loader,
+            optimizer,
+            cfg.device,
+            turnover_penalty_lambda=cfg.turnover_penalty_lambda,
+        )
         va = _run_epoch(model, valid_loader, None, cfg.device)
         history["train_loss"].append(tr)
         history["valid_loss"].append(va)

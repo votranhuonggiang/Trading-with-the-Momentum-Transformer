@@ -209,11 +209,18 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
     va_ds = SequenceDataset(va, fp, sequence_length=seq_len)
     if len(tr_ds) == 0 or len(va_ds) == 0:
         return {}
-    tr_loader = DataLoader(tr_ds, batch_size=batch_size, shuffle=True)
     va_loader = DataLoader(va_ds, batch_size=batch_size, shuffle=False)
 
     out: dict[str, pd.Series] = {}
     for model_name in cfg["models"]["main_models"]:
+        turnover_penalty_lambda = 0.0
+        if model_name == "decoder_tft":
+            turnover_penalty_lambda = float(cfg.get("training", {}).get("decoder_tft_turnover_penalty_lambda", 0.0))
+        tr_loader = DataLoader(
+            tr_ds,
+            batch_size=batch_size,
+            shuffle=turnover_penalty_lambda <= 0,
+        )
         tcfg = TrainConfig(
             model_name=model_name,
             lr=lr,
@@ -223,6 +230,7 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             num_layers=2 if model_name == "lstm_dmn" else 1,
             num_heads=4,
             dropout=0.2,
+            turnover_penalty_lambda=turnover_penalty_lambda,
             device=device,
         )
         model, _ = fit_model(tr_loader, va_loader, input_size=len(feature_cols), cfg=tcfg)
