@@ -18,7 +18,7 @@ class FeaturePack:
     date_col: str = "trade_date"
 
 
-def default_feature_columns(df: pd.DataFrame) -> List[str]:
+def _all_numeric_feature_columns(df: pd.DataFrame) -> List[str]:
     excluded = {
         "timestamp",
         "trade_date",
@@ -33,6 +33,59 @@ def default_feature_columns(df: pd.DataFrame) -> List[str]:
         "volume",
     }
     return [c for c in df.columns if c not in excluded and pd.api.types.is_numeric_dtype(df[c])]
+
+
+def default_feature_columns(df: pd.DataFrame, cfg: dict | None = None) -> List[str]:
+    feature_cols = _all_numeric_feature_columns(df)
+    subset_mode = str((cfg or {}).get("features", {}).get("model_feature_subset", "all")).lower()
+    if subset_mode in {"", "all"}:
+        return feature_cols
+
+    if subset_mode != "clean_trend":
+        raise ValueError(f"Unknown features.model_feature_subset: {subset_mode}")
+
+    keep_exact = {
+        "log_return",
+        "ewm_vol_78",
+        "ewm_vol_390",
+        "ema_12",
+        "ema_24",
+        "ema_32",
+        "ema_78",
+        "ema_96",
+        "price_to_sma_24",
+        "price_to_sma_78",
+        "ema_slope_12",
+        "ema_slope_24",
+        "ema_slope_78",
+        "macd_32_96",
+        "macd_32_96_norm",
+        "macd_32_96_signal",
+        "macd_32_96_hist",
+        "macd_32_96_hist_norm",
+        "macd_32_96_slope",
+        "macd_32_96_slope_norm",
+        "macd_32_96_abs_norm",
+        "macd_32_96_sign",
+        "macd_32_96_cross_up",
+        "macd_32_96_cross_down",
+        "atr_14",
+        "atr_78",
+        "sin_time",
+        "cos_time",
+        "sin_day_of_week",
+        "cos_day_of_week",
+        "time_to_close",
+        "trade_allowed",
+    }
+    keep_prefixes = (
+        "ret_",
+        "rolling_vol_",
+    )
+    selected = [c for c in feature_cols if c in keep_exact or c.startswith(keep_prefixes)]
+    if not selected:
+        raise ValueError("Feature subset 'clean_trend' selected zero columns.")
+    return selected
 
 
 class SequenceDataset(Dataset):

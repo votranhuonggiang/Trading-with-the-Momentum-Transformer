@@ -25,6 +25,7 @@ trading:
   cost_scenarios_points: [0.20]
 
 features:
+  model_feature_subset: "clean_trend"
   return_horizons: [1, 2, 3, 6, 12, 24, 48, 78]
   volatility_windows: [12, 24, 48, 78, 390]
   macd_pairs:

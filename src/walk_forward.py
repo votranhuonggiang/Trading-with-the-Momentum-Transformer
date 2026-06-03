@@ -194,7 +194,7 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
     if max_va > 0 and len(valid) > max_va:
         valid = valid.tail(max_va).copy()
 
-    feature_cols = default_feature_columns(train)
+    feature_cols = default_feature_columns(train, cfg)
     tr, va, te = _scale_with_train_stats(train, valid, test, feature_cols)
     fp = FeaturePack(feature_cols=feature_cols)
     seq_len = int(cfg["models"]["sequence_lengths"][0])
