@@ -33,7 +33,7 @@ features:
     - [32, 96]
 
 models:
-  sequence_lengths: [156]
+  sequence_lengths: [390]
   main_models:
     - "lstm_dmn"
     - "decoder_transformer"
