@@ -64,6 +64,20 @@ def build_features(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
         macd = ema_short - ema_long
         out[f"macd_{short_w}_{long_w}"] = macd
         out[f"macd_{short_w}_{long_w}_norm"] = macd / (ref_vol * out["close"] + 1e-9)
+        if short_w == 32 and long_w == 96:
+            signal = macd.ewm(span=9, adjust=False).mean()
+            hist = macd - signal
+            sign = np.sign(macd).fillna(0)
+            prev_sign = sign.shift(1).fillna(0)
+            out["macd_32_96_signal"] = signal
+            out["macd_32_96_hist"] = hist
+            out["macd_32_96_hist_norm"] = hist / (ref_vol * out["close"] + 1e-9)
+            out["macd_32_96_slope"] = macd.diff()
+            out["macd_32_96_slope_norm"] = out["macd_32_96_slope"] / (ref_vol * out["close"] + 1e-9)
+            out["macd_32_96_abs_norm"] = out["macd_32_96_norm"].abs()
+            out["macd_32_96_sign"] = sign
+            out["macd_32_96_cross_up"] = ((sign > 0) & (prev_sign <= 0)).astype(int)
+            out["macd_32_96_cross_down"] = ((sign < 0) & (prev_sign >= 0)).astype(int)
 
     out["log_volume"] = np.log(out["volume"].clip(lower=1.0))
     out["volume_change"] = out["volume"].pct_change()
