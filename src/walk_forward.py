@@ -198,6 +198,7 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
     tr, va, te = _scale_with_train_stats(train, valid, test, feature_cols)
     fp = FeaturePack(feature_cols=feature_cols)
     seq_len = int(cfg["models"]["sequence_lengths"][0])
+    hidden_size = int(cfg.get("models", {}).get("hidden_size", 64))
     batch_size = int(cfg.get("training", {}).get("batch_size", 256))
     epochs = int(cfg.get("training", {}).get("max_epochs_per_window", cfg.get("training", {}).get("max_epochs", 100)))
     epochs = min(epochs, 8)
@@ -218,7 +219,7 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             lr=lr,
             epochs=epochs,
             batch_size=batch_size,
-            hidden_size=64,
+            hidden_size=hidden_size,
             num_layers=2 if model_name == "lstm_dmn" else 1,
             num_heads=4,
             dropout=0.2,
