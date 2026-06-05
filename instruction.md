@@ -244,55 +244,62 @@ gross_return_t = position_{t-1} * simple_return_t
 
 ### 4.3 Transaction Cost
 
-Use round-trip transaction cost:
+The implemented backtest uses the current asymmetric VN30F1M fee model from `src/backtest.py`, not the older flat point-cost approximation.
+
+Active trading cost parameters:
 
 ```text
-base_round_trip_cost = 0.60 to 0.75 point
+contract_multiplier = 100000
+margin_rate = 0.1848
+transfer_tax_rate = 0.001
+fee_vsdc_vnd_per_contract_per_side = 5000
+fee_hnx_vnd_per_contract_per_side = 2700
+fee_ctck_vnd_per_contract_per_side = 2700
+per_side_fixed_fee_vnd = 10400
 ```
 
-The base assumption should use:
+Transaction cost is charged from actual position changes, separated into buy-side units and sell-side units:
 
 ```text
-round_trip_cost_points = 0.20
+position_change_t = position_t - position_{t-1}
+buy_units_t = max(position_change_t, 0)
+sell_units_t = max(-position_change_t, 0)
 ```
 
-Convert to one-way cost:
+The cost model is:
 
 ```text
-one_way_cost_points = round_trip_cost_points / 2
-```
+tax_vnd_per_contract_t = close_t * contract_multiplier * margin_rate * transfer_tax_rate / 2
 
-Transaction cost should be charged according to turnover.
+buy_cost_vnd_t = buy_units_t * per_side_fixed_fee_vnd
+sell_fixed_cost_vnd_t = sell_units_t * per_side_fixed_fee_vnd
+sell_tax_cost_vnd_t = sell_units_t * tax_vnd_per_contract_t
 
-For continuous position sizing:
-
-```text
-turnover_t = abs(position_t - position_{t-1})
-cost_points_t = one_way_cost_points * turnover_t
+cost_vnd_t = buy_cost_vnd_t + sell_fixed_cost_vnd_t + sell_tax_cost_vnd_t
+cost_points_t = cost_vnd_t / contract_multiplier
 net_pnl_t = gross_pnl_t - cost_points_t
 ```
 
-Important:
-1. Opening from 0 to 1 has turnover 1.
-2. Closing from 1 to 0 has turnover 1.
-3. Reversing from 1 to -1 has turnover 2.
-4. Therefore, a full long-to-short reversal costs one full round-trip cost.
+Interpretation:
+1. Long / buy-side execution pays only the fixed fee: `10,400 VND` per contract-side.
+2. Short / sell-side execution pays the fixed fee plus transfer tax.
+3. Opening from `0` to `1` pays one buy-side fee.
+4. Closing from `1` to `0` pays one sell-side fee plus tax.
+5. Reversing from `1` to `-1` is a two-unit sell change, so it pays two sell-side fixed fees plus two sell-side tax charges.
+6. Reversing from `-1` to `1` is a two-unit buy change, so it pays two buy-side fixed fees and no sell-side tax.
+
+For return-based evaluation, the implemented normalized cost is:
+
+```text
+cost_return_t = cost_vnd_t / (close_t * contract_multiplier)
+net_return_t = gross_return_t - cost_return_t
+```
 
 ### 4.4 Cost Sensitivity
 
-Use fixed transaction cost:
+Legacy fields `base_round_trip_cost_points = 0.20` and `cost_scenarios_points = [0.20]` remain in config only for compatibility with fallback utilities.
 
-```text
-0.10 point for sell side and 0.10 point for long side
-```
-
-Equivalent round-trip cost:
-
-```text
-0.20 point round-trip
-```
-
-For every model and baseline, report performance under this fixed cost setting.
+The active research baseline should report performance under the asymmetric fee-plus-tax model above.
 
 ### 4.5 Net Sharpe Optimization
 
