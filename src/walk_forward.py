@@ -176,8 +176,10 @@ def _infer_signals_from_model(
     with torch.no_grad():
         for xb, _ in loader:
             xb = xb.to(device)
-            out = model(xb).detach().cpu().numpy().tolist()
-            preds.extend(out)
+            out = model(xb)
+            if isinstance(out, dict):
+                out = out["position"]
+            preds.extend(out.detach().cpu().numpy().tolist())
 
     signal = pd.Series(0.0, index=data_df.index)
     valid_indices = ds.indices
@@ -196,7 +198,20 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
 
     feature_cols = default_feature_columns(train, cfg)
     tr, va, te = _scale_with_train_stats(train, valid, test, feature_cols)
-    fp = FeaturePack(feature_cols=feature_cols)
+    aux_target_cols: list[str] = []
+    requested_aux_target_cols = ["target_future_realized_vol_12", "target_future_vol_regime_12"]
+    if float(cfg.get("training", {}).get("decoder_tft_aux_vol_loss_weight", 0.0)) > 0.0 or float(
+        cfg.get("training", {}).get("decoder_tft_aux_regime_loss_weight", 0.0)
+    ) > 0.0:
+        if all(col in tr.columns and col in va.columns and col in te.columns for col in requested_aux_target_cols):
+            aux_target_cols = requested_aux_target_cols
+        else:
+            missing = [col for col in requested_aux_target_cols if col not in tr.columns or col not in va.columns or col not in te.columns]
+            print(
+                "Auxiliary targets requested for decoder_tft but missing from feature data; "
+                f"disabling s13 multitask targets for this run. Missing: {missing}"
+            )
+    fp = FeaturePack(feature_cols=feature_cols, aux_target_cols=aux_target_cols)
     seq_len = int(cfg["models"]["sequence_lengths"][0])
     hidden_size = int(cfg.get("models", {}).get("hidden_size", 64))
     batch_size = int(cfg.get("training", {}).get("batch_size", 256))
@@ -246,6 +261,18 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             valid_selection_sell_turnover_lambda=float(
                 cfg.get("training", {}).get(
                     "decoder_tft_valid_selection_sell_turnover_lambda" if model_name == "decoder_tft" else "valid_selection_sell_turnover_lambda",
+                    0.0,
+                )
+            ),
+            multitask_aux_loss_weight=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_aux_vol_loss_weight" if model_name == "decoder_tft" else "multitask_aux_loss_weight",
+                    0.0,
+                )
+            ),
+            multitask_regime_loss_weight=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_aux_regime_loss_weight" if model_name == "decoder_tft" else "multitask_regime_loss_weight",
                     0.0,
                 )
             ),

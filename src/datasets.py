@@ -15,6 +15,7 @@ from torch.utils.data import Dataset
 class FeaturePack:
     feature_cols: List[str]
     target_col: str = "target_return_next"
+    aux_target_cols: List[str] | None = None
     date_col: str = "trade_date"
 
 
@@ -23,6 +24,8 @@ def _all_numeric_feature_columns(df: pd.DataFrame) -> List[str]:
         "timestamp",
         "trade_date",
         "target_return_next",
+        "target_future_realized_vol_12",
+        "target_future_vol_regime_12",
         "future_return_sign",
         "simple_return",
         "price_change",
@@ -98,20 +101,32 @@ class SequenceDataset(Dataset):
         self.df = df.reset_index(drop=True).copy()
         self.feature_cols = features.feature_cols
         self.target_col = features.target_col
+        self.aux_target_cols = list(features.aux_target_cols or [])
         self.sequence_length = sequence_length
 
         x = self.df[self.feature_cols].astype(np.float32).values
         y = self.df[self.target_col].astype(np.float32).values
+        aux_y = (
+            self.df[self.aux_target_cols].astype(np.float32).values
+            if self.aux_target_cols
+            else np.empty((len(self.df), 0), dtype=np.float32)
+        )
         self.x = x
         self.y = y
+        self.aux_y = aux_y
         self.indices = list(range(sequence_length - 1, len(self.df) - 1))
 
     def __len__(self) -> int:
         return len(self.indices)
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, dict[str, torch.Tensor]]:
         end_idx = self.indices[idx]
         start_idx = end_idx - self.sequence_length + 1
         x = self.x[start_idx : end_idx + 1]
-        y = self.y[end_idx + 1]  # next-step return target
-        return torch.from_numpy(x), torch.tensor(y, dtype=torch.float32)
+        target_idx = end_idx + 1
+        target = {
+            "main": torch.tensor(self.y[target_idx], dtype=torch.float32),
+        }
+        if self.aux_target_cols:
+            target["aux"] = torch.from_numpy(self.aux_y[target_idx])
+        return torch.from_numpy(x), target

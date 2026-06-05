@@ -28,8 +28,10 @@ class DecoderTft(nn.Module):
         hidden_size: int = 64,
         num_heads: int = 4,
         dropout: float = 0.2,
+        multitask: bool = False,
     ) -> None:
         super().__init__()
+        self.multitask = multitask
         self.gate = GatedFeatureBlock(input_size)
         self.lstm = nn.LSTM(
             input_size=input_size,
@@ -45,8 +47,18 @@ class DecoderTft(nn.Module):
             dim_feedforward=hidden_size * 2,
             dropout=dropout,
         )
+        self.vol_head = nn.Linear(hidden_size, 1)
+        self.regime_head = nn.Linear(hidden_size, 1)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(self, x: torch.Tensor) -> torch.Tensor | dict[str, torch.Tensor]:
         xg = self.gate(x)
         h, _ = self.lstm(xg)
-        return self.attn(h)
+        position = self.attn(h)
+        if not self.multitask:
+            return position
+        last_hidden = h[:, -1, :]
+        return {
+            "position": position,
+            "future_vol": self.vol_head(last_hidden).squeeze(-1),
+            "future_vol_regime_logit": self.regime_head(last_hidden).squeeze(-1),
+        }
