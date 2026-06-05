@@ -85,7 +85,7 @@ def run_strategy(
     # Tax applies on sell/short-side turnover only. Buy/long-side turnover
     # pays fixed fees without tax.
     out["tax_vnd_per_contract"] = (
-        margin_rate * contract_multiplier * transfer_tax_rate * out["close"] / 2.0
+        margin_rate * contract_multiplier * transfer_tax_rate * out["close"]
     )
     out["buy_cost_vnd"] = out["buy_units"] * per_side_fixed_fee
     out["sell_fixed_cost_vnd"] = out["sell_units"] * per_side_fixed_fee

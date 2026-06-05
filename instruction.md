@@ -269,7 +269,7 @@ sell_units_t = max(-position_change_t, 0)
 The cost model is:
 
 ```text
-tax_vnd_per_contract_t = close_t * contract_multiplier * margin_rate * transfer_tax_rate / 2
+tax_vnd_per_contract_t = close_t * contract_multiplier * margin_rate * transfer_tax_rate
 
 buy_cost_vnd_t = buy_units_t * per_side_fixed_fee_vnd
 sell_fixed_cost_vnd_t = sell_units_t * per_side_fixed_fee_vnd
@@ -1036,7 +1036,7 @@ trading:
   # - buy/long side: fixed fee only
   # - sell/short side: fixed fee + transfer tax
   # transfer-tax formula:
-  # tax_per_sell_side = close_price * 100000 * margin_rate * 0.001 / 2
+  # tax_per_sell_side = close_price * 100000 * margin_rate * 0.001
   margin_rate: 0.1848
   transfer_tax_rate: 0.001
 
