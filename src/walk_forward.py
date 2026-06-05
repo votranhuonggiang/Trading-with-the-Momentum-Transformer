@@ -237,6 +237,18 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
                     0.0,
                 )
             ),
+            valid_selection_buy_turnover_lambda=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_valid_selection_buy_turnover_lambda" if model_name == "decoder_tft" else "valid_selection_buy_turnover_lambda",
+                    0.0,
+                )
+            ),
+            valid_selection_sell_turnover_lambda=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_valid_selection_sell_turnover_lambda" if model_name == "decoder_tft" else "valid_selection_sell_turnover_lambda",
+                    0.0,
+                )
+            ),
             device=device,
         )
         model, _ = fit_model(tr_loader, va_loader, input_size=len(feature_cols), cfg=tcfg)
