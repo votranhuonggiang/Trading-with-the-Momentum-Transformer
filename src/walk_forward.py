@@ -199,9 +199,22 @@ def _infer_signals_from_model(
         regime_scale = pd.Series(1.0, index=data_df.index)
         low_scale = float(cfg.get("trading", {}).get("decoder_tft_low_vol_scale", 1.0))
         high_scale = float(cfg.get("trading", {}).get("decoder_tft_high_vol_scale", 0.6))
+        use_asymmetric_scaling = bool(
+            cfg.get("trading", {}).get("decoder_tft_asymmetric_regime_scaling", False)
+        )
+        low_long_scale = float(cfg.get("trading", {}).get("decoder_tft_low_vol_long_scale", low_scale))
+        high_long_scale = float(cfg.get("trading", {}).get("decoder_tft_high_vol_long_scale", high_scale))
+        low_short_scale = float(cfg.get("trading", {}).get("decoder_tft_low_vol_short_scale", low_scale))
+        high_short_scale = float(cfg.get("trading", {}).get("decoder_tft_high_vol_short_scale", high_scale))
         for i, end_idx in enumerate(valid_indices):
             p_high = float(np.clip(regime_probs[i], 0.0, 1.0))
-            regime_scale.iloc[end_idx] = low_scale * (1.0 - p_high) + high_scale * p_high
+            if use_asymmetric_scaling:
+                if signal.iloc[end_idx] >= 0.0:
+                    regime_scale.iloc[end_idx] = low_long_scale * (1.0 - p_high) + high_long_scale * p_high
+                else:
+                    regime_scale.iloc[end_idx] = low_short_scale * (1.0 - p_high) + high_short_scale * p_high
+            else:
+                regime_scale.iloc[end_idx] = low_scale * (1.0 - p_high) + high_scale * p_high
         signal = signal * regime_scale
     return signal
 
