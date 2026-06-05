@@ -166,6 +166,8 @@ def _infer_signals_from_model(
     fp: FeaturePack,
     seq_len: int,
     device: str,
+    model_name: str,
+    cfg: dict,
 ) -> pd.Series:
     ds = SequenceDataset(data_df, fp, sequence_length=seq_len)
     if len(ds) == 0:
@@ -173,18 +175,34 @@ def _infer_signals_from_model(
     loader = DataLoader(ds, batch_size=512, shuffle=False)
     model.eval()
     preds: list[float] = []
+    regime_probs: list[float] = []
     with torch.no_grad():
         for xb, _ in loader:
             xb = xb.to(device)
             out = model(xb)
             if isinstance(out, dict):
-                out = out["position"]
-            preds.extend(out.detach().cpu().numpy().tolist())
+                preds.extend(out["position"].detach().cpu().numpy().tolist())
+                if (
+                    model_name == "decoder_tft"
+                    and cfg.get("trading", {}).get("decoder_tft_regime_conditioned_exposure", False)
+                    and "future_vol_regime_logit" in out
+                ):
+                    regime_probs.extend(torch.sigmoid(out["future_vol_regime_logit"]).detach().cpu().numpy().tolist())
+            else:
+                preds.extend(out.detach().cpu().numpy().tolist())
 
     signal = pd.Series(0.0, index=data_df.index)
     valid_indices = ds.indices
     for i, end_idx in enumerate(valid_indices):
         signal.iloc[end_idx] = float(np.clip(preds[i], -1.0, 1.0))
+    if regime_probs:
+        regime_scale = pd.Series(1.0, index=data_df.index)
+        low_scale = float(cfg.get("trading", {}).get("decoder_tft_low_vol_scale", 1.0))
+        high_scale = float(cfg.get("trading", {}).get("decoder_tft_high_vol_scale", 0.6))
+        for i, end_idx in enumerate(valid_indices):
+            p_high = float(np.clip(regime_probs[i], 0.0, 1.0))
+            regime_scale.iloc[end_idx] = low_scale * (1.0 - p_high) + high_scale * p_high
+        signal = signal * regime_scale
     return signal
 
 
@@ -279,7 +297,15 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             device=device,
         )
         model, _ = fit_model(tr_loader, va_loader, input_size=len(feature_cols), cfg=tcfg)
-        out[model_name] = _infer_signals_from_model(model, te, fp, seq_len=seq_len, device=device)
+        out[model_name] = _infer_signals_from_model(
+            model,
+            te,
+            fp,
+            seq_len=seq_len,
+            device=device,
+            model_name=model_name,
+            cfg=cfg,
+        )
     return out
 
 

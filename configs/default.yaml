@@ -23,6 +23,9 @@ trading:
   fee_ctck_vnd_per_contract_per_side: 2700
   base_round_trip_cost_points: 0.20
   cost_scenarios_points: [0.20]
+  decoder_tft_regime_conditioned_exposure: true
+  decoder_tft_low_vol_scale: 1.00
+  decoder_tft_high_vol_scale: 0.60
 
 features:
   model_feature_subset: "clean_trend"
