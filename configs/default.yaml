@@ -26,7 +26,7 @@ trading:
   decoder_tft_regime_conditioned_exposure: true
   decoder_tft_low_vol_scale: 1.00
   decoder_tft_high_vol_scale: 0.60
-  decoder_tft_asymmetric_regime_scaling: true
+  decoder_tft_asymmetric_regime_scaling: false
   decoder_tft_low_vol_long_scale: 1.00
   decoder_tft_high_vol_long_scale: 0.85
   decoder_tft_low_vol_short_scale: 1.00
@@ -59,7 +59,7 @@ walk_forward:
 training:
   objective: "net_sharpe"
   decoder_tft_aux_future_vol_horizon: 12
-  decoder_tft_aux_vol_loss_weight: 0.10
+  decoder_tft_aux_vol_loss_weight: 0.05
   decoder_tft_aux_regime_loss_weight: 0.05
   decoder_tft_turnover_penalty_lambda: 0.0
   decoder_tft_valid_selection_turnover_lambda: 0.05
