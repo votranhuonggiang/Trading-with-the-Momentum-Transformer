@@ -277,6 +277,18 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             num_heads=4,
             dropout=0.2,
             turnover_penalty_lambda=turnover_penalty_lambda,
+            train_buy_turnover_lambda=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_train_buy_turnover_lambda" if model_name == "decoder_tft" else "train_buy_turnover_lambda",
+                    0.0,
+                )
+            ),
+            train_sell_turnover_lambda=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_train_sell_turnover_lambda" if model_name == "decoder_tft" else "train_sell_turnover_lambda",
+                    0.0,
+                )
+            ),
             valid_selection_turnover_lambda=float(
                 cfg.get("training", {}).get(
                     "decoder_tft_valid_selection_turnover_lambda" if model_name == "decoder_tft" else "valid_selection_turnover_lambda",

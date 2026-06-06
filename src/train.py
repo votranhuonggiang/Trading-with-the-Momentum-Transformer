@@ -27,6 +27,8 @@ class TrainConfig:
     num_heads: int = 4
     dropout: float = 0.2
     turnover_penalty_lambda: float = 0.0
+    train_buy_turnover_lambda: float = 0.0
+    train_sell_turnover_lambda: float = 0.0
     valid_selection_turnover_lambda: float = 0.0
     valid_selection_buy_turnover_lambda: float = 0.0
     valid_selection_sell_turnover_lambda: float = 0.0
@@ -39,15 +41,25 @@ def sharpe_loss(
     positions: torch.Tensor,
     future_returns: torch.Tensor,
     turnover_penalty_lambda: float = 0.0,
+    buy_turnover_lambda: float = 0.0,
+    sell_turnover_lambda: float = 0.0,
 ) -> torch.Tensor:
     captured = positions * future_returns
     mean = captured.mean()
     var = captured.var(unbiased=False)
     sharpe = mean / torch.sqrt(var + 1e-9)
     loss = -sharpe
-    if turnover_penalty_lambda > 0 and positions.numel() > 1:
-        turnover_proxy = torch.mean(torch.abs(positions[1:] - positions[:-1]))
-        loss = loss + turnover_penalty_lambda * turnover_proxy
+    if positions.numel() > 1:
+        delta = positions[1:] - positions[:-1]
+        if turnover_penalty_lambda > 0:
+            turnover_proxy = torch.mean(torch.abs(delta))
+            loss = loss + turnover_penalty_lambda * turnover_proxy
+        if buy_turnover_lambda > 0:
+            buy_turnover_proxy = torch.mean(torch.clamp(delta, min=0.0))
+            loss = loss + buy_turnover_lambda * buy_turnover_proxy
+        if sell_turnover_lambda > 0:
+            sell_turnover_proxy = torch.mean(torch.clamp(-delta, min=0.0))
+            loss = loss + sell_turnover_lambda * sell_turnover_proxy
     return loss
 
 
@@ -68,6 +80,8 @@ def _total_loss(
         positions,
         target["main"],
         turnover_penalty_lambda=cfg.turnover_penalty_lambda if apply_turnover_penalty else 0.0,
+        buy_turnover_lambda=cfg.train_buy_turnover_lambda if apply_turnover_penalty else 0.0,
+        sell_turnover_lambda=cfg.train_sell_turnover_lambda if apply_turnover_penalty else 0.0,
     )
     aux_target = target.get("aux")
     if aux_target is not None and extras:
