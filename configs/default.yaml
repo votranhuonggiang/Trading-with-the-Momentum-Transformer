@@ -60,10 +60,10 @@ training:
   objective: "net_sharpe"
   decoder_tft_aux_future_vol_horizon: 12
   decoder_tft_aux_vol_loss_weight: 0.10
-  decoder_tft_aux_regime_loss_weight: 0.05
+  decoder_tft_aux_regime_loss_weight: 0.10
   decoder_tft_turnover_penalty_lambda: 0.0
-  decoder_tft_train_buy_turnover_lambda: 0.01
-  decoder_tft_train_sell_turnover_lambda: 0.05
+  decoder_tft_train_buy_turnover_lambda: 0.0
+  decoder_tft_train_sell_turnover_lambda: 0.0
   decoder_tft_valid_selection_turnover_lambda: 0.05
   decoder_tft_valid_selection_buy_turnover_lambda: 0.03
   decoder_tft_valid_selection_sell_turnover_lambda: 0.08
