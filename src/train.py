@@ -35,6 +35,7 @@ class TrainConfig:
     multitask_aux_loss_weight: float = 0.0
     multitask_regime_loss_weight: float = 0.0
     multitask_downside_loss_weight: float = 0.0
+    dual_position_heads: bool = False
     device: str = "cpu"
 
 
@@ -129,6 +130,7 @@ def model_factory(input_size: int, cfg: TrainConfig) -> nn.Module:
                 or cfg.multitask_regime_loss_weight > 0.0
                 or cfg.multitask_downside_loss_weight > 0.0
             ),
+            dual_position_heads=cfg.dual_position_heads,
         )
     raise ValueError(f"Unknown model name: {cfg.model_name}")
 

@@ -50,10 +50,14 @@ class DecoderTransformer(nn.Module):
         m = torch.triu(torch.ones(t, t, device=device), diagonal=1).bool()
         return m
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def encode(self, x: torch.Tensor) -> torch.Tensor:
         z = self.embed(x)
         z = self.pos(z)
         mask = self._causal_mask(z.size(1), z.device)
         z = self.enc(z, mask=mask)
-        out = self.head(z[:, -1, :])
+        return z[:, -1, :]
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        z_last = self.encode(x)
+        out = self.head(z_last)
         return self.tanh(out).squeeze(-1)

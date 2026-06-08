@@ -333,6 +333,12 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
                     0.0,
                 )
             ),
+            dual_position_heads=bool(
+                cfg.get("training", {}).get(
+                    "decoder_tft_dual_position_heads" if model_name == "decoder_tft" else "dual_position_heads",
+                    False,
+                )
+            ),
             device=device,
         )
         model, _ = fit_model(tr_loader, va_loader, input_size=len(feature_cols), cfg=tcfg)
