@@ -113,10 +113,13 @@ def build_features(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     out["distance_from_intraday_low"] = out["close"] / out["intraday_low_so_far"] - 1.0
     out["intraday_volume_cumsum"] = g["volume"].cumsum()
 
+    target_horizon = int(cfg.get("training", {}).get("target_horizon_bars", 1))
     out["simple_return"] = out["close"].pct_change()
     out["price_change"] = out["close"].diff()
     out["future_return_sign"] = np.sign(out["simple_return"].shift(-1)).fillna(0)
     out["target_return_next"] = out["simple_return"].shift(-1)
+    out["target_return_3bar"] = out["close"].shift(-3) / out["close"] - 1.0
+    out["target_return_horizon"] = out["close"].shift(-target_horizon) / out["close"] - 1.0
     future_vol_horizon = int(cfg.get("training", {}).get("decoder_tft_aux_future_vol_horizon", 12))
     future_log_returns = out["log_return"].shift(-1)
     future_realized_vol = future_log_returns.rolling(future_vol_horizon).std().shift(-(future_vol_horizon - 1))

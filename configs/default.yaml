@@ -58,11 +58,12 @@ walk_forward:
 
 training:
   objective: "net_sharpe"
+  target_horizon_bars: 3
   decoder_tft_aux_future_vol_horizon: 12
   decoder_tft_aux_vol_loss_weight: 0.10
   decoder_tft_aux_regime_loss_weight: 0.05
-  decoder_tft_aux_downside_loss_weight: 0.05
-  decoder_tft_dual_position_heads: true
+  decoder_tft_aux_downside_loss_weight: 0.0
+  decoder_tft_dual_position_heads: false
   decoder_tft_turnover_penalty_lambda: 0.0
   decoder_tft_train_buy_turnover_lambda: 0.0
   decoder_tft_train_sell_turnover_lambda: 0.0

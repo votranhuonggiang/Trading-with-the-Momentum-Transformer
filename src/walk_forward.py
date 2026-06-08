@@ -248,7 +248,8 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
                 "Auxiliary targets requested for decoder_tft but missing from feature data; "
                 f"disabling multitask auxiliary targets for this run. Missing: {missing}"
             )
-    fp = FeaturePack(feature_cols=feature_cols, aux_target_cols=aux_target_cols)
+    target_col = "target_return_horizon" if "target_return_horizon" in tr.columns else "target_return_next"
+    fp = FeaturePack(feature_cols=feature_cols, target_col=target_col, aux_target_cols=aux_target_cols)
     seq_len = int(cfg["models"]["sequence_lengths"][0])
     hidden_size = int(cfg.get("models", {}).get("hidden_size", 64))
     batch_size = int(cfg.get("training", {}).get("batch_size", 256))

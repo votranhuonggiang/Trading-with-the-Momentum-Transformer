@@ -14,7 +14,7 @@ from torch.utils.data import Dataset
 @dataclass
 class FeaturePack:
     feature_cols: List[str]
-    target_col: str = "target_return_next"
+    target_col: str = "target_return_horizon"
     aux_target_cols: List[str] | None = None
     date_col: str = "trade_date"
 
@@ -24,6 +24,8 @@ def _all_numeric_feature_columns(df: pd.DataFrame) -> List[str]:
         "timestamp",
         "trade_date",
         "target_return_next",
+        "target_return_3bar",
+        "target_return_horizon",
         "target_future_realized_vol_12",
         "target_future_vol_regime_12",
         "target_future_downside_semivariance_12",
