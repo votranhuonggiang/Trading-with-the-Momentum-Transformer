@@ -120,10 +120,12 @@ def build_features(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     future_vol_horizon = int(cfg.get("training", {}).get("decoder_tft_aux_future_vol_horizon", 12))
     future_log_returns = out["log_return"].shift(-1)
     future_realized_vol = future_log_returns.rolling(future_vol_horizon).std().shift(-(future_vol_horizon - 1))
+    future_downside_semivariance = (
+        future_log_returns.clip(upper=0.0).pow(2).rolling(future_vol_horizon).mean().shift(-(future_vol_horizon - 1))
+    )
     out["target_future_realized_vol_12"] = future_realized_vol
-    out["target_future_vol_regime_12"] = (
-        future_realized_vol > (out["ewm_vol_78"] * 1.1)
-    ).astype(float)
+    out["target_future_vol_regime_12"] = (future_realized_vol > (out["ewm_vol_78"] * 1.1)).astype(float)
+    out["target_future_downside_semivariance_12"] = future_downside_semivariance
     out["trade_allowed"] = ((out["is_first_5min"] == 0) & (out["is_last_5min"] == 0)).astype(int)
     return out.dropna().reset_index(drop=True)
 

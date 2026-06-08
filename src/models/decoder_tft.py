@@ -49,6 +49,7 @@ class DecoderTft(nn.Module):
         )
         self.vol_head = nn.Linear(hidden_size, 1)
         self.regime_head = nn.Linear(hidden_size, 1)
+        self.downside_semivariance_head = nn.Linear(hidden_size, 1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor | dict[str, torch.Tensor]:
         xg = self.gate(x)
@@ -61,4 +62,5 @@ class DecoderTft(nn.Module):
             "position": position,
             "future_vol": self.vol_head(last_hidden).squeeze(-1),
             "future_vol_regime_logit": self.regime_head(last_hidden).squeeze(-1),
+            "future_downside_semivariance": self.downside_semivariance_head(last_hidden).squeeze(-1),
         }

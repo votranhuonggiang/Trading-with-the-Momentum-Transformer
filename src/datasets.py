@@ -26,6 +26,7 @@ def _all_numeric_feature_columns(df: pd.DataFrame) -> List[str]:
         "target_return_next",
         "target_future_realized_vol_12",
         "target_future_vol_regime_12",
+        "target_future_downside_semivariance_12",
         "future_return_sign",
         "simple_return",
         "price_change",

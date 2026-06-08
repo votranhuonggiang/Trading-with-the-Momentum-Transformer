@@ -230,9 +230,15 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
     feature_cols = default_feature_columns(train, cfg)
     tr, va, te = _scale_with_train_stats(train, valid, test, feature_cols)
     aux_target_cols: list[str] = []
-    requested_aux_target_cols = ["target_future_realized_vol_12", "target_future_vol_regime_12"]
+    requested_aux_target_cols = [
+        "target_future_realized_vol_12",
+        "target_future_vol_regime_12",
+        "target_future_downside_semivariance_12",
+    ]
     if float(cfg.get("training", {}).get("decoder_tft_aux_vol_loss_weight", 0.0)) > 0.0 or float(
         cfg.get("training", {}).get("decoder_tft_aux_regime_loss_weight", 0.0)
+    ) > 0.0 or float(
+        cfg.get("training", {}).get("decoder_tft_aux_downside_loss_weight", 0.0)
     ) > 0.0:
         if all(col in tr.columns and col in va.columns and col in te.columns for col in requested_aux_target_cols):
             aux_target_cols = requested_aux_target_cols
@@ -240,7 +246,7 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             missing = [col for col in requested_aux_target_cols if col not in tr.columns or col not in va.columns or col not in te.columns]
             print(
                 "Auxiliary targets requested for decoder_tft but missing from feature data; "
-                f"disabling s13 multitask targets for this run. Missing: {missing}"
+                f"disabling multitask auxiliary targets for this run. Missing: {missing}"
             )
     fp = FeaturePack(feature_cols=feature_cols, aux_target_cols=aux_target_cols)
     seq_len = int(cfg["models"]["sequence_lengths"][0])
@@ -316,6 +322,14 @@ def model_signals_for_split(train: pd.DataFrame, valid: pd.DataFrame, test: pd.D
             multitask_regime_loss_weight=float(
                 cfg.get("training", {}).get(
                     "decoder_tft_aux_regime_loss_weight" if model_name == "decoder_tft" else "multitask_regime_loss_weight",
+                    0.0,
+                )
+            ),
+            multitask_downside_loss_weight=float(
+                cfg.get("training", {}).get(
+                    "decoder_tft_aux_downside_loss_weight"
+                    if model_name == "decoder_tft"
+                    else "multitask_downside_loss_weight",
                     0.0,
                 )
             ),

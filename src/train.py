@@ -34,6 +34,7 @@ class TrainConfig:
     valid_selection_sell_turnover_lambda: float = 0.0
     multitask_aux_loss_weight: float = 0.0
     multitask_regime_loss_weight: float = 0.0
+    multitask_downside_loss_weight: float = 0.0
     device: str = "cpu"
 
 
@@ -92,6 +93,11 @@ def _total_loss(
                 extras["future_vol_regime_logit"],
                 aux_target[:, 1],
             )
+        if cfg.multitask_downside_loss_weight > 0.0 and "future_downside_semivariance" in extras:
+            loss = loss + cfg.multitask_downside_loss_weight * F.mse_loss(
+                extras["future_downside_semivariance"],
+                aux_target[:, 2],
+            )
     return loss
 
 
@@ -118,7 +124,11 @@ def model_factory(input_size: int, cfg: TrainConfig) -> nn.Module:
             hidden_size=cfg.hidden_size,
             num_heads=cfg.num_heads,
             dropout=cfg.dropout,
-            multitask=(cfg.multitask_aux_loss_weight > 0.0 or cfg.multitask_regime_loss_weight > 0.0),
+            multitask=(
+                cfg.multitask_aux_loss_weight > 0.0
+                or cfg.multitask_regime_loss_weight > 0.0
+                or cfg.multitask_downside_loss_weight > 0.0
+            ),
         )
     raise ValueError(f"Unknown model name: {cfg.model_name}")
 
