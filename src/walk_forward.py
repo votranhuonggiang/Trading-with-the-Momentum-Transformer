@@ -195,6 +195,21 @@ def _infer_signals_from_model(
     valid_indices = ds.indices
     for i, end_idx in enumerate(valid_indices):
         signal.iloc[end_idx] = float(np.clip(preds[i], -1.0, 1.0))
+    if model_name == "decoder_tft" and bool(
+        cfg.get("trading", {}).get("decoder_tft_confidence_scaled_exposure", False)
+    ):
+        tau = float(cfg.get("trading", {}).get("decoder_tft_confidence_gate_tau", 0.0))
+        alpha = float(cfg.get("trading", {}).get("decoder_tft_confidence_scale_alpha", 1.0))
+        max_position = float(cfg.get("trading", {}).get("decoder_tft_confidence_scaled_max_position", 1.0))
+        if alpha <= 0.0:
+            raise ValueError("decoder_tft_confidence_scale_alpha must be positive.")
+        scaled_signal = signal.copy()
+        active_mask = scaled_signal.abs() >= tau
+        scaled_signal.loc[~active_mask] = 0.0
+        if active_mask.any():
+            active_values = scaled_signal.loc[active_mask]
+            scaled_signal.loc[active_mask] = np.sign(active_values) * np.power(active_values.abs(), alpha)
+        signal = scaled_signal.clip(-max_position, max_position)
     if regime_probs:
         regime_scale = pd.Series(1.0, index=data_df.index)
         low_scale = float(cfg.get("trading", {}).get("decoder_tft_low_vol_scale", 1.0))

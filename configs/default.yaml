@@ -26,6 +26,10 @@ trading:
   decoder_tft_regime_conditioned_exposure: true
   decoder_tft_low_vol_scale: 1.00
   decoder_tft_high_vol_scale: 0.60
+  decoder_tft_confidence_scaled_exposure: true
+  decoder_tft_confidence_gate_tau: 0.08
+  decoder_tft_confidence_scale_alpha: 0.75
+  decoder_tft_confidence_scaled_max_position: 1.00
   decoder_tft_asymmetric_regime_scaling: false
   decoder_tft_low_vol_long_scale: 1.00
   decoder_tft_high_vol_long_scale: 0.85
