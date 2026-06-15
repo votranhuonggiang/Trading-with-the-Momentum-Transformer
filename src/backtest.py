@@ -21,6 +21,35 @@ class ThresholdConfig:
     short_to_long_reverse_threshold: float
 
 
+def _round_away_from_zero(values: pd.Series) -> pd.Series:
+    arr = values.astype(float).to_numpy()
+    rounded = np.sign(arr) * np.floor(np.abs(arr) + 0.5)
+    return pd.Series(rounded, index=values.index, dtype=float)
+
+
+def _quantize_to_integer_contracts(position: pd.Series, trading_cfg: dict) -> pd.Series:
+    if not bool(trading_cfg.get("integer_contract_execution", False)):
+        return position.astype(float)
+
+    max_contracts = int(trading_cfg.get("max_contracts", 1))
+    if max_contracts <= 0:
+        raise ValueError("trading.max_contracts must be positive when integer_contract_execution is enabled.")
+
+    rounding_mode = str(trading_cfg.get("contract_rounding_mode", "nearest")).lower()
+    scaled = position.astype(float) * max_contracts
+
+    if rounding_mode == "nearest":
+        quantized = _round_away_from_zero(scaled)
+    elif rounding_mode == "floor":
+        quantized = pd.Series(np.sign(scaled) * np.floor(np.abs(scaled)), index=position.index, dtype=float)
+    elif rounding_mode == "ceil":
+        quantized = pd.Series(np.sign(scaled) * np.ceil(np.abs(scaled)), index=position.index, dtype=float)
+    else:
+        raise ValueError(f"Unsupported contract_rounding_mode: {rounding_mode}")
+
+    return quantized.clip(-max_contracts, max_contracts)
+
+
 def _threshold_position(signal: pd.Series, allowed: pd.Series, cfg: ThresholdConfig) -> pd.Series:
     out = np.zeros(len(signal), dtype=float)
     current = 0.0
@@ -66,6 +95,7 @@ def run_strategy(
     out["signal"] = raw_signal.clip(-1.0, 1.0).fillna(0.0)
     out["position"] = _threshold_position(out["signal"], out["trade_allowed"].astype(bool), thresholds)
     out["position"] = apply_intraday_close(out["position"], out["trade_date"], out["is_last_5min"])
+    out["position"] = _quantize_to_integer_contracts(out["position"], trading_cfg)
 
     contract_multiplier = float(trading_cfg.get("contract_multiplier", 100000.0))
     fee_vsdc = float(trading_cfg.get("fee_vsdc_vnd_per_contract_per_side", 5000.0))

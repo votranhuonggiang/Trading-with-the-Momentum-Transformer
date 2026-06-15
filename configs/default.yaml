@@ -9,6 +9,9 @@ trading:
   intraday_only: true
   close_before_end_of_day: true
   no_overnight: true
+  integer_contract_execution: true
+  max_contracts: 5
+  contract_rounding_mode: "nearest"
   long_entry_threshold: 0.20
   short_entry_threshold: 0.35
   long_exit_threshold: 0.04
