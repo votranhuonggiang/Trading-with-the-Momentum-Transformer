@@ -1,0 +1,87 @@
+data:
+  raw_path: "data/raw/vn30f1m.csv"
+  processed_path: "data/processed/vn30f1m_5min.csv"
+  features_path: "data/features/features_5min.parquet"
+  timestamp_col: "timestamp"
+  timeframe: "5min"
+
+trading:
+  intraday_only: true
+  close_before_end_of_day: true
+  no_overnight: true
+  integer_contract_execution: true
+  max_contracts: 5
+  contract_rounding_mode: "nearest"
+  long_entry_threshold: 0.20
+  short_entry_threshold: 0.35
+  long_exit_threshold: 0.04
+  short_exit_threshold: 0.08
+  long_to_short_reverse_threshold: 0.60
+  short_to_long_reverse_threshold: 0.35
+  contract_multiplier: 100000
+  margin_rate: 0.1848
+  transfer_tax_rate: 0.001
+  fee_vsdc_vnd_per_contract_per_side: 5000
+  fee_hnx_vnd_per_contract_per_side: 2700
+  fee_ctck_vnd_per_contract_per_side: 2700
+  base_round_trip_cost_points: 0.20
+  cost_scenarios_points: [0.20]
+  decoder_tft_regime_conditioned_exposure: true
+  decoder_tft_low_vol_scale: 1.00
+  decoder_tft_high_vol_scale: 0.60
+  decoder_tft_confidence_scaled_exposure: true
+  decoder_tft_confidence_gate_tau: 0.08
+  decoder_tft_confidence_scale_alpha: 0.75
+  decoder_tft_confidence_scaled_max_position: 1.00
+  decoder_tft_asymmetric_regime_scaling: false
+  decoder_tft_low_vol_long_scale: 1.00
+  decoder_tft_high_vol_long_scale: 0.85
+  decoder_tft_low_vol_short_scale: 1.00
+  decoder_tft_high_vol_short_scale: 0.45
+
+features:
+  model_feature_subset: "clean_trend"
+  return_horizons: [1, 2, 3, 6, 12, 24, 48, 78]
+  volatility_windows: [12, 24, 48, 78, 390]
+  macd_pairs:
+    - [8, 24]
+    - [16, 48]
+    - [32, 96]
+
+models:
+  sequence_lengths: [156]
+  hidden_size: 64
+  main_models:
+    - "lstm_dmn"
+    - "decoder_transformer"
+    - "decoder_tft"
+
+walk_forward:
+  method: "expanding"
+  validation_months: 6
+  test_months: 6
+  step_months: 6
+  max_windows: 0
+
+training:
+  objective: "net_sharpe"
+  target_horizon_bars: 3
+  decoder_tft_aux_future_vol_horizon: 12
+  decoder_tft_aux_vol_loss_weight: 0.10
+  decoder_tft_aux_regime_loss_weight: 0.05
+  decoder_tft_aux_downside_loss_weight: 0.0
+  decoder_tft_dual_position_heads: false
+  decoder_tft_turnover_penalty_lambda: 0.0
+  decoder_tft_train_buy_turnover_lambda: 0.0
+  decoder_tft_train_sell_turnover_lambda: 0.0
+  decoder_tft_valid_selection_turnover_lambda: 0.05
+  decoder_tft_valid_selection_buy_turnover_lambda: 0.03
+  decoder_tft_valid_selection_sell_turnover_lambda: 0.08
+  batch_size: 64
+  learning_rate: 0.0001
+  max_epochs: 100
+  max_epochs_per_window: 1
+  max_train_rows_per_window: 5000
+  max_valid_rows_per_window: 2000
+  early_stopping_patience: 10
+  device: "auto"

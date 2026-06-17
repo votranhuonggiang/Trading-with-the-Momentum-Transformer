@@ -1,0 +1,34 @@
+{
+  "model": "decoder_tft",
+  "headline": {
+    "model": "decoder_tft",
+    "total_return": 3.60739293651616,
+    "sharpe_ratio": 2.758059154233264,
+    "max_drawdown": -0.4206210447103382,
+    "profit_factor": 1.1875849984436593
+  },
+  "trade_profile": {
+    "model": "decoder_tft",
+    "number_of_trades": 13266,
+    "turnover": 16824.0,
+    "average_net_pnl_points": 0.0396528136079109,
+    "percentage_time_long": 0.2686798619332677,
+    "percentage_time_short": 0.3377299027863467,
+    "percentage_time_flat": 0.3935902352803855
+  },
+  "daily_profile": {
+    "model": "decoder_tft",
+    "n_days": 1200,
+    "total_return": 3.4535202074142104,
+    "annualized_return": 0.3684461740875135,
+    "annualized_volatility": 0.3140585723288206,
+    "sharpe_ratio": 1.155632389392699,
+    "sortino_ratio": 1.7642849597218793,
+    "max_drawdown": -0.3918882298995692,
+    "calmar_ratio": 0.940181781376636,
+    "positive_day_rate": 0.4525,
+    "average_daily_return": 0.0014402232474191,
+    "best_day_return": 0.1469479322393067,
+    "worst_day_return": -0.1689564486992018
+  }
+}
