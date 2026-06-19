@@ -30,5 +30,16 @@
     "average_daily_return": 0.0014402232474191,
     "best_day_return": 0.1469479322393067,
     "worst_day_return": -0.1689564486992018
+  },
+  "final_training": {
+    "train_rows": 95115,
+    "valid_rows": 10569,
+    "sequence_length": 156,
+    "device": "cuda",
+    "best_valid_score": -0.019671273265845297,
+    "train_start": "2017-11-07 14:15:00",
+    "train_end": "2025-07-01 14:25:00",
+    "valid_start": "2025-07-01 14:30:00",
+    "valid_end": "2026-05-11 13:35:00"
   }
 }

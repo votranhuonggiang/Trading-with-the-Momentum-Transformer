@@ -1,0 +1,2 @@
+model,splits,median_total_return,mean_total_return,worst_total_return,positive_return_rate,median_sharpe,mean_sharpe,worst_sharpe,median_max_drawdown,worst_max_drawdown,median_profit_factor,profit_factor_gt_1_rate,median_turnover,median_number_of_trades
+decoder_tft,12,1.5005662661785062,1.5555599314050677,0.025702316848209117,1.0,3.247039612052059,2.889569654996192,0.40610480519038017,-0.3136127912837055,-0.39957757277731665,1.14005102352346,0.75,7780.0,6050.5

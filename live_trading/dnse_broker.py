@@ -27,10 +27,20 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, List, Literal, Optional
 
-from dnse.client import DNSEClient
+THIS_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = THIS_DIR.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+try:
+    from dnse.client import DNSEClient
+except ImportError:
+    from DNSE.client import DNSEClient
 
 
 # DNSE side codes (camelCase JSON):

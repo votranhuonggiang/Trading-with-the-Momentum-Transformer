@@ -10,6 +10,7 @@ import datetime as dt
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+import csv
 
 import numpy as np
 import pandas as pd
@@ -158,6 +159,25 @@ class DecoderTftLiveTrade:
         self.dry_run = dry_run
         self.logger = SimpleLogger(self.__class__.__name__, log_path=log_path)
         self.last_processed_ts: pd.Timestamp | None = None
+        self.prev_close: float | None = None
+        self.simulated_contracts: int = 0
+        self.cum_net_pnl_points: float = 0.0
+        self.cum_net_return: float = 0.0
+        self.trading_cfg = dict(self.cfg.get("trading", {}))
+        self.contract_multiplier = float(self.trading_cfg.get("contract_multiplier", 100000.0))
+        self.fee_vsdc = float(self.trading_cfg.get("fee_vsdc_vnd_per_contract_per_side", 5000.0))
+        self.fee_hnx = float(self.trading_cfg.get("fee_hnx_vnd_per_contract_per_side", 2700.0))
+        self.fee_ctck = float(self.trading_cfg.get("fee_ctck_vnd_per_contract_per_side", 2700.0))
+        self.margin_rate = float(self.trading_cfg.get("margin_rate", 0.1848))
+        self.transfer_tax_rate = float(self.trading_cfg.get("transfer_tax_rate", 0.001))
+        self.logs_dir = PROJECT_ROOT / "live_trading" / "logs"
+        self.daily_summary_path = self.logs_dir / "live_dryrun_daily_summary.csv"
+        self.decision_log_path = self.logs_dir / "live_dryrun_decisions.csv"
+        self.trade_log_path = self.logs_dir / "live_dryrun_trades.csv"
+        self.equity_log_path = self.logs_dir / "live_dryrun_equity_curve.csv"
+        self.daily_summary: dict[str, dict[str, float]] = {}
+        if self.dry_run:
+            self.logs_dir.mkdir(parents=True, exist_ok=True)
 
         checkpoint_rel = self.manifest.checkpoint_file
         if not checkpoint_rel:
@@ -188,6 +208,158 @@ class DecoderTftLiveTrade:
         model.load_state_dict(state, strict=True)
         model.eval()
         return model
+
+    def _append_csv_row(self, path: Path, row: dict[str, Any]) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        write_header = not path.exists() or path.stat().st_size == 0
+        with path.open("a", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(row.keys()))
+            if write_header:
+                writer.writeheader()
+            writer.writerow(row)
+
+    def _compute_costs(self, prev_contracts: int, next_contracts: int, close_price: float) -> dict[str, float]:
+        buy_units = float(max(next_contracts - prev_contracts, 0))
+        sell_units = float(max(prev_contracts - next_contracts, 0))
+        per_side_fixed_fee = self.fee_vsdc + self.fee_hnx + self.fee_ctck
+        tax_vnd_per_contract = self.margin_rate * self.contract_multiplier * self.transfer_tax_rate * close_price
+        buy_cost_vnd = buy_units * per_side_fixed_fee
+        sell_fixed_cost_vnd = sell_units * per_side_fixed_fee
+        sell_tax_cost_vnd = sell_units * tax_vnd_per_contract
+        sell_cost_vnd = sell_fixed_cost_vnd + sell_tax_cost_vnd
+        cost_vnd = buy_cost_vnd + sell_cost_vnd
+        cost_points = cost_vnd / self.contract_multiplier
+        return {
+            "buy_units": buy_units,
+            "sell_units": sell_units,
+            "turnover": abs(float(next_contracts - prev_contracts)),
+            "tax_vnd_per_contract": tax_vnd_per_contract,
+            "buy_cost_vnd": buy_cost_vnd,
+            "sell_fixed_cost_vnd": sell_fixed_cost_vnd,
+            "sell_tax_cost_vnd": sell_tax_cost_vnd,
+            "sell_cost_vnd": sell_cost_vnd,
+            "cost_vnd": cost_vnd,
+            "cost_points": cost_points,
+        }
+
+    def _update_daily_summary(
+        self,
+        timestamp: pd.Timestamp,
+        turnover: float,
+        cost_vnd: float,
+        gross_pnl_points: float,
+        net_pnl_points: float,
+        trade_count_increment: int,
+    ) -> None:
+        trade_day = str(timestamp.date())
+        day = self.daily_summary.setdefault(
+            trade_day,
+            {
+                "trade_day": trade_day,
+                "bars_processed": 0.0,
+                "number_of_transactions": 0.0,
+                "total_turnover": 0.0,
+                "total_cost_vnd": 0.0,
+                "gross_pnl_points": 0.0,
+                "net_pnl_points": 0.0,
+                "cum_net_pnl_points": 0.0,
+            },
+        )
+        day["bars_processed"] += 1.0
+        day["number_of_transactions"] += float(trade_count_increment)
+        day["total_turnover"] += float(turnover)
+        day["total_cost_vnd"] += float(cost_vnd)
+        day["gross_pnl_points"] += float(gross_pnl_points)
+        day["net_pnl_points"] += float(net_pnl_points)
+        day["cum_net_pnl_points"] = float(self.cum_net_pnl_points)
+        pd.DataFrame(sorted(self.daily_summary.values(), key=lambda x: x["trade_day"])).to_csv(
+            self.daily_summary_path,
+            index=False,
+        )
+
+    def _record_dry_run(
+        self,
+        decision: dict[str, Any],
+        current_contracts_before: int,
+        target_contracts: int,
+        delta_contracts: int,
+    ) -> None:
+        ts = pd.Timestamp(decision["timestamp"])
+        close_price = float(decision["close"])
+        price_change = 0.0 if self.prev_close is None else close_price - float(self.prev_close)
+        gross_pnl_points = float(current_contracts_before) * float(price_change)
+        costs = self._compute_costs(current_contracts_before, target_contracts, close_price)
+        net_pnl_points = gross_pnl_points - float(costs["cost_points"])
+        cost_return = 0.0 if close_price == 0 else float(costs["cost_vnd"]) / (close_price * self.contract_multiplier)
+        gross_return = 0.0 if close_price == 0 else (float(current_contracts_before) * price_change) / (
+            close_price * self.contract_multiplier
+        )
+        net_return = gross_return - cost_return
+        self.cum_net_pnl_points += net_pnl_points
+        self.cum_net_return += net_return
+
+        decision_row = {
+            "timestamp": ts.isoformat(),
+            "close": close_price,
+            "raw_signal": float(decision["raw_signal"]),
+            "processed_signal": float(decision["processed_signal"]),
+            "regime_probability": decision["regime_probability"],
+            "target_normalized_position": float(decision["target_normalized_position"]),
+            "current_contracts_before": int(current_contracts_before),
+            "target_contracts": int(target_contracts),
+            "delta_contracts": int(delta_contracts),
+            "trade_allowed": bool(decision["trade_allowed"]),
+            "dry_run": True,
+        }
+        self._append_csv_row(self.decision_log_path, decision_row)
+
+        if delta_contracts != 0:
+            action = "buy" if delta_contracts > 0 else "sell"
+            trade_row = {
+                "timestamp": ts.isoformat(),
+                "close": close_price,
+                "action": action,
+                "contracts_before": int(current_contracts_before),
+                "contracts_after": int(target_contracts),
+                "delta_contracts": int(delta_contracts),
+                "turnover": float(costs["turnover"]),
+                "buy_units": float(costs["buy_units"]),
+                "sell_units": float(costs["sell_units"]),
+                "buy_cost_vnd": float(costs["buy_cost_vnd"]),
+                "sell_fixed_cost_vnd": float(costs["sell_fixed_cost_vnd"]),
+                "sell_tax_cost_vnd": float(costs["sell_tax_cost_vnd"]),
+                "total_cost_vnd": float(costs["cost_vnd"]),
+                "cost_points": float(costs["cost_points"]),
+            }
+            self._append_csv_row(self.trade_log_path, trade_row)
+
+        equity_row = {
+            "timestamp": ts.isoformat(),
+            "close": close_price,
+            "previous_close": self.prev_close,
+            "price_change": float(price_change),
+            "contracts_held_during_bar": int(current_contracts_before),
+            "contracts_after_decision": int(target_contracts),
+            "gross_pnl_points": float(gross_pnl_points),
+            "cost_points": float(costs["cost_points"]),
+            "cost_vnd": float(costs["cost_vnd"]),
+            "net_pnl_points": float(net_pnl_points),
+            "gross_return": float(gross_return),
+            "net_return": float(net_return),
+            "cum_net_pnl_points": float(self.cum_net_pnl_points),
+            "cum_net_return": float(self.cum_net_return),
+        }
+        self._append_csv_row(self.equity_log_path, equity_row)
+        self._update_daily_summary(
+            timestamp=ts,
+            turnover=float(costs["turnover"]),
+            cost_vnd=float(costs["cost_vnd"]),
+            gross_pnl_points=float(gross_pnl_points),
+            net_pnl_points=float(net_pnl_points),
+            trade_count_increment=1 if delta_contracts != 0 else 0,
+        )
+        self.simulated_contracts = int(target_contracts)
+        self.prev_close = close_price
 
     def fetch_latest_data(self, cursor) -> pd.DataFrame:
         query = """
@@ -229,14 +401,16 @@ class DecoderTftLiveTrade:
         if len(bars) < max(int(self.manifest.sequence_length) + 5, 300):
             raise ValueError(f"Need more bars before inference. Current rows={len(bars)}")
 
-        features = build_features(bars.copy(), self.cfg)
+        features = build_features(bars.copy(), self.cfg, include_targets=False)
         features = features.sort_values(self.manifest.timestamp_col).reset_index(drop=True)
-        features = scale_feature_frame(features, self.scaler, self.feature_cols)
-        window = features.tail(int(self.manifest.sequence_length))
+        latest_feature_row = features.iloc[-1]
+        trade_allowed = bool(int(latest_feature_row["trade_allowed"]) == 1)
+        features_scaled = scale_feature_frame(features, self.scaler, self.feature_cols)
+        window = features_scaled.tail(int(self.manifest.sequence_length))
         if len(window) != int(self.manifest.sequence_length):
             raise ValueError("Feature window shorter than required sequence_length.")
 
-        latest_bar = features.iloc[-1]
+        latest_bar = latest_feature_row
         latest_ts = pd.Timestamp(latest_bar[self.manifest.timestamp_col])
         x = torch.tensor(
             window[self.feature_cols].astype(np.float32).to_numpy(),
@@ -259,7 +433,7 @@ class DecoderTftLiveTrade:
         current_normalized = float(current_contracts / max_contracts) if max_contracts > 0 else 0.0
         target_normalized = _threshold_transition(
             signal=processed_signal,
-            can_open=bool(int(latest_bar["trade_allowed"]) == 1),
+            can_open=trade_allowed,
             state=ThresholdState(
                 current_normalized_position=current_normalized,
                 current_contracts=current_contracts,
@@ -280,7 +454,7 @@ class DecoderTftLiveTrade:
             "target_normalized_position": target_normalized,
             "target_contracts": target_contracts,
             "close": float(latest_bar["close"]),
-            "trade_allowed": bool(int(latest_bar["trade_allowed"]) == 1),
+            "trade_allowed": trade_allowed,
         }
 
     def _place_delta_order(self, delta_contracts: int, ref_price: float) -> None:
@@ -324,7 +498,10 @@ class DecoderTftLiveTrade:
                         time.sleep(self.poll_interval_s)
                         continue
 
-                    current_contracts, _ = self.get_current_contracts()
+                    if self.dry_run:
+                        current_contracts = int(self.simulated_contracts)
+                    else:
+                        current_contracts, _ = self.get_current_contracts()
                     decision = self.infer_target_contracts(bars, current_contracts)
                     ts = decision["timestamp"]
                     if self.last_processed_ts is not None and ts <= self.last_processed_ts:
@@ -338,6 +515,13 @@ class DecoderTftLiveTrade:
                         f"processed={decision['processed_signal']:+.4f} | current={current_contracts} | "
                         f"target={decision['target_contracts']} | delta={delta_contracts}"
                     )
+                    if self.dry_run:
+                        self._record_dry_run(
+                            decision=decision,
+                            current_contracts_before=int(current_contracts),
+                            target_contracts=int(decision["target_contracts"]),
+                            delta_contracts=int(delta_contracts),
+                        )
                     if delta_contracts != 0:
                         self._place_delta_order(delta_contracts, ref_price=float(decision["close"]))
 

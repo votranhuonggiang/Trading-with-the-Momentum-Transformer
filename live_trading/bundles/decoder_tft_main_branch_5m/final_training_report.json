@@ -1,0 +1,7 @@
+{
+  "bundle_dir": "/kaggle/working/Trading-with-the-Momentum-Transformer/live_trading/bundles/decoder_tft_main_branch_5m",
+  "checkpoint_path": "/kaggle/working/Trading-with-the-Momentum-Transformer/live_trading/bundles/decoder_tft_main_branch_5m/model.pt",
+  "train_rows": 95115,
+  "valid_rows": 10569,
+  "device": "cuda"
+}

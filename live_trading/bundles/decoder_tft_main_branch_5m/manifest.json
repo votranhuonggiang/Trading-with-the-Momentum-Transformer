@@ -1,10 +1,10 @@
 {
   "bundle_name": "decoder_tft_main_branch_5m",
   "bundle_version": "1.0",
-  "created_at_utc": "2026-06-17T06:57:32+00:00",
+  "created_at_utc": "2026-06-19T08:55:23+00:00",
   "model_name": "decoder_tft",
   "config_file": "config_snapshot.yaml",
-  "checkpoint_file": null,
+  "checkpoint_file": "model.pt",
   "feature_columns_file": "feature_columns.json",
   "scaler_file": "scaler.json",
   "execution_policy_file": "execution_policy.json",
@@ -23,5 +23,5 @@
   "integer_contract_execution": true,
   "max_contracts": 5,
   "contract_rounding_mode": "nearest",
-  "notes": "Config, feature schema, scaler, and execution policy exported from the current main-branch decoder_tft setup. Supply --checkpoint to make the bundle directly loadable for inference."
+  "notes": "Final deployable decoder_tft model trained from the current config and exported as a live bundle."
 }

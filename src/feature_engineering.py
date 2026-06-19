@@ -10,13 +10,35 @@ import pandas as pd
 
 from common import abs_path, ensure_parent, load_config
 
+_MORNING_START_MINUTE = 9 * 60
+_MORNING_END_MINUTE = 11 * 60 + 30
+_AFTERNOON_START_MINUTE = 13 * 60
+_AFTERNOON_END_MINUTE = 14 * 60 + 30
+_BAR_MINUTES = 5
+_BARS_PER_DAY = ((_MORNING_END_MINUTE - _MORNING_START_MINUTE) // _BAR_MINUTES) + (
+    (_AFTERNOON_END_MINUTE - _AFTERNOON_START_MINUTE) // _BAR_MINUTES
+)
+
+
+def _bar_index_from_minute(minute_of_day: pd.Series) -> pd.Series:
+    morning_mask = (minute_of_day >= _MORNING_START_MINUTE) & (minute_of_day < _MORNING_END_MINUTE)
+    afternoon_mask = (minute_of_day >= _AFTERNOON_START_MINUTE) & (minute_of_day < _AFTERNOON_END_MINUTE)
+
+    slot = pd.Series(np.nan, index=minute_of_day.index, dtype=float)
+    slot.loc[morning_mask] = ((minute_of_day.loc[morning_mask] - _MORNING_START_MINUTE) // _BAR_MINUTES).astype(float)
+    slot.loc[afternoon_mask] = (
+        ((_MORNING_END_MINUTE - _MORNING_START_MINUTE) // _BAR_MINUTES)
+        + ((minute_of_day.loc[afternoon_mask] - _AFTERNOON_START_MINUTE) // _BAR_MINUTES)
+    ).astype(float)
+    return slot
+
 
 def _session_flags(df: pd.DataFrame, ts_col: str) -> pd.DataFrame:
     out = df.copy()
     out["trade_date"] = out[ts_col].dt.date
     out["minute_of_day"] = out[ts_col].dt.hour * 60 + out[ts_col].dt.minute
-    out["bar_index_in_day"] = out.groupby("trade_date").cumcount()
-    out["bars_in_day"] = out.groupby("trade_date")["bar_index_in_day"].transform("max") + 1
+    out["bar_index_in_day"] = _bar_index_from_minute(out["minute_of_day"])
+    out["bars_in_day"] = _BARS_PER_DAY
     out["day_of_week"] = out[ts_col].dt.weekday
     out["sin_day_of_week"] = np.sin(2.0 * math.pi * out["day_of_week"] / 7.0)
     out["cos_day_of_week"] = np.cos(2.0 * math.pi * out["day_of_week"] / 7.0)
@@ -30,7 +52,7 @@ def _session_flags(df: pd.DataFrame, ts_col: str) -> pd.DataFrame:
     return out
 
 
-def build_features(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
+def build_features(df: pd.DataFrame, cfg: dict, include_targets: bool = True) -> pd.DataFrame:
     ts_col = cfg["data"]["timestamp_col"]
     out = df.copy().sort_values(ts_col).reset_index(drop=True)
     out = _session_flags(out, ts_col)
@@ -113,24 +135,26 @@ def build_features(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     out["distance_from_intraday_low"] = out["close"] / out["intraday_low_so_far"] - 1.0
     out["intraday_volume_cumsum"] = g["volume"].cumsum()
 
-    target_horizon = int(cfg.get("training", {}).get("target_horizon_bars", 1))
-    out["simple_return"] = out["close"].pct_change()
-    out["price_change"] = out["close"].diff()
-    out["future_return_sign"] = np.sign(out["simple_return"].shift(-1)).fillna(0)
-    out["target_return_next"] = out["simple_return"].shift(-1)
-    out["target_return_3bar"] = out["close"].shift(-3) / out["close"] - 1.0
-    out["target_return_horizon"] = out["close"].shift(-target_horizon) / out["close"] - 1.0
-    future_vol_horizon = int(cfg.get("training", {}).get("decoder_tft_aux_future_vol_horizon", 12))
-    future_log_returns = out["log_return"].shift(-1)
-    future_realized_vol = future_log_returns.rolling(future_vol_horizon).std().shift(-(future_vol_horizon - 1))
-    future_downside_semivariance = (
-        future_log_returns.clip(upper=0.0).pow(2).rolling(future_vol_horizon).mean().shift(-(future_vol_horizon - 1))
-    )
-    out["target_future_realized_vol_12"] = future_realized_vol
-    out["target_future_vol_regime_12"] = (future_realized_vol > (out["ewm_vol_78"] * 1.1)).astype(float)
-    out["target_future_downside_semivariance_12"] = future_downside_semivariance
     out["trade_allowed"] = ((out["is_first_5min"] == 0) & (out["is_last_5min"] == 0)).astype(int)
-    return out.dropna().reset_index(drop=True)
+    if include_targets:
+        target_horizon = int(cfg.get("training", {}).get("target_horizon_bars", 1))
+        out["simple_return"] = out["close"].pct_change()
+        out["price_change"] = out["close"].diff()
+        out["future_return_sign"] = np.sign(out["simple_return"].shift(-1)).fillna(0)
+        out["target_return_next"] = out["simple_return"].shift(-1)
+        out["target_return_3bar"] = out["close"].shift(-3) / out["close"] - 1.0
+        out["target_return_horizon"] = out["close"].shift(-target_horizon) / out["close"] - 1.0
+        future_vol_horizon = int(cfg.get("training", {}).get("decoder_tft_aux_future_vol_horizon", 12))
+        future_log_returns = out["log_return"].shift(-1)
+        future_realized_vol = future_log_returns.rolling(future_vol_horizon).std().shift(-(future_vol_horizon - 1))
+        future_downside_semivariance = (
+            future_log_returns.clip(upper=0.0).pow(2).rolling(future_vol_horizon).mean().shift(-(future_vol_horizon - 1))
+        )
+        out["target_future_realized_vol_12"] = future_realized_vol
+        out["target_future_vol_regime_12"] = (future_realized_vol > (out["ewm_vol_78"] * 1.1)).astype(float)
+        out["target_future_downside_semivariance_12"] = future_downside_semivariance
+        return out.dropna().reset_index(drop=True)
+    return out.replace([np.inf, -np.inf], np.nan).dropna().reset_index(drop=True)
 
 
 def main() -> None:

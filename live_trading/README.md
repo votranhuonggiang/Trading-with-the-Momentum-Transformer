@@ -1,34 +1,35 @@
 # decoder_tft live trading
 
-This folder now contains the live-trading path for the current main-branch
-`decoder_tft` setup on 5-minute bars.
+This folder contains the live-trading path for the current `decoder_tft`
+setup on 5-minute bars.
 
 ## What is here
 
 - `DecoderTftLiveTrade.py`
-  - new live runner for the current 5-minute `decoder_tft` stack
-  - uses the same feature pipeline from `src/feature_engineering.py`
-  - uses the same threshold and execution logic family as the current backtest
+  - live runner for the current 5-minute `decoder_tft` stack
+  - uses `src/feature_engineering.py`
+  - uses the same threshold and execution logic family as the backtest
   - converts normalized position into integer contracts using the bundle policy
+- `validate_decoder_tft_bundle.py`
+  - preflight checker for the bundle and environment
 - `export_current_decoder_tft_bundle.py`
-  - exports a deployable bundle from the current main-branch config
-  - writes config snapshot, feature schema, scaler, execution policy, and summary
+  - exports a deployable bundle from the current config
 - `bundle_utils.py`
   - bundle serialization and scaler helpers
 - `dnse_broker.py`
   - DNSE execution adapter
 - `SharpeHeadLiveTrade.py`
-  - older JEPA-based trader, kept for reference only
+  - older JEPA-based trader, kept only as reference
 
-## Bundle format
+## Current bundle
 
-Each bundle lives under:
+The current trained bundle is now expected at:
 
 ```text
-live_trading/bundles/<bundle_name>/
+live_trading/bundles/decoder_tft_main_branch_5m/
 ```
 
-Expected contents:
+Required contents:
 
 - `manifest.json`
 - `config_snapshot.yaml`
@@ -36,23 +37,28 @@ Expected contents:
 - `scaler.json`
 - `execution_policy.json`
 - `training_summary.json`
-- `model.pt` if a deployable checkpoint has been supplied
+- `model.pt`
 
-## Prepare the current main-branch bundle
+Useful extra files:
+
+- `final_training_history.json`
+- `final_training_report.json`
+
+## Rebuild or refresh the bundle
 
 Run from the project root:
 
 ```bash
-python live_trading/export_current_decoder_tft_bundle.py --config configs/default.yaml --bundle-name decoder_tft_main_branch_5m --outputs-run-label vn30f1m_outputs_version1
+python src/train_final_decoder_tft.py --config configs/default.yaml --bundle-name decoder_tft_main_branch_5m --outputs-run-label vn30f1m_outputs_version1
 ```
 
-If you already have a final deployable checkpoint:
+If you only need to rebuild metadata around an existing checkpoint:
 
 ```bash
 python live_trading/export_current_decoder_tft_bundle.py --config configs/default.yaml --bundle-name decoder_tft_main_branch_5m --outputs-run-label vn30f1m_outputs_version1 --checkpoint path/to/model.pt
 ```
 
-## Environment variables for the live runner
+## Environment variables
 
 Required for live data and broker access:
 
@@ -76,7 +82,26 @@ Optional:
 - `DECODER_TFT_DEVICE`
 - `DECODER_TFT_DRY_RUN`
 
-## Run in dry-run first
+See `.env.example` in this folder for a concrete template.
+
+## Preflight check
+
+Run this before the first dry-run:
+
+```bash
+python live_trading/validate_decoder_tft_bundle.py
+```
+
+It checks:
+
+- required bundle files exist
+- manifest and checkpoint agree
+- the model can be loaded
+- required environment variables are present
+
+## Dry-run
+
+Run the trader in dry-run first:
 
 ```bash
 python live_trading/DecoderTftLiveTrade.py
@@ -84,15 +109,10 @@ python live_trading/DecoderTftLiveTrade.py
 
 Default behavior is dry-run unless `DECODER_TFT_DRY_RUN=false`.
 
-## Important limitation
+## Next operational steps
 
-The current research pipeline does not yet save a final deployable
-`decoder_tft` checkpoint automatically. The bundle exporter prepares everything
-except the checkpoint unless `--checkpoint` is supplied.
-
-That means the next operational step is:
-
-1. save one final `decoder_tft` checkpoint,
-2. place it into the bundle as `model.pt`,
-3. dry-run the live trader against that bundle,
-4. compare live replay decisions to backtest before real execution.
+1. populate `.env` from `.env.example`
+2. run `validate_decoder_tft_bundle.py`
+3. dry-run `DecoderTftLiveTrade.py`
+4. compare live replay decisions against backtest behavior
+5. only then enable real order submission
