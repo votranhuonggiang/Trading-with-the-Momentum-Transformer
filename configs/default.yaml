@@ -63,6 +63,17 @@ walk_forward:
   step_months: 6
   max_windows: 0
 
+robust_validation:
+  method: "purged_cpcv"
+  models:
+    - "decoder_tft"
+  n_groups: 8
+  test_groups: 2
+  purge_bars: 159
+  embargo_bars: 48
+  valid_fraction: 0.20
+  max_splits: 12
+
 training:
   objective: "net_sharpe"
   target_horizon_bars: 3
