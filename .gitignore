@@ -27,5 +27,7 @@ data/raw/
 !data/raw/vn30f1m.csv
 data/processed/
 data/features/
-outputs/
+outputs/*
+!outputs/vn30f1m_outputs_version1/
+!outputs/vn30f1m_outputs_version1/**
 reports/
