@@ -1,0 +1,508 @@
+[2026-06-19 09:29:56] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-19 09:29:57] [DecoderTftLiveTrade] 2026-06-18 14:10:00 | close=1972.50 | raw=-0.6319 | processed=-0.5600 | current=0 | target=0 | delta=0
+[2026-06-19 09:30:28] [DecoderTftLiveTrade] 2026-06-18 14:15:00 | close=1971.30 | raw=-0.6007 | processed=-0.5436 | current=0 | target=0 | delta=0
+[2026-06-19 09:35:31] [DecoderTftLiveTrade] 2026-06-18 14:20:00 | close=1971.20 | raw=-0.5659 | processed=-0.5230 | current=0 | target=0 | delta=0
+[2026-06-19 09:37:53] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-19 09:37:53] [DecoderTftLiveTrade] Done.
+[2026-06-19 09:41:46] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-19 09:41:47] [DecoderTftLiveTrade] 2026-06-19 09:40:00 | close=1965.30 | raw=-0.6723 | processed=-0.7282 | current=0 | target=0 | delta=0
+[2026-06-19 09:45:20] [DecoderTftLiveTrade] 2026-06-19 09:45:00 | close=1964.00 | raw=-0.6438 | processed=-0.7018 | current=0 | target=0 | delta=0
+[2026-06-19 09:50:24] [DecoderTftLiveTrade] 2026-06-19 09:50:00 | close=1964.10 | raw=-0.6630 | processed=-0.7144 | current=0 | target=0 | delta=0
+[2026-06-19 09:55:28] [DecoderTftLiveTrade] 2026-06-19 09:55:00 | close=1963.50 | raw=-0.6350 | processed=-0.6860 | current=0 | target=0 | delta=0
+[2026-06-19 10:00:53] [DecoderTftLiveTrade] 2026-06-19 10:00:00 | close=1963.40 | raw=-0.6568 | processed=-0.6976 | current=0 | target=0 | delta=0
+[2026-06-19 10:01:52] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-19 10:01:52] [DecoderTftLiveTrade] Done.
+[2026-06-19 10:07:33] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-19 10:07:34] [DecoderTftLiveTrade] 2026-06-19 10:05:00 | close=1963.70 | raw=-0.6684 | processed=-0.7004 | current=0 | target=0 | delta=0
+[2026-06-19 10:10:36] [DecoderTftLiveTrade] 2026-06-19 10:10:00 | close=1962.80 | raw=-0.6309 | processed=-0.6618 | current=0 | target=0 | delta=0
+[2026-06-19 10:15:09] [DecoderTftLiveTrade] 2026-06-19 10:15:00 | close=1962.30 | raw=-0.6157 | processed=-0.6409 | current=0 | target=0 | delta=0
+[2026-06-19 10:20:13] [DecoderTftLiveTrade] 2026-06-19 10:20:00 | close=1961.40 | raw=-0.6013 | processed=-0.6207 | current=0 | target=0 | delta=0
+[2026-06-19 10:22:20] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-19 10:22:20] [DecoderTftLiveTrade] Done.
+[2026-06-19 10:23:44] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-19 10:23:45] [DecoderTftLiveTrade] 2026-06-19 10:20:00 | close=1961.20 | raw=-0.5957 | processed=-0.6160 | current=0 | target=-3 | delta=-3
+[2026-06-19 10:23:45] [DecoderTftLiveTrade] Submitted SELL 3 @ 1959.70 | ack_status=DRY
+[2026-06-19 10:25:15] [DecoderTftLiveTrade] 2026-06-19 10:25:00 | close=1962.30 | raw=-0.5569 | processed=-0.5680 | current=-3 | target=-3 | delta=0
+[2026-06-19 10:30:19] [DecoderTftLiveTrade] 2026-06-19 10:30:00 | close=1962.60 | raw=-0.6183 | processed=-0.6133 | current=-3 | target=-3 | delta=0
+[2026-06-19 10:35:22] [DecoderTftLiveTrade] 2026-06-19 10:35:00 | close=1963.50 | raw=-0.6142 | processed=-0.6082 | current=-3 | target=-3 | delta=0
+[2026-06-19 10:40:27] [DecoderTftLiveTrade] 2026-06-19 10:40:00 | close=1962.80 | raw=-0.6006 | processed=-0.5898 | current=-3 | target=-3 | delta=0
+[2026-06-19 10:45:30] [DecoderTftLiveTrade] 2026-06-19 10:45:00 | close=1962.30 | raw=-0.5944 | processed=-0.5769 | current=-3 | target=-3 | delta=0
+[2026-06-19 10:50:33] [DecoderTftLiveTrade] 2026-06-19 10:50:00 | close=1964.00 | raw=-0.5055 | processed=-0.5104 | current=-3 | target=-3 | delta=0
+[2026-06-19 10:55:07] [DecoderTftLiveTrade] 2026-06-19 10:55:00 | close=1964.50 | raw=-0.4405 | processed=-0.4556 | current=-3 | target=-2 | delta=1
+[2026-06-19 10:55:07] [DecoderTftLiveTrade] Submitted BUY 1 @ 1966.00 | ack_status=DRY
+[2026-06-19 11:00:10] [DecoderTftLiveTrade] 2026-06-19 11:00:00 | close=1967.80 | raw=-0.2438 | processed=-0.2916 | current=-2 | target=-1 | delta=1
+[2026-06-19 11:00:10] [DecoderTftLiveTrade] Submitted BUY 1 @ 1969.30 | ack_status=DRY
+[2026-06-19 11:05:13] [DecoderTftLiveTrade] 2026-06-19 11:05:00 | close=1965.80 | raw=-0.2982 | processed=-0.3332 | current=-1 | target=-2 | delta=-1
+[2026-06-19 11:05:13] [DecoderTftLiveTrade] Submitted SELL 1 @ 1964.30 | ack_status=DRY
+[2026-06-19 11:10:16] [DecoderTftLiveTrade] 2026-06-19 11:10:00 | close=1965.00 | raw=-0.3682 | processed=-0.3850 | current=-2 | target=-2 | delta=0
+[2026-06-19 11:15:19] [DecoderTftLiveTrade] 2026-06-19 11:15:00 | close=1964.40 | raw=-0.3989 | processed=-0.4037 | current=-2 | target=-2 | delta=0
+[2026-06-19 11:20:22] [DecoderTftLiveTrade] 2026-06-19 11:20:00 | close=1964.60 | raw=-0.3917 | processed=-0.3953 | current=-2 | target=-2 | delta=0
+[2026-06-19 11:25:26] [DecoderTftLiveTrade] 2026-06-19 11:25:00 | close=1962.00 | raw=-0.5231 | processed=-0.4896 | current=-2 | target=-2 | delta=0
+[2026-06-19 13:00:18] [DecoderTftLiveTrade] 2026-06-19 13:00:00 | close=1961.30 | raw=-0.5286 | processed=-0.4906 | current=-2 | target=-2 | delta=0
+[2026-06-19 13:05:23] [DecoderTftLiveTrade] 2026-06-19 13:05:00 | close=1963.00 | raw=-0.4167 | processed=-0.4110 | current=-2 | target=-2 | delta=0
+[2026-06-19 13:10:26] [DecoderTftLiveTrade] 2026-06-19 13:10:00 | close=1961.90 | raw=-0.4558 | processed=-0.4376 | current=-2 | target=-2 | delta=0
+[2026-06-19 13:15:29] [DecoderTftLiveTrade] 2026-06-19 13:15:00 | close=1962.80 | raw=-0.3977 | processed=-0.3934 | current=-2 | target=-2 | delta=0
+[2026-06-19 13:20:31] [DecoderTftLiveTrade] 2026-06-19 13:20:00 | close=1963.60 | raw=-0.3055 | processed=-0.3223 | current=-2 | target=-2 | delta=0
+[2026-06-19 13:25:04] [DecoderTftLiveTrade] 2026-06-19 13:25:00 | close=1963.90 | raw=-0.2475 | processed=-0.2731 | current=-2 | target=-1 | delta=1
+[2026-06-19 13:25:04] [DecoderTftLiveTrade] Submitted BUY 1 @ 1965.40 | ack_status=DRY
+[2026-06-19 13:30:07] [DecoderTftLiveTrade] 2026-06-19 13:30:00 | close=1964.60 | raw=-0.2043 | processed=-0.2356 | current=-1 | target=-1 | delta=0
+[2026-06-19 13:35:10] [DecoderTftLiveTrade] 2026-06-19 13:35:00 | close=1965.10 | raw=-0.1194 | processed=-0.1568 | current=-1 | target=-1 | delta=0
+[2026-06-19 13:40:13] [DecoderTftLiveTrade] 2026-06-19 13:40:00 | close=1966.50 | raw=-0.0199 | processed=+0.0000 | current=-1 | target=0 | delta=1
+[2026-06-19 13:40:13] [DecoderTftLiveTrade] Submitted BUY 1 @ 1968.00 | ack_status=DRY
+[2026-06-19 13:45:16] [DecoderTftLiveTrade] 2026-06-19 13:45:00 | close=1963.70 | raw=-0.1912 | processed=-0.2232 | current=0 | target=0 | delta=0
+[2026-06-19 13:50:23] [DecoderTftLiveTrade] 2026-06-19 13:50:00 | close=1964.60 | raw=-0.1394 | processed=-0.1764 | current=0 | target=0 | delta=0
+[2026-06-19 13:55:26] [DecoderTftLiveTrade] 2026-06-19 13:55:00 | close=1962.80 | raw=-0.2181 | processed=-0.2496 | current=0 | target=0 | delta=0
+[2026-06-19 14:00:30] [DecoderTftLiveTrade] 2026-06-19 14:00:00 | close=1964.00 | raw=-0.1930 | processed=-0.2292 | current=0 | target=0 | delta=0
+[2026-06-19 14:05:33] [DecoderTftLiveTrade] 2026-06-19 14:05:00 | close=1964.80 | raw=-0.0978 | processed=-0.1387 | current=0 | target=0 | delta=0
+[2026-06-19 14:10:05] [DecoderTftLiveTrade] 2026-06-19 14:10:00 | close=1961.60 | raw=-0.2366 | processed=-0.2740 | current=0 | target=0 | delta=0
+[2026-06-19 14:15:08] [DecoderTftLiveTrade] 2026-06-19 14:15:00 | close=1964.10 | raw=-0.0942 | processed=-0.1384 | current=0 | target=0 | delta=0
+[2026-06-19 14:16:28] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-19 14:16:28] [DecoderTftLiveTrade] Done.
+[2026-06-24 10:47:27] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-24 10:47:28] [DecoderTftLiveTrade] 2026-06-24 10:45:00 | close=1997.80 | raw=+0.5086 | processed=+0.5706 | current=0 | target=3 | delta=3
+[2026-06-24 10:47:28] [DecoderTftLiveTrade] Submitted BUY 3 @ 1999.30 | ack_status=DRY
+[2026-06-24 10:50:31] [DecoderTftLiveTrade] 2026-06-24 10:50:00 | close=1996.70 | raw=+0.4178 | processed=+0.4902 | current=3 | target=2 | delta=-1
+[2026-06-24 10:50:31] [DecoderTftLiveTrade] Submitted SELL 1 @ 1995.20 | ack_status=DRY
+[2026-06-24 10:55:35] [DecoderTftLiveTrade] 2026-06-24 10:55:00 | close=1997.30 | raw=+0.2209 | processed=+0.3028 | current=2 | target=2 | delta=0
+[2026-06-24 11:00:20] [DecoderTftLiveTrade] 2026-06-24 11:00:00 | close=1996.90 | raw=+0.0948 | processed=+0.1595 | current=2 | target=1 | delta=-1
+[2026-06-24 11:00:20] [DecoderTftLiveTrade] Submitted SELL 1 @ 1995.40 | ack_status=DRY
+[2026-06-24 11:05:24] [DecoderTftLiveTrade] 2026-06-24 11:05:00 | close=1996.30 | raw=-0.0269 | processed=+0.0000 | current=1 | target=0 | delta=-1
+[2026-06-24 11:05:24] [DecoderTftLiveTrade] Submitted SELL 1 @ 1994.80 | ack_status=DRY
+[2026-06-24 11:10:27] [DecoderTftLiveTrade] 2026-06-24 11:10:00 | close=1997.90 | raw=-0.2769 | processed=-0.3518 | current=0 | target=-2 | delta=-2
+[2026-06-24 11:10:27] [DecoderTftLiveTrade] Submitted SELL 2 @ 1996.40 | ack_status=DRY
+[2026-06-24 11:15:31] [DecoderTftLiveTrade] 2026-06-24 11:15:00 | close=1995.80 | raw=-0.1778 | processed=-0.2498 | current=-2 | target=-1 | delta=1
+[2026-06-24 11:15:31] [DecoderTftLiveTrade] Submitted BUY 1 @ 1997.30 | ack_status=DRY
+[2026-06-24 11:20:04] [DecoderTftLiveTrade] 2026-06-24 11:20:00 | close=1997.10 | raw=-0.3627 | processed=-0.4225 | current=-1 | target=-2 | delta=-1
+[2026-06-24 11:20:04] [DecoderTftLiveTrade] Submitted SELL 1 @ 1995.60 | ack_status=DRY
+[2026-06-24 11:25:09] [DecoderTftLiveTrade] 2026-06-24 11:25:00 | close=1997.30 | raw=-0.4223 | processed=-0.4692 | current=-2 | target=-2 | delta=0
+[2026-06-24 13:00:14] [DecoderTftLiveTrade] 2026-06-24 13:00:00 | close=1999.30 | raw=-0.5489 | processed=-0.5565 | current=-2 | target=-3 | delta=-1
+[2026-06-24 13:00:14] [DecoderTftLiveTrade] Submitted SELL 1 @ 1997.80 | ack_status=DRY
+[2026-06-24 13:05:18] [DecoderTftLiveTrade] 2026-06-24 13:05:00 | close=2000.80 | raw=-0.5879 | processed=-0.5703 | current=-3 | target=-3 | delta=0
+[2026-06-24 13:10:21] [DecoderTftLiveTrade] 2026-06-24 13:10:00 | close=2003.40 | raw=-0.5671 | processed=-0.5400 | current=-3 | target=-3 | delta=0
+[2026-06-24 13:15:24] [DecoderTftLiveTrade] 2026-06-24 13:15:00 | close=2003.30 | raw=-0.4424 | processed=-0.4422 | current=-3 | target=-2 | delta=1
+[2026-06-24 13:15:24] [DecoderTftLiveTrade] Submitted BUY 1 @ 2004.80 | ack_status=DRY
+[2026-06-24 13:20:27] [DecoderTftLiveTrade] 2026-06-24 13:20:00 | close=2005.50 | raw=-0.4020 | processed=-0.4016 | current=-2 | target=-2 | delta=0
+[2026-06-24 13:25:30] [DecoderTftLiveTrade] 2026-06-24 13:25:00 | close=2005.10 | raw=-0.2881 | processed=-0.3103 | current=-2 | target=-2 | delta=0
+[2026-06-24 13:30:03] [DecoderTftLiveTrade] 2026-06-24 13:30:00 | close=2003.00 | raw=-0.0858 | processed=-0.1252 | current=-2 | target=-1 | delta=1
+[2026-06-24 13:30:03] [DecoderTftLiveTrade] Submitted BUY 1 @ 2004.50 | ack_status=DRY
+[2026-06-24 13:35:06] [DecoderTftLiveTrade] 2026-06-24 13:35:00 | close=2004.60 | raw=-0.1102 | processed=-0.1490 | current=-1 | target=-1 | delta=0
+[2026-06-24 13:40:09] [DecoderTftLiveTrade] 2026-06-24 13:40:00 | close=2003.00 | raw=+0.0722 | processed=+0.0000 | current=-1 | target=0 | delta=1
+[2026-06-24 13:40:09] [DecoderTftLiveTrade] Submitted BUY 1 @ 2004.50 | ack_status=DRY
+[2026-06-24 13:45:12] [DecoderTftLiveTrade] 2026-06-24 13:45:00 | close=2002.20 | raw=+0.1886 | processed=+0.2233 | current=0 | target=1 | delta=1
+[2026-06-24 13:45:12] [DecoderTftLiveTrade] Submitted BUY 1 @ 2003.70 | ack_status=DRY
+[2026-06-24 13:50:14] [DecoderTftLiveTrade] 2026-06-24 13:50:00 | close=2001.80 | raw=+0.2545 | processed=+0.2809 | current=1 | target=1 | delta=0
+[2026-06-24 13:55:17] [DecoderTftLiveTrade] 2026-06-24 13:55:00 | close=2001.90 | raw=+0.2845 | processed=+0.3061 | current=1 | target=2 | delta=1
+[2026-06-24 13:55:17] [DecoderTftLiveTrade] Submitted BUY 1 @ 2003.40 | ack_status=DRY
+[2026-06-24 14:00:20] [DecoderTftLiveTrade] 2026-06-24 14:00:00 | close=1999.80 | raw=+0.4607 | processed=+0.4401 | current=2 | target=2 | delta=0
+[2026-06-24 14:05:24] [DecoderTftLiveTrade] 2026-06-24 14:05:00 | close=2005.00 | raw=+0.1891 | processed=+0.2264 | current=2 | target=1 | delta=-1
+[2026-06-24 14:05:24] [DecoderTftLiveTrade] Submitted SELL 1 @ 2003.50 | ack_status=DRY
+[2026-06-24 14:10:28] [DecoderTftLiveTrade] 2026-06-24 14:10:00 | close=2004.80 | raw=+0.2462 | processed=+0.2758 | current=1 | target=1 | delta=0
+[2026-06-24 14:15:15] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-24 14:15:15] [DecoderTftLiveTrade] Done.
+[2026-06-24 14:15:23] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-24 14:15:23] [DecoderTftLiveTrade] 2026-06-24 14:10:00 | close=2004.30 | raw=+0.2710 | processed=+0.2966 | current=0 | target=1 | delta=1
+[2026-06-24 14:15:24] [DecoderTftLiveTrade] Submitted BUY 1 @ 2005.80 | ack_status=DRY
+[2026-06-24 14:20:26] [DecoderTftLiveTrade] 2026-06-24 14:15:00 | close=2006.70 | raw=+0.1927 | processed=+0.2289 | current=1 | target=1 | delta=0
+[2026-06-24 14:25:29] [DecoderTftLiveTrade] 2026-06-24 14:20:00 | close=2006.30 | raw=+0.2712 | processed=+0.3272 | current=1 | target=2 | delta=1
+[2026-06-24 14:25:29] [DecoderTftLiveTrade] Submitted BUY 1 @ 2007.80 | ack_status=DRY
+[2026-06-24 14:30:02] [DecoderTftLiveTrade] 2026-06-24 14:25:00 | close=2008.20 | raw=+0.3674 | processed=+0.4272 | current=2 | target=0 | delta=-2
+[2026-06-24 14:30:02] [DecoderTftLiveTrade] Submitted SELL 2 @ 2006.70 | ack_status=DRY
+[2026-06-24 14:49:34] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-24 14:49:34] [DecoderTftLiveTrade] Done.
+[2026-06-25 09:19:54] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-25 09:19:55] [DecoderTftLiveTrade] 2026-06-25 09:10:00 | close=2009.10 | raw=+0.8209 | processed=+0.8473 | current=0 | target=4 | delta=4
+[2026-06-25 09:19:55] [DecoderTftLiveTrade] Submitted BUY 4 @ 2010.60 | ack_status=DRY
+[2026-06-25 09:20:25] [DecoderTftLiveTrade] 2026-06-25 09:15:00 | close=2006.80 | raw=+0.9097 | processed=+0.9148 | current=4 | target=5 | delta=1
+[2026-06-25 09:20:25] [DecoderTftLiveTrade] Submitted BUY 1 @ 2008.30 | ack_status=DRY
+[2026-06-25 09:29:14] [DecoderTftLiveTrade] Loop error: consuming input failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+[2026-06-25 09:29:38] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-25 09:29:38] [DecoderTftLiveTrade] Done.
+[2026-06-25 09:29:46] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-25 09:29:46] [DecoderTftLiveTrade] 2026-06-25 09:20:00 | close=2005.00 | raw=+0.9226 | processed=+0.9252 | current=0 | target=5 | delta=5
+[2026-06-25 09:29:46] [DecoderTftLiveTrade] Submitted BUY 5 @ 2006.50 | ack_status=DRY
+[2026-06-25 09:30:16] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-25 09:30:16] [DecoderTftLiveTrade] Done.
+[2026-06-25 09:31:19] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-25 09:31:20] [DecoderTftLiveTrade] 2026-06-25 09:25:00 | close=2003.70 | raw=+0.9023 | processed=+0.9106 | current=0 | target=5 | delta=5
+[2026-06-25 09:31:20] [DecoderTftLiveTrade] Submitted BUY 5 @ 2005.20 | ack_status=DRY
+[2026-06-25 09:35:24] [DecoderTftLiveTrade] 2026-06-25 09:30:00 | close=2004.70 | raw=+0.7730 | processed=+0.8117 | current=5 | target=4 | delta=-1
+[2026-06-25 09:35:24] [DecoderTftLiveTrade] Submitted SELL 1 @ 2003.20 | ack_status=DRY
+[2026-06-25 09:40:28] [DecoderTftLiveTrade] 2026-06-25 09:35:00 | close=2004.10 | raw=+0.6759 | processed=+0.7336 | current=4 | target=4 | delta=0
+[2026-06-25 09:45:02] [DecoderTftLiveTrade] 2026-06-25 09:40:00 | close=2003.60 | raw=+0.6460 | processed=+0.7086 | current=4 | target=4 | delta=0
+[2026-06-25 09:50:07] [DecoderTftLiveTrade] 2026-06-25 09:45:00 | close=2004.20 | raw=+0.4968 | processed=+0.5813 | current=4 | target=3 | delta=-1
+[2026-06-25 09:50:07] [DecoderTftLiveTrade] Submitted SELL 1 @ 2002.70 | ack_status=DRY
+[2026-06-25 09:55:12] [DecoderTftLiveTrade] 2026-06-25 09:50:00 | close=2005.70 | raw=+0.2652 | processed=+0.3623 | current=3 | target=2 | delta=-1
+[2026-06-25 09:55:12] [DecoderTftLiveTrade] Submitted SELL 1 @ 2004.20 | ack_status=DRY
+[2026-06-25 10:00:17] [DecoderTftLiveTrade] 2026-06-25 09:55:00 | close=2005.40 | raw=+0.3540 | processed=+0.4487 | current=2 | target=2 | delta=0
+[2026-06-25 10:12:24] [DecoderTftLiveTrade] Loop error: consuming input failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+[2026-06-25 10:12:54] [DecoderTftLiveTrade] Loop error: the connection is lost
+[2026-06-25 10:13:24] [DecoderTftLiveTrade] Loop error: the connection is lost
+[2026-06-25 10:13:54] [DecoderTftLiveTrade] Loop error: the connection is lost
+[2026-06-25 10:14:24] [DecoderTftLiveTrade] Loop error: the connection is lost
+[2026-06-25 10:14:26] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-25 10:14:26] [DecoderTftLiveTrade] Done.
+[2026-06-25 10:14:35] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-25 10:14:36] [DecoderTftLiveTrade] 2026-06-25 10:05:00 | close=2004.00 | raw=+0.5417 | processed=+0.6145 | current=0 | target=3 | delta=3
+[2026-06-25 10:14:36] [DecoderTftLiveTrade] Submitted BUY 3 @ 2005.50 | ack_status=DRY
+[2026-06-25 10:15:06] [DecoderTftLiveTrade] 2026-06-25 10:10:00 | close=2004.90 | raw=+0.4221 | processed=+0.5090 | current=3 | target=3 | delta=0
+[2026-06-25 10:20:09] [DecoderTftLiveTrade] 2026-06-25 10:15:00 | close=2005.10 | raw=+0.3405 | processed=+0.4315 | current=3 | target=2 | delta=-1
+[2026-06-25 10:20:09] [DecoderTftLiveTrade] Submitted SELL 1 @ 2003.60 | ack_status=DRY
+[2026-06-25 10:25:12] [DecoderTftLiveTrade] 2026-06-25 10:20:00 | close=2005.20 | raw=+0.3353 | processed=+0.4249 | current=2 | target=2 | delta=0
+[2026-06-25 10:30:16] [DecoderTftLiveTrade] 2026-06-25 10:25:00 | close=2005.50 | raw=+0.3422 | processed=+0.4295 | current=2 | target=2 | delta=0
+[2026-06-25 10:35:20] [DecoderTftLiveTrade] 2026-06-25 10:30:00 | close=2004.80 | raw=+0.4234 | processed=+0.5012 | current=2 | target=3 | delta=1
+[2026-06-25 10:35:20] [DecoderTftLiveTrade] Submitted BUY 1 @ 2006.30 | ack_status=DRY
+[2026-06-25 10:40:04] [DecoderTftLiveTrade] 2026-06-25 10:35:00 | close=2005.40 | raw=+0.3619 | processed=+0.4436 | current=3 | target=2 | delta=-1
+[2026-06-25 10:40:04] [DecoderTftLiveTrade] Submitted SELL 1 @ 2003.90 | ack_status=DRY
+[2026-06-25 10:45:09] [DecoderTftLiveTrade] 2026-06-25 10:40:00 | close=2004.80 | raw=+0.4055 | processed=+0.4801 | current=2 | target=2 | delta=0
+[2026-06-25 10:50:13] [DecoderTftLiveTrade] 2026-06-25 10:45:00 | close=2004.10 | raw=+0.3980 | processed=+0.4710 | current=2 | target=2 | delta=0
+[2026-06-25 10:55:16] [DecoderTftLiveTrade] 2026-06-25 10:50:00 | close=2004.80 | raw=+0.2628 | processed=+0.3432 | current=2 | target=2 | delta=0
+[2026-06-25 11:00:19] [DecoderTftLiveTrade] 2026-06-25 10:55:00 | close=2004.50 | raw=+0.2053 | processed=+0.2831 | current=2 | target=1 | delta=-1
+[2026-06-25 11:00:19] [DecoderTftLiveTrade] Submitted SELL 1 @ 2003.00 | ack_status=DRY
+[2026-06-25 11:05:21] [DecoderTftLiveTrade] 2026-06-25 11:00:00 | close=2003.50 | raw=+0.2388 | processed=+0.3148 | current=1 | target=2 | delta=1
+[2026-06-25 11:05:21] [DecoderTftLiveTrade] Submitted BUY 1 @ 2005.00 | ack_status=DRY
+[2026-06-25 11:10:24] [DecoderTftLiveTrade] 2026-06-25 11:05:00 | close=2005.50 | raw=-0.0164 | processed=+0.0000 | current=2 | target=0 | delta=-2
+[2026-06-25 11:10:24] [DecoderTftLiveTrade] Submitted SELL 2 @ 2004.00 | ack_status=DRY
+[2026-06-25 11:15:28] [DecoderTftLiveTrade] 2026-06-25 11:10:00 | close=2005.70 | raw=-0.0351 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-25 11:20:03] [DecoderTftLiveTrade] 2026-06-25 11:15:00 | close=2007.40 | raw=-0.0735 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-25 11:25:06] [DecoderTftLiveTrade] 2026-06-25 11:20:00 | close=2005.10 | raw=+0.2081 | processed=+0.2754 | current=0 | target=1 | delta=1
+[2026-06-25 11:25:06] [DecoderTftLiveTrade] Submitted BUY 1 @ 2006.60 | ack_status=DRY
+[2026-06-25 11:30:09] [DecoderTftLiveTrade] 2026-06-25 11:25:00 | close=2005.50 | raw=+0.2237 | processed=+0.2908 | current=1 | target=1 | delta=0
+[2026-06-25 13:05:03] [DecoderTftLiveTrade] 2026-06-25 13:00:00 | close=2006.30 | raw=+0.0687 | processed=+0.0000 | current=1 | target=0 | delta=-1
+[2026-06-25 13:05:03] [DecoderTftLiveTrade] Submitted SELL 1 @ 2004.80 | ack_status=DRY
+[2026-06-25 13:10:07] [DecoderTftLiveTrade] 2026-06-25 13:05:00 | close=2005.90 | raw=+0.0238 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-25 13:15:10] [DecoderTftLiveTrade] 2026-06-25 13:10:00 | close=2007.00 | raw=-0.1346 | processed=-0.1877 | current=0 | target=0 | delta=0
+[2026-06-25 13:20:13] [DecoderTftLiveTrade] 2026-06-25 13:15:00 | close=2010.80 | raw=-0.3602 | processed=-0.3833 | current=0 | target=-2 | delta=-2
+[2026-06-25 13:20:13] [DecoderTftLiveTrade] Submitted SELL 2 @ 2009.30 | ack_status=DRY
+[2026-06-25 13:25:17] [DecoderTftLiveTrade] 2026-06-25 13:20:00 | close=2009.50 | raw=-0.3169 | processed=-0.3397 | current=-2 | target=-2 | delta=0
+[2026-06-25 13:30:20] [DecoderTftLiveTrade] 2026-06-25 13:25:00 | close=2009.00 | raw=-0.2470 | processed=-0.2782 | current=-2 | target=-1 | delta=1
+[2026-06-25 13:30:20] [DecoderTftLiveTrade] Submitted BUY 1 @ 2010.50 | ack_status=DRY
+[2026-06-25 13:35:23] [DecoderTftLiveTrade] 2026-06-25 13:30:00 | close=2009.60 | raw=-0.2534 | processed=-0.2791 | current=-1 | target=-1 | delta=0
+[2026-06-25 13:40:26] [DecoderTftLiveTrade] 2026-06-25 13:35:00 | close=2007.80 | raw=-0.1587 | processed=-0.1937 | current=-1 | target=-1 | delta=0
+[2026-06-25 13:45:30] [DecoderTftLiveTrade] 2026-06-25 13:40:00 | close=2007.50 | raw=-0.1348 | processed=-0.1711 | current=-1 | target=-1 | delta=0
+[2026-06-25 13:50:02] [DecoderTftLiveTrade] 2026-06-25 13:45:00 | close=2007.10 | raw=-0.1073 | processed=-0.1431 | current=-1 | target=-1 | delta=0
+[2026-06-25 13:55:05] [DecoderTftLiveTrade] 2026-06-25 13:50:00 | close=2008.60 | raw=-0.1782 | processed=-0.2106 | current=-1 | target=-1 | delta=0
+[2026-06-25 14:00:08] [DecoderTftLiveTrade] 2026-06-25 13:55:00 | close=2007.70 | raw=-0.1036 | processed=-0.1396 | current=-1 | target=-1 | delta=0
+[2026-06-25 14:05:11] [DecoderTftLiveTrade] 2026-06-25 14:00:00 | close=2007.80 | raw=+0.0064 | processed=+0.0000 | current=-1 | target=0 | delta=1
+[2026-06-25 14:05:11] [DecoderTftLiveTrade] Submitted BUY 1 @ 2009.30 | ack_status=DRY
+[2026-06-25 14:10:14] [DecoderTftLiveTrade] 2026-06-25 14:05:00 | close=2004.80 | raw=+0.2957 | processed=+0.3054 | current=0 | target=2 | delta=2
+[2026-06-25 14:10:14] [DecoderTftLiveTrade] Submitted BUY 2 @ 2006.30 | ack_status=DRY
+[2026-06-25 14:15:17] [DecoderTftLiveTrade] 2026-06-25 14:10:00 | close=2003.60 | raw=+0.4929 | processed=+0.4525 | current=2 | target=2 | delta=0
+[2026-06-25 14:20:20] [DecoderTftLiveTrade] 2026-06-25 14:15:00 | close=2005.80 | raw=+0.4272 | processed=+0.4173 | current=2 | target=2 | delta=0
+[2026-06-25 14:25:24] [DecoderTftLiveTrade] 2026-06-25 14:20:00 | close=2008.10 | raw=+0.3822 | processed=+0.4227 | current=2 | target=2 | delta=0
+[2026-06-25 14:30:30] [DecoderTftLiveTrade] 2026-06-25 14:25:00 | close=2006.00 | raw=+0.6693 | processed=+0.6743 | current=2 | target=0 | delta=-2
+[2026-06-25 14:30:30] [DecoderTftLiveTrade] Submitted SELL 2 @ 2004.50 | ack_status=DRY
+[2026-06-25 14:41:49] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-25 14:41:49] [DecoderTftLiveTrade] Done.
+[2026-06-26 09:40:33] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-26 09:40:34] [DecoderTftLiveTrade] 2026-06-26 09:35:00 | close=2003.50 | raw=+0.7791 | processed=+0.8167 | current=0 | target=4 | delta=4
+[2026-06-26 09:40:35] [DecoderTftLiveTrade] Submitted BUY 4 @ 2005.00 | ack_status=DRY
+[2026-06-26 09:45:10] [DecoderTftLiveTrade] 2026-06-26 09:40:00 | close=2003.10 | raw=+0.7503 | processed=+0.7945 | current=4 | target=4 | delta=0
+[2026-06-26 09:50:15] [DecoderTftLiveTrade] 2026-06-26 09:45:00 | close=2001.90 | raw=+0.7156 | processed=+0.7663 | current=4 | target=4 | delta=0
+[2026-06-26 09:55:20] [DecoderTftLiveTrade] 2026-06-26 09:50:00 | close=2001.00 | raw=+0.6560 | processed=+0.7180 | current=4 | target=4 | delta=0
+[2026-06-26 10:00:25] [DecoderTftLiveTrade] 2026-06-26 09:55:00 | close=2001.30 | raw=+0.5344 | processed=+0.6156 | current=4 | target=3 | delta=-1
+[2026-06-26 10:00:25] [DecoderTftLiveTrade] Submitted SELL 1 @ 1999.80 | ack_status=DRY
+[2026-06-26 10:05:00] [DecoderTftLiveTrade] 2026-06-26 10:00:00 | close=1998.60 | raw=+0.5904 | processed=+0.6620 | current=3 | target=3 | delta=0
+[2026-06-26 10:10:05] [DecoderTftLiveTrade] 2026-06-26 10:05:00 | close=1998.50 | raw=+0.5531 | processed=+0.6301 | current=3 | target=3 | delta=0
+[2026-06-26 10:15:10] [DecoderTftLiveTrade] 2026-06-26 10:10:00 | close=1996.40 | raw=+0.6802 | processed=+0.7338 | current=3 | target=4 | delta=1
+[2026-06-26 10:15:10] [DecoderTftLiveTrade] Submitted BUY 1 @ 1997.90 | ack_status=DRY
+[2026-06-26 10:20:15] [DecoderTftLiveTrade] 2026-06-26 10:15:00 | close=1997.10 | raw=+0.6426 | processed=+0.7024 | current=4 | target=4 | delta=0
+[2026-06-26 10:25:20] [DecoderTftLiveTrade] 2026-06-26 10:20:00 | close=1999.20 | raw=+0.3698 | processed=+0.4612 | current=4 | target=2 | delta=-2
+[2026-06-26 10:25:20] [DecoderTftLiveTrade] Submitted SELL 2 @ 1997.70 | ack_status=DRY
+[2026-06-26 10:30:25] [DecoderTftLiveTrade] 2026-06-26 10:25:00 | close=1998.50 | raw=+0.6192 | processed=+0.6742 | current=2 | target=3 | delta=1
+[2026-06-26 10:30:25] [DecoderTftLiveTrade] Submitted BUY 1 @ 2000.00 | ack_status=DRY
+[2026-06-26 10:35:00] [DecoderTftLiveTrade] 2026-06-26 10:30:00 | close=1997.30 | raw=+0.7874 | processed=+0.8016 | current=3 | target=4 | delta=1
+[2026-06-26 10:35:00] [DecoderTftLiveTrade] Submitted BUY 1 @ 1998.80 | ack_status=DRY
+[2026-06-26 10:40:04] [DecoderTftLiveTrade] 2026-06-26 10:35:00 | close=1993.80 | raw=+0.8852 | processed=+0.8667 | current=4 | target=4 | delta=0
+[2026-06-26 10:45:09] [DecoderTftLiveTrade] 2026-06-26 10:40:00 | close=1994.10 | raw=+0.8709 | processed=+0.8527 | current=4 | target=4 | delta=0
+[2026-06-26 10:50:14] [DecoderTftLiveTrade] 2026-06-26 10:45:00 | close=1995.00 | raw=+0.7992 | processed=+0.7915 | current=4 | target=4 | delta=0
+[2026-06-26 10:55:19] [DecoderTftLiveTrade] 2026-06-26 10:50:00 | close=1994.70 | raw=+0.7815 | processed=+0.7711 | current=4 | target=4 | delta=0
+[2026-06-26 11:00:23] [DecoderTftLiveTrade] 2026-06-26 10:55:00 | close=1994.50 | raw=+0.7891 | processed=+0.7692 | current=4 | target=4 | delta=0
+[2026-06-26 11:05:26] [DecoderTftLiveTrade] 2026-06-26 11:00:00 | close=1995.00 | raw=+0.7760 | processed=+0.7548 | current=4 | target=4 | delta=0
+[2026-06-26 11:10:01] [DecoderTftLiveTrade] 2026-06-26 11:05:00 | close=1993.40 | raw=+0.8178 | processed=+0.7777 | current=4 | target=4 | delta=0
+[2026-06-26 11:15:05] [DecoderTftLiveTrade] 2026-06-26 11:10:00 | close=1994.40 | raw=+0.7698 | processed=+0.7401 | current=4 | target=4 | delta=0
+[2026-06-26 11:20:08] [DecoderTftLiveTrade] 2026-06-26 11:15:00 | close=1993.60 | raw=+0.7623 | processed=+0.7255 | current=4 | target=4 | delta=0
+[2026-06-26 11:25:16] [DecoderTftLiveTrade] 2026-06-26 11:20:00 | close=1993.50 | raw=+0.7283 | processed=+0.6951 | current=4 | target=3 | delta=-1
+[2026-06-26 11:25:16] [DecoderTftLiveTrade] Submitted SELL 1 @ 1992.00 | ack_status=DRY
+[2026-06-26 11:30:26] [DecoderTftLiveTrade] 2026-06-26 11:25:00 | close=1992.70 | raw=+0.7101 | processed=+0.6735 | current=3 | target=3 | delta=0
+[2026-06-26 11:33:05] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-26 11:33:05] [DecoderTftLiveTrade] Done.
+[2026-06-26 12:54:24] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-26 12:54:25] [DecoderTftLiveTrade] 2026-06-26 11:25:00 | close=1992.70 | raw=+0.7101 | processed=+0.6735 | current=0 | target=3 | delta=3
+[2026-06-26 12:54:25] [DecoderTftLiveTrade] Submitted BUY 3 @ 1994.20 | ack_status=DRY
+[2026-06-26 13:05:02] [DecoderTftLiveTrade] 2026-06-26 13:00:00 | close=1997.60 | raw=+0.3378 | processed=+0.3818 | current=3 | target=2 | delta=-1
+[2026-06-26 13:05:02] [DecoderTftLiveTrade] Submitted SELL 1 @ 1996.10 | ack_status=DRY
+[2026-06-26 13:10:05] [DecoderTftLiveTrade] 2026-06-26 13:05:00 | close=1997.30 | raw=+0.3184 | processed=+0.3581 | current=2 | target=2 | delta=0
+[2026-06-26 13:15:08] [DecoderTftLiveTrade] 2026-06-26 13:10:00 | close=1998.00 | raw=+0.2998 | processed=+0.3368 | current=2 | target=2 | delta=0
+[2026-06-26 13:20:12] [DecoderTftLiveTrade] 2026-06-26 13:15:00 | close=1998.00 | raw=+0.2462 | processed=+0.2830 | current=2 | target=1 | delta=-1
+[2026-06-26 13:20:12] [DecoderTftLiveTrade] Submitted SELL 1 @ 1996.50 | ack_status=DRY
+[2026-06-26 13:25:16] [DecoderTftLiveTrade] 2026-06-26 13:20:00 | close=2001.30 | raw=+0.0890 | processed=+0.1307 | current=1 | target=1 | delta=0
+[2026-06-26 13:30:19] [DecoderTftLiveTrade] 2026-06-26 13:25:00 | close=2001.90 | raw=+0.0651 | processed=+0.0000 | current=1 | target=0 | delta=-1
+[2026-06-26 13:30:19] [DecoderTftLiveTrade] Submitted SELL 1 @ 2000.40 | ack_status=DRY
+[2026-06-26 13:35:22] [DecoderTftLiveTrade] 2026-06-26 13:30:00 | close=2002.00 | raw=+0.0472 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-26 13:40:25] [DecoderTftLiveTrade] 2026-06-26 13:35:00 | close=2000.20 | raw=+0.0679 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-26 13:45:28] [DecoderTftLiveTrade] 2026-06-26 13:40:00 | close=2002.60 | raw=+0.0401 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-26 13:50:01] [DecoderTftLiveTrade] 2026-06-26 13:45:00 | close=2004.70 | raw=+0.0602 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-26 13:55:04] [DecoderTftLiveTrade] 2026-06-26 13:50:00 | close=2004.50 | raw=+0.1113 | processed=+0.1384 | current=0 | target=0 | delta=0
+[2026-06-26 14:00:08] [DecoderTftLiveTrade] 2026-06-26 13:55:00 | close=2004.70 | raw=+0.1067 | processed=+0.1320 | current=0 | target=0 | delta=0
+[2026-06-26 14:05:12] [DecoderTftLiveTrade] 2026-06-26 14:00:00 | close=2005.50 | raw=+0.0507 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-26 14:10:16] [DecoderTftLiveTrade] 2026-06-26 14:05:00 | close=2004.20 | raw=+0.0335 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-26 14:15:20] [DecoderTftLiveTrade] 2026-06-26 14:10:00 | close=2004.70 | raw=+0.0444 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-26 14:20:23] [DecoderTftLiveTrade] 2026-06-26 14:15:00 | close=2006.00 | raw=-0.3655 | processed=-0.3620 | current=0 | target=-2 | delta=-2
+[2026-06-26 14:20:23] [DecoderTftLiveTrade] Submitted SELL 2 @ 2004.50 | ack_status=DRY
+[2026-06-26 14:25:27] [DecoderTftLiveTrade] 2026-06-26 14:20:00 | close=2009.10 | raw=-0.4031 | processed=-0.4139 | current=-2 | target=-2 | delta=0
+[2026-06-26 14:30:00] [DecoderTftLiveTrade] 2026-06-26 14:25:00 | close=2007.00 | raw=-0.2656 | processed=-0.3146 | current=-2 | target=0 | delta=2
+[2026-06-26 14:30:00] [DecoderTftLiveTrade] Submitted BUY 2 @ 2008.50 | ack_status=DRY
+[2026-06-26 14:46:26] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-26 14:46:26] [DecoderTftLiveTrade] Done.
+[2026-06-29 09:46:17] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-29 09:46:18] [DecoderTftLiveTrade] 2026-06-29 09:40:00 | close=2012.30 | raw=-0.7640 | processed=-0.7975 | current=0 | target=-4 | delta=-4
+[2026-06-29 09:46:18] [DecoderTftLiveTrade] Submitted SELL 4 @ 2010.80 | ack_status=DRY
+[2026-06-29 09:50:22] [DecoderTftLiveTrade] 2026-06-29 09:45:00 | close=2012.80 | raw=-0.7748 | processed=-0.8045 | current=-4 | target=-4 | delta=0
+[2026-06-29 09:55:26] [DecoderTftLiveTrade] 2026-06-29 09:50:00 | close=2010.90 | raw=-0.7143 | processed=-0.7564 | current=-4 | target=-4 | delta=0
+[2026-06-29 10:00:01] [DecoderTftLiveTrade] 2026-06-29 09:55:00 | close=2010.60 | raw=-0.7159 | processed=-0.7585 | current=-4 | target=-4 | delta=0
+[2026-06-29 10:05:06] [DecoderTftLiveTrade] 2026-06-29 10:00:00 | close=2010.80 | raw=-0.7669 | processed=-0.7989 | current=-4 | target=-4 | delta=0
+[2026-06-29 10:10:11] [DecoderTftLiveTrade] 2026-06-29 10:05:00 | close=2010.20 | raw=-0.7703 | processed=-0.8011 | current=-4 | target=-4 | delta=0
+[2026-06-29 10:15:16] [DecoderTftLiveTrade] 2026-06-29 10:10:00 | close=2011.50 | raw=-0.7763 | processed=-0.8049 | current=-4 | target=-4 | delta=0
+[2026-06-29 10:20:21] [DecoderTftLiveTrade] 2026-06-29 10:15:00 | close=2013.00 | raw=-0.7361 | processed=-0.7708 | current=-4 | target=-4 | delta=0
+[2026-06-29 10:25:26] [DecoderTftLiveTrade] 2026-06-29 10:20:00 | close=2012.00 | raw=-0.5120 | processed=-0.5852 | current=-4 | target=-3 | delta=1
+[2026-06-29 10:25:26] [DecoderTftLiveTrade] Submitted BUY 1 @ 2013.50 | ack_status=DRY
+[2026-06-29 10:30:00] [DecoderTftLiveTrade] 2026-06-29 10:25:00 | close=2012.00 | raw=-0.3241 | processed=-0.4148 | current=-3 | target=-2 | delta=1
+[2026-06-29 10:30:00] [DecoderTftLiveTrade] Submitted BUY 1 @ 2013.50 | ack_status=DRY
+[2026-06-29 10:35:09] [DecoderTftLiveTrade] 2026-06-29 10:30:00 | close=2011.60 | raw=-0.2073 | processed=-0.2962 | current=-2 | target=-1 | delta=1
+[2026-06-29 10:35:09] [DecoderTftLiveTrade] Submitted BUY 1 @ 2013.10 | ack_status=DRY
+[2026-06-29 10:40:13] [DecoderTftLiveTrade] 2026-06-29 10:35:00 | close=2010.40 | raw=-0.0632 | processed=+0.0000 | current=-1 | target=0 | delta=1
+[2026-06-29 10:40:13] [DecoderTftLiveTrade] Submitted BUY 1 @ 2011.90 | ack_status=DRY
+[2026-06-29 10:45:18] [DecoderTftLiveTrade] 2026-06-29 10:40:00 | close=2010.50 | raw=-0.0809 | processed=-0.1456 | current=0 | target=0 | delta=0
+[2026-06-29 10:50:22] [DecoderTftLiveTrade] 2026-06-29 10:45:00 | close=2011.80 | raw=-0.1468 | processed=-0.2263 | current=0 | target=0 | delta=0
+[2026-06-29 10:55:25] [DecoderTftLiveTrade] 2026-06-29 10:50:00 | close=2011.90 | raw=-0.0534 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-29 11:00:29] [DecoderTftLiveTrade] 2026-06-29 10:55:00 | close=2011.80 | raw=+0.0817 | processed=+0.1431 | current=0 | target=0 | delta=0
+[2026-06-29 11:05:14] [DecoderTftLiveTrade] 2026-06-29 11:00:00 | close=2012.00 | raw=+0.1399 | processed=+0.2122 | current=0 | target=1 | delta=1
+[2026-06-29 11:05:14] [DecoderTftLiveTrade] Submitted BUY 1 @ 2013.50 | ack_status=DRY
+[2026-06-29 11:10:28] [DecoderTftLiveTrade] 2026-06-29 11:05:00 | close=2011.50 | raw=+0.2170 | processed=+0.2923 | current=1 | target=1 | delta=0
+[2026-06-29 11:15:02] [DecoderTftLiveTrade] 2026-06-29 11:10:00 | close=2010.70 | raw=+0.2510 | processed=+0.3237 | current=1 | target=2 | delta=1
+[2026-06-29 11:15:02] [DecoderTftLiveTrade] Submitted BUY 1 @ 2012.20 | ack_status=DRY
+[2026-06-29 11:20:07] [DecoderTftLiveTrade] 2026-06-29 11:15:00 | close=2010.30 | raw=+0.1398 | processed=+0.2067 | current=2 | target=1 | delta=-1
+[2026-06-29 11:20:07] [DecoderTftLiveTrade] Submitted SELL 1 @ 2008.80 | ack_status=DRY
+[2026-06-29 11:25:10] [DecoderTftLiveTrade] 2026-06-29 11:20:00 | close=2011.20 | raw=-0.0647 | processed=+0.0000 | current=1 | target=0 | delta=-1
+[2026-06-29 11:25:10] [DecoderTftLiveTrade] Submitted SELL 1 @ 2009.70 | ack_status=DRY
+[2026-06-29 11:30:16] [DecoderTftLiveTrade] 2026-06-29 11:25:00 | close=2011.00 | raw=-0.1162 | processed=-0.1761 | current=0 | target=0 | delta=0
+[2026-06-29 13:05:27] [DecoderTftLiveTrade] 2026-06-29 13:00:00 | close=2011.20 | raw=-0.2294 | processed=-0.2849 | current=0 | target=0 | delta=0
+[2026-06-29 13:10:01] [DecoderTftLiveTrade] 2026-06-29 13:05:00 | close=2012.30 | raw=-0.3332 | processed=-0.3675 | current=0 | target=-2 | delta=-2
+[2026-06-29 13:10:01] [DecoderTftLiveTrade] Submitted SELL 2 @ 2010.80 | ack_status=DRY
+[2026-06-29 13:15:05] [DecoderTftLiveTrade] 2026-06-29 13:10:00 | close=2010.60 | raw=-0.3014 | processed=-0.3331 | current=-2 | target=-2 | delta=0
+[2026-06-29 13:20:08] [DecoderTftLiveTrade] 2026-06-29 13:15:00 | close=2011.00 | raw=-0.3833 | processed=-0.3941 | current=-2 | target=-2 | delta=0
+[2026-06-29 13:25:12] [DecoderTftLiveTrade] 2026-06-29 13:20:00 | close=2012.20 | raw=-0.4600 | processed=-0.4454 | current=-2 | target=-2 | delta=0
+[2026-06-29 13:30:16] [DecoderTftLiveTrade] 2026-06-29 13:25:00 | close=2012.80 | raw=-0.4568 | processed=-0.4372 | current=-2 | target=-2 | delta=0
+[2026-06-29 13:35:20] [DecoderTftLiveTrade] 2026-06-29 13:30:00 | close=2012.30 | raw=-0.3977 | processed=-0.3905 | current=-2 | target=-2 | delta=0
+[2026-06-29 13:40:23] [DecoderTftLiveTrade] 2026-06-29 13:35:00 | close=2013.80 | raw=-0.3740 | processed=-0.3703 | current=-2 | target=-2 | delta=0
+[2026-06-29 13:45:27] [DecoderTftLiveTrade] 2026-06-29 13:40:00 | close=2014.00 | raw=-0.2951 | processed=-0.3067 | current=-2 | target=-2 | delta=0
+[2026-06-29 13:50:30] [DecoderTftLiveTrade] 2026-06-29 13:45:00 | close=2013.00 | raw=-0.1898 | processed=-0.2197 | current=-2 | target=-1 | delta=1
+[2026-06-29 13:50:30] [DecoderTftLiveTrade] Submitted BUY 1 @ 2014.50 | ack_status=DRY
+[2026-06-29 13:55:03] [DecoderTftLiveTrade] 2026-06-29 13:50:00 | close=2011.00 | raw=-0.0885 | processed=-0.1242 | current=-1 | target=-1 | delta=0
+[2026-06-29 14:00:06] [DecoderTftLiveTrade] 2026-06-29 13:55:00 | close=2010.80 | raw=-0.0790 | processed=+0.0000 | current=-1 | target=0 | delta=1
+[2026-06-29 14:00:06] [DecoderTftLiveTrade] Submitted BUY 1 @ 2012.30 | ack_status=DRY
+[2026-06-29 14:05:10] [DecoderTftLiveTrade] 2026-06-29 14:00:00 | close=2010.40 | raw=-0.0897 | processed=-0.1276 | current=0 | target=0 | delta=0
+[2026-06-29 14:10:20] [DecoderTftLiveTrade] 2026-06-29 14:05:00 | close=2010.00 | raw=-0.1121 | processed=-0.1529 | current=0 | target=0 | delta=0
+[2026-06-29 14:15:24] [DecoderTftLiveTrade] 2026-06-29 14:10:00 | close=2009.00 | raw=-0.0467 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-29 14:20:28] [DecoderTftLiveTrade] 2026-06-29 14:15:00 | close=2009.00 | raw=-0.0998 | processed=-0.1439 | current=0 | target=0 | delta=0
+[2026-06-29 14:25:02] [DecoderTftLiveTrade] 2026-06-29 14:20:00 | close=2003.30 | raw=+0.5139 | processed=+0.5284 | current=0 | target=0 | delta=0
+[2026-06-29 14:29:43] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-29 14:29:43] [DecoderTftLiveTrade] Done.
+[2026-06-30 09:38:57] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-06-30 09:38:59] [DecoderTftLiveTrade] 2026-06-30 09:30:00 | close=2008.80 | raw=+0.6308 | processed=+0.7012 | current=0 | target=4 | delta=4
+[2026-06-30 09:38:59] [DecoderTftLiveTrade] Submitted BUY 4 @ 2010.30 | ack_status=DRY
+[2026-06-30 09:40:00] [DecoderTftLiveTrade] 2026-06-30 09:35:00 | close=2007.40 | raw=+0.6053 | processed=+0.6796 | current=4 | target=3 | delta=-1
+[2026-06-30 09:40:00] [DecoderTftLiveTrade] Submitted SELL 1 @ 2005.90 | ack_status=DRY
+[2026-06-30 09:45:04] [DecoderTftLiveTrade] 2026-06-30 09:40:00 | close=2006.20 | raw=+0.5740 | processed=+0.6528 | current=3 | target=3 | delta=0
+[2026-06-30 09:50:28] [DecoderTftLiveTrade] 2026-06-30 09:45:00 | close=2005.00 | raw=+0.4684 | processed=+0.5601 | current=3 | target=3 | delta=0
+[2026-06-30 09:55:09] [DecoderTftLiveTrade] 2026-06-30 09:50:00 | close=2004.70 | raw=+0.2171 | processed=+0.3143 | current=3 | target=2 | delta=-1
+[2026-06-30 09:55:09] [DecoderTftLiveTrade] Submitted SELL 1 @ 2003.20 | ack_status=DRY
+[2026-06-30 10:00:18] [DecoderTftLiveTrade] 2026-06-30 09:55:00 | close=2004.60 | raw=-0.0390 | processed=+0.0000 | current=2 | target=0 | delta=-2
+[2026-06-30 10:00:18] [DecoderTftLiveTrade] Submitted SELL 2 @ 2003.10 | ack_status=DRY
+[2026-06-30 10:05:28] [DecoderTftLiveTrade] 2026-06-30 10:00:00 | close=2004.50 | raw=-0.1972 | processed=-0.2910 | current=0 | target=0 | delta=0
+[2026-06-30 10:10:01] [DecoderTftLiveTrade] 2026-06-30 10:05:00 | close=2005.00 | raw=-0.2787 | processed=-0.3756 | current=0 | target=-2 | delta=-2
+[2026-06-30 10:10:01] [DecoderTftLiveTrade] Submitted SELL 2 @ 2003.50 | ack_status=DRY
+[2026-06-30 10:15:06] [DecoderTftLiveTrade] 2026-06-30 10:10:00 | close=2005.80 | raw=-0.2672 | processed=-0.3621 | current=-2 | target=-2 | delta=0
+[2026-06-30 10:20:10] [DecoderTftLiveTrade] 2026-06-30 10:15:00 | close=2006.80 | raw=-0.1348 | processed=-0.2155 | current=-2 | target=-1 | delta=1
+[2026-06-30 10:20:10] [DecoderTftLiveTrade] Submitted BUY 1 @ 2008.30 | ack_status=DRY
+[2026-06-30 10:25:13] [DecoderTftLiveTrade] 2026-06-30 10:20:00 | close=2007.00 | raw=+0.0917 | processed=+0.1607 | current=-1 | target=0 | delta=1
+[2026-06-30 10:25:13] [DecoderTftLiveTrade] Submitted BUY 1 @ 2008.50 | ack_status=DRY
+[2026-06-30 10:30:17] [DecoderTftLiveTrade] 2026-06-30 10:25:00 | close=2008.90 | raw=+0.1799 | processed=+0.2650 | current=0 | target=1 | delta=1
+[2026-06-30 10:30:17] [DecoderTftLiveTrade] Submitted BUY 1 @ 2010.40 | ack_status=DRY
+[2026-06-30 10:35:22] [DecoderTftLiveTrade] 2026-06-30 10:30:00 | close=2007.50 | raw=+0.3949 | processed=+0.4764 | current=1 | target=2 | delta=1
+[2026-06-30 10:35:22] [DecoderTftLiveTrade] Submitted BUY 1 @ 2009.00 | ack_status=DRY
+[2026-06-30 10:40:28] [DecoderTftLiveTrade] 2026-06-30 10:35:00 | close=2007.20 | raw=+0.4751 | processed=+0.5476 | current=2 | target=3 | delta=1
+[2026-06-30 10:40:28] [DecoderTftLiveTrade] Submitted BUY 1 @ 2008.70 | ack_status=DRY
+[2026-06-30 10:45:02] [DecoderTftLiveTrade] 2026-06-30 10:40:00 | close=2008.00 | raw=+0.4093 | processed=+0.4878 | current=3 | target=2 | delta=-1
+[2026-06-30 10:45:02] [DecoderTftLiveTrade] Submitted SELL 1 @ 2006.50 | ack_status=DRY
+[2026-06-30 10:50:08] [DecoderTftLiveTrade] 2026-06-30 10:45:00 | close=2007.40 | raw=+0.4896 | processed=+0.5553 | current=2 | target=3 | delta=1
+[2026-06-30 10:50:08] [DecoderTftLiveTrade] Submitted BUY 1 @ 2008.90 | ack_status=DRY
+[2026-06-30 10:55:12] [DecoderTftLiveTrade] 2026-06-30 10:50:00 | close=2007.60 | raw=+0.5634 | processed=+0.6143 | current=3 | target=3 | delta=0
+[2026-06-30 11:00:24] [DecoderTftLiveTrade] 2026-06-30 10:55:00 | close=2007.10 | raw=+0.6422 | processed=+0.6719 | current=3 | target=3 | delta=0
+[2026-06-30 11:05:00] [DecoderTftLiveTrade] 2026-06-30 11:00:00 | close=2007.50 | raw=+0.6552 | processed=+0.6776 | current=3 | target=3 | delta=0
+[2026-06-30 11:10:04] [DecoderTftLiveTrade] 2026-06-30 11:05:00 | close=2006.90 | raw=+0.6817 | processed=+0.6906 | current=3 | target=3 | delta=0
+[2026-06-30 11:15:09] [DecoderTftLiveTrade] 2026-06-30 11:10:00 | close=2006.80 | raw=+0.6884 | processed=+0.6898 | current=3 | target=3 | delta=0
+[2026-06-30 11:20:14] [DecoderTftLiveTrade] 2026-06-30 11:15:00 | close=2007.10 | raw=+0.6421 | processed=+0.6481 | current=3 | target=3 | delta=0
+[2026-06-30 11:25:17] [DecoderTftLiveTrade] 2026-06-30 11:20:00 | close=2007.80 | raw=+0.5477 | processed=+0.5708 | current=3 | target=3 | delta=0
+[2026-06-30 11:30:28] [DecoderTftLiveTrade] 2026-06-30 11:25:00 | close=2007.90 | raw=+0.4764 | processed=+0.5090 | current=3 | target=3 | delta=0
+[2026-06-30 13:05:24] [DecoderTftLiveTrade] 2026-06-30 13:00:00 | close=2008.60 | raw=+0.3270 | processed=+0.3770 | current=3 | target=2 | delta=-1
+[2026-06-30 13:05:24] [DecoderTftLiveTrade] Submitted SELL 1 @ 2007.10 | ack_status=DRY
+[2026-06-30 13:10:27] [DecoderTftLiveTrade] 2026-06-30 13:05:00 | close=2009.60 | raw=+0.1702 | processed=+0.2274 | current=2 | target=1 | delta=-1
+[2026-06-30 13:10:27] [DecoderTftLiveTrade] Submitted SELL 1 @ 2008.10 | ack_status=DRY
+[2026-06-30 13:15:00] [DecoderTftLiveTrade] 2026-06-30 13:10:00 | close=2008.30 | raw=+0.1537 | processed=+0.2056 | current=1 | target=1 | delta=0
+[2026-06-30 13:20:03] [DecoderTftLiveTrade] 2026-06-30 13:15:00 | close=2007.30 | raw=+0.1246 | processed=+0.1727 | current=1 | target=1 | delta=0
+[2026-06-30 13:25:06] [DecoderTftLiveTrade] 2026-06-30 13:20:00 | close=2007.70 | raw=+0.0126 | processed=+0.0000 | current=1 | target=0 | delta=-1
+[2026-06-30 13:25:06] [DecoderTftLiveTrade] Submitted SELL 1 @ 2006.20 | ack_status=DRY
+[2026-06-30 13:30:10] [DecoderTftLiveTrade] 2026-06-30 13:25:00 | close=2007.40 | raw=-0.0666 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-06-30 13:35:12] [DecoderTftLiveTrade] 2026-06-30 13:30:00 | close=2007.50 | raw=-0.1640 | processed=-0.2055 | current=0 | target=0 | delta=0
+[2026-06-30 13:40:15] [DecoderTftLiveTrade] 2026-06-30 13:35:00 | close=2007.20 | raw=-0.2428 | processed=-0.2722 | current=0 | target=0 | delta=0
+[2026-06-30 13:45:18] [DecoderTftLiveTrade] 2026-06-30 13:40:00 | close=2006.60 | raw=-0.2961 | processed=-0.3127 | current=0 | target=0 | delta=0
+[2026-06-30 13:50:23] [DecoderTftLiveTrade] 2026-06-30 13:45:00 | close=2006.70 | raw=-0.3668 | processed=-0.3664 | current=0 | target=-2 | delta=-2
+[2026-06-30 13:50:23] [DecoderTftLiveTrade] Submitted SELL 2 @ 2005.20 | ack_status=DRY
+[2026-06-30 13:55:26] [DecoderTftLiveTrade] 2026-06-30 13:50:00 | close=2007.00 | raw=-0.4408 | processed=-0.4197 | current=-2 | target=-2 | delta=0
+[2026-06-30 14:00:00] [DecoderTftLiveTrade] 2026-06-30 13:55:00 | close=2006.90 | raw=-0.4620 | processed=-0.4334 | current=-2 | target=-2 | delta=0
+[2026-06-30 14:05:04] [DecoderTftLiveTrade] 2026-06-30 14:00:00 | close=2005.50 | raw=-0.4361 | processed=-0.4095 | current=-2 | target=-2 | delta=0
+[2026-06-30 14:10:08] [DecoderTftLiveTrade] 2026-06-30 14:05:00 | close=2003.80 | raw=-0.3814 | processed=-0.3584 | current=-2 | target=-2 | delta=0
+[2026-06-30 14:15:11] [DecoderTftLiveTrade] 2026-06-30 14:10:00 | close=2003.50 | raw=-0.4432 | processed=-0.3997 | current=-2 | target=-2 | delta=0
+[2026-06-30 14:20:20] [DecoderTftLiveTrade] 2026-06-30 14:15:00 | close=2000.00 | raw=-0.2504 | processed=-0.2564 | current=-2 | target=-1 | delta=1
+[2026-06-30 14:20:20] [DecoderTftLiveTrade] Submitted BUY 1 @ 2001.50 | ack_status=DRY
+[2026-06-30 14:25:24] [DecoderTftLiveTrade] 2026-06-30 14:20:00 | close=1998.30 | raw=+0.1824 | processed=+0.2201 | current=-1 | target=0 | delta=1
+[2026-06-30 14:25:24] [DecoderTftLiveTrade] Submitted BUY 1 @ 1999.80 | ack_status=DRY
+[2026-06-30 14:30:28] [DecoderTftLiveTrade] 2026-06-30 14:25:00 | close=1998.20 | raw=+0.4226 | processed=+0.4376 | current=0 | target=0 | delta=0
+[2026-06-30 15:10:37] [DecoderTftLiveTrade] Stopped by user.
+[2026-06-30 15:10:37] [DecoderTftLiveTrade] Done.
+[2026-07-01 09:32:08] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-07-01 09:40:14] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-07-01 09:40:15] [DecoderTftLiveTrade] 2026-07-01 09:35:00 | close=2007.00 | raw=+0.9151 | processed=+0.8957 | current=0 | target=4 | delta=4
+[2026-07-01 09:40:15] [DecoderTftLiveTrade] Submitted BUY 4 @ 2008.50 | ack_status=DRY
+[2026-07-01 09:45:18] [DecoderTftLiveTrade] 2026-07-01 09:40:00 | close=2007.90 | raw=+0.9115 | processed=+0.8965 | current=4 | target=4 | delta=0
+[2026-07-01 09:50:23] [DecoderTftLiveTrade] 2026-07-01 09:45:00 | close=2008.80 | raw=+0.9041 | processed=+0.8920 | current=4 | target=4 | delta=0
+[2026-07-01 09:55:30] [DecoderTftLiveTrade] 2026-07-01 09:50:00 | close=2009.80 | raw=+0.8971 | processed=+0.8863 | current=4 | target=4 | delta=0
+[2026-07-01 10:00:06] [DecoderTftLiveTrade] 2026-07-01 09:55:00 | close=2008.80 | raw=+0.8936 | processed=+0.8844 | current=4 | target=4 | delta=0
+[2026-07-01 10:05:14] [DecoderTftLiveTrade] 2026-07-01 10:00:00 | close=2008.40 | raw=+0.8833 | processed=+0.8788 | current=4 | target=4 | delta=0
+[2026-07-01 10:10:23] [DecoderTftLiveTrade] 2026-07-01 10:05:00 | close=2008.60 | raw=+0.8595 | processed=+0.8618 | current=4 | target=4 | delta=0
+[2026-07-01 10:15:28] [DecoderTftLiveTrade] 2026-07-01 10:10:00 | close=2008.80 | raw=+0.8488 | processed=+0.8535 | current=4 | target=4 | delta=0
+[2026-07-01 10:20:02] [DecoderTftLiveTrade] 2026-07-01 10:15:00 | close=2010.00 | raw=+0.8325 | processed=+0.8396 | current=4 | target=4 | delta=0
+[2026-07-01 10:25:15] [DecoderTftLiveTrade] 2026-07-01 10:20:00 | close=2011.90 | raw=+0.8116 | processed=+0.8198 | current=4 | target=4 | delta=0
+[2026-07-01 10:30:19] [DecoderTftLiveTrade] 2026-07-01 10:25:00 | close=2012.70 | raw=+0.2638 | processed=+0.3532 | current=4 | target=2 | delta=-2
+[2026-07-01 10:30:19] [DecoderTftLiveTrade] Submitted SELL 2 @ 2011.20 | ack_status=DRY
+[2026-07-01 10:35:24] [DecoderTftLiveTrade] 2026-07-01 10:30:00 | close=2012.80 | raw=+0.5209 | processed=+0.5816 | current=2 | target=3 | delta=1
+[2026-07-01 10:35:24] [DecoderTftLiveTrade] Submitted BUY 1 @ 2014.30 | ack_status=DRY
+[2026-07-01 10:40:28] [DecoderTftLiveTrade] 2026-07-01 10:35:00 | close=2015.30 | raw=+0.5780 | processed=+0.6247 | current=3 | target=3 | delta=0
+[2026-07-01 10:45:02] [DecoderTftLiveTrade] 2026-07-01 10:40:00 | close=2014.00 | raw=+0.6849 | processed=+0.7072 | current=3 | target=4 | delta=1
+[2026-07-01 10:45:02] [DecoderTftLiveTrade] Submitted BUY 1 @ 2015.50 | ack_status=DRY
+[2026-07-01 10:50:06] [DecoderTftLiveTrade] 2026-07-01 10:45:00 | close=2013.80 | raw=+0.7377 | processed=+0.7508 | current=4 | target=4 | delta=0
+[2026-07-01 10:55:10] [DecoderTftLiveTrade] 2026-07-01 10:50:00 | close=2013.30 | raw=+0.7342 | processed=+0.7485 | current=4 | target=4 | delta=0
+[2026-07-01 11:00:13] [DecoderTftLiveTrade] 2026-07-01 10:55:00 | close=2012.90 | raw=+0.7451 | processed=+0.7572 | current=4 | target=4 | delta=0
+[2026-07-01 11:05:16] [DecoderTftLiveTrade] 2026-07-01 11:00:00 | close=2013.70 | raw=+0.7187 | processed=+0.7355 | current=4 | target=4 | delta=0
+[2026-07-01 11:10:21] [DecoderTftLiveTrade] 2026-07-01 11:05:00 | close=2013.50 | raw=+0.6885 | processed=+0.7082 | current=4 | target=4 | delta=0
+[2026-07-01 11:15:24] [DecoderTftLiveTrade] 2026-07-01 11:10:00 | close=2013.30 | raw=+0.6680 | processed=+0.6888 | current=4 | target=3 | delta=-1
+[2026-07-01 11:15:24] [DecoderTftLiveTrade] Submitted SELL 1 @ 2011.80 | ack_status=DRY
+[2026-07-01 11:20:27] [DecoderTftLiveTrade] 2026-07-01 11:15:00 | close=2013.40 | raw=+0.6387 | processed=+0.6626 | current=3 | target=3 | delta=0
+[2026-07-01 11:25:00] [DecoderTftLiveTrade] 2026-07-01 11:20:00 | close=2013.90 | raw=+0.5920 | processed=+0.6209 | current=3 | target=3 | delta=0
+[2026-07-01 11:30:04] [DecoderTftLiveTrade] 2026-07-01 11:25:00 | close=2015.00 | raw=+0.5255 | processed=+0.5595 | current=3 | target=3 | delta=0
+[2026-07-01 13:05:25] [DecoderTftLiveTrade] 2026-07-01 13:00:00 | close=2015.90 | raw=+0.4492 | processed=+0.4774 | current=3 | target=2 | delta=-1
+[2026-07-01 13:05:25] [DecoderTftLiveTrade] Submitted SELL 1 @ 2014.40 | ack_status=DRY
+[2026-07-01 13:10:28] [DecoderTftLiveTrade] 2026-07-01 13:05:00 | close=2015.30 | raw=+0.3985 | processed=+0.4196 | current=2 | target=2 | delta=0
+[2026-07-01 13:15:02] [DecoderTftLiveTrade] 2026-07-01 13:10:00 | close=2015.80 | raw=+0.3366 | processed=+0.3586 | current=2 | target=2 | delta=0
+[2026-07-01 13:20:05] [DecoderTftLiveTrade] 2026-07-01 13:15:00 | close=2015.90 | raw=+0.3191 | processed=+0.3346 | current=2 | target=2 | delta=0
+[2026-07-01 13:25:09] [DecoderTftLiveTrade] 2026-07-01 13:20:00 | close=2016.00 | raw=+0.3372 | processed=+0.3408 | current=2 | target=2 | delta=0
+[2026-07-01 13:30:12] [DecoderTftLiveTrade] 2026-07-01 13:25:00 | close=2013.60 | raw=+0.3852 | processed=+0.3742 | current=2 | target=2 | delta=0
+[2026-07-01 13:35:15] [DecoderTftLiveTrade] 2026-07-01 13:30:00 | close=2013.50 | raw=+0.4066 | processed=+0.3895 | current=2 | target=2 | delta=0
+[2026-07-01 13:40:19] [DecoderTftLiveTrade] 2026-07-01 13:35:00 | close=2012.60 | raw=+0.4185 | processed=+0.3964 | current=2 | target=2 | delta=0
+[2026-07-01 13:45:22] [DecoderTftLiveTrade] 2026-07-01 13:40:00 | close=2012.10 | raw=+0.3939 | processed=+0.3793 | current=2 | target=2 | delta=0
+[2026-07-01 13:50:26] [DecoderTftLiveTrade] 2026-07-01 13:45:00 | close=2012.70 | raw=+0.3098 | processed=+0.3168 | current=2 | target=2 | delta=0
+[2026-07-01 13:55:29] [DecoderTftLiveTrade] 2026-07-01 13:50:00 | close=2013.20 | raw=+0.2402 | processed=+0.2612 | current=2 | target=1 | delta=-1
+[2026-07-01 13:55:29] [DecoderTftLiveTrade] Submitted SELL 1 @ 2011.70 | ack_status=DRY
+[2026-07-01 14:00:08] [DecoderTftLiveTrade] 2026-07-01 13:55:00 | close=2012.40 | raw=+0.2856 | processed=+0.2970 | current=1 | target=1 | delta=0
+[2026-07-01 14:05:12] [DecoderTftLiveTrade] 2026-07-01 14:00:00 | close=2013.20 | raw=+0.2579 | processed=+0.2763 | current=1 | target=1 | delta=0
+[2026-07-01 14:10:16] [DecoderTftLiveTrade] 2026-07-01 14:05:00 | close=2013.70 | raw=+0.2779 | processed=+0.2915 | current=1 | target=1 | delta=0
+[2026-07-01 14:15:20] [DecoderTftLiveTrade] 2026-07-01 14:10:00 | close=2014.80 | raw=+0.3292 | processed=+0.3308 | current=1 | target=2 | delta=1
+[2026-07-01 14:15:20] [DecoderTftLiveTrade] Submitted BUY 1 @ 2016.30 | ack_status=DRY
+[2026-07-01 14:20:24] [DecoderTftLiveTrade] 2026-07-01 14:15:00 | close=2015.50 | raw=+0.4123 | processed=+0.3898 | current=2 | target=2 | delta=0
+[2026-07-01 14:25:27] [DecoderTftLiveTrade] 2026-07-01 14:20:00 | close=2014.00 | raw=+0.6434 | processed=+0.6127 | current=2 | target=3 | delta=1
+[2026-07-01 14:25:27] [DecoderTftLiveTrade] Submitted BUY 1 @ 2015.50 | ack_status=DRY
+[2026-07-01 14:30:01] [DecoderTftLiveTrade] 2026-07-01 14:25:00 | close=2014.80 | raw=+0.7649 | processed=+0.7383 | current=3 | target=0 | delta=-3
+[2026-07-01 14:30:01] [DecoderTftLiveTrade] Submitted SELL 3 @ 2013.30 | ack_status=DRY
+[2026-07-01 14:38:58] [DecoderTftLiveTrade] Loop error: consuming input failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+[2026-07-01 14:39:28] [DecoderTftLiveTrade] Loop error: the connection is lost
+[2026-07-01 14:39:58] [DecoderTftLiveTrade] Loop error: the connection is lost
+[2026-07-01 14:40:28] [DecoderTftLiveTrade] Loop error: the connection is lost
+[2026-07-01 14:40:35] [DecoderTftLiveTrade] Stopped by user.
+[2026-07-01 14:40:35] [DecoderTftLiveTrade] Done.
+[2026-07-02 09:26:04] [DecoderTftLiveTrade] Starting decoder_tft live trader | data_symbol=VN30F1M | broker_symbol=41I1G6000 | bundle=decoder_tft_main_branch_5m | dry_run=True
+[2026-07-02 09:26:06] [DecoderTftLiveTrade] 2026-07-02 09:20:00 | close=2022.50 | raw=+0.0453 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-07-02 09:30:11] [DecoderTftLiveTrade] 2026-07-02 09:25:00 | close=2020.60 | raw=+0.3630 | processed=+0.4523 | current=0 | target=2 | delta=2
+[2026-07-02 09:30:11] [DecoderTftLiveTrade] Submitted BUY 2 @ 2022.10 | ack_status=DRY
+[2026-07-02 09:35:18] [DecoderTftLiveTrade] 2026-07-02 09:30:00 | close=2020.00 | raw=+0.4500 | processed=+0.5327 | current=2 | target=3 | delta=1
+[2026-07-02 09:35:18] [DecoderTftLiveTrade] Submitted BUY 1 @ 2021.50 | ack_status=DRY
+[2026-07-02 09:40:25] [DecoderTftLiveTrade] 2026-07-02 09:35:00 | close=2016.80 | raw=+0.4421 | processed=+0.5274 | current=3 | target=3 | delta=0
+[2026-07-02 09:45:30] [DecoderTftLiveTrade] 2026-07-02 09:40:00 | close=2016.10 | raw=+0.2783 | processed=+0.3743 | current=3 | target=2 | delta=-1
+[2026-07-02 09:45:30] [DecoderTftLiveTrade] Submitted SELL 1 @ 2014.60 | ack_status=DRY
+[2026-07-02 09:50:05] [DecoderTftLiveTrade] 2026-07-02 09:45:00 | close=2015.50 | raw=+0.1044 | processed=+0.1797 | current=2 | target=1 | delta=-1
+[2026-07-02 09:50:05] [DecoderTftLiveTrade] Submitted SELL 1 @ 2014.00 | ack_status=DRY
+[2026-07-02 09:55:09] [DecoderTftLiveTrade] 2026-07-02 09:50:00 | close=2015.20 | raw=-0.1656 | processed=-0.2544 | current=1 | target=0 | delta=-1
+[2026-07-02 09:55:09] [DecoderTftLiveTrade] Submitted SELL 1 @ 2013.70 | ack_status=DRY
+[2026-07-02 10:00:22] [DecoderTftLiveTrade] 2026-07-02 09:55:00 | close=2016.50 | raw=-0.4213 | processed=-0.5126 | current=0 | target=-3 | delta=-3
+[2026-07-02 10:00:22] [DecoderTftLiveTrade] Submitted SELL 3 @ 2015.00 | ack_status=DRY
+[2026-07-02 10:05:29] [DecoderTftLiveTrade] 2026-07-02 10:00:00 | close=2017.30 | raw=-0.4441 | processed=-0.5326 | current=-3 | target=-3 | delta=0
+[2026-07-02 10:10:03] [DecoderTftLiveTrade] 2026-07-02 10:05:00 | close=2015.40 | raw=-0.0632 | processed=+0.0000 | current=-3 | target=0 | delta=3
+[2026-07-02 10:10:03] [DecoderTftLiveTrade] Submitted BUY 3 @ 2016.90 | ack_status=DRY
+[2026-07-02 10:15:11] [DecoderTftLiveTrade] 2026-07-02 10:10:00 | close=2016.30 | raw=-0.1103 | processed=-0.1870 | current=0 | target=0 | delta=0
+[2026-07-02 10:20:18] [DecoderTftLiveTrade] 2026-07-02 10:15:00 | close=2015.50 | raw=-0.0506 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-07-02 10:25:25] [DecoderTftLiveTrade] 2026-07-02 10:20:00 | close=2016.00 | raw=-0.0655 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-07-02 10:30:30] [DecoderTftLiveTrade] 2026-07-02 10:25:00 | close=2015.70 | raw=-0.0542 | processed=+0.0000 | current=0 | target=0 | delta=0
+[2026-07-02 10:35:04] [DecoderTftLiveTrade] 2026-07-02 10:30:00 | close=2013.20 | raw=+0.1395 | processed=+0.2206 | current=0 | target=1 | delta=1
+[2026-07-02 10:35:04] [DecoderTftLiveTrade] Submitted BUY 1 @ 2014.70 | ack_status=DRY
+[2026-07-02 10:40:12] [DecoderTftLiveTrade] 2026-07-02 10:35:00 | close=2013.70 | raw=-0.0708 | processed=+0.0000 | current=1 | target=0 | delta=-1
+[2026-07-02 10:40:12] [DecoderTftLiveTrade] Submitted SELL 1 @ 2012.20 | ack_status=DRY
+[2026-07-02 10:45:19] [DecoderTftLiveTrade] 2026-07-02 10:40:00 | close=2013.10 | raw=-0.1321 | processed=-0.2098 | current=0 | target=0 | delta=0
+[2026-07-02 10:50:23] [DecoderTftLiveTrade] 2026-07-02 10:45:00 | close=2014.70 | raw=-0.3181 | processed=-0.4036 | current=0 | target=-2 | delta=-2
+[2026-07-02 10:50:23] [DecoderTftLiveTrade] Submitted SELL 2 @ 2013.20 | ack_status=DRY
+[2026-07-02 10:55:27] [DecoderTftLiveTrade] 2026-07-02 10:50:00 | close=2016.50 | raw=-0.3417 | processed=-0.4214 | current=-2 | target=-2 | delta=0
+[2026-07-02 11:00:02] [DecoderTftLiveTrade] 2026-07-02 10:55:00 | close=2018.30 | raw=-0.1579 | processed=-0.2328 | current=-2 | target=-1 | delta=1
+[2026-07-02 11:00:02] [DecoderTftLiveTrade] Submitted BUY 1 @ 2019.80 | ack_status=DRY
+[2026-07-02 11:05:05] [DecoderTftLiveTrade] 2026-07-02 11:00:00 | close=2017.10 | raw=+0.2583 | processed=+0.3339 | current=-1 | target=0 | delta=1
+[2026-07-02 11:05:05] [DecoderTftLiveTrade] Submitted BUY 1 @ 2018.60 | ack_status=DRY
+[2026-07-02 11:10:08] [DecoderTftLiveTrade] 2026-07-02 11:05:00 | close=2017.30 | raw=+0.3747 | processed=+0.4401 | current=0 | target=2 | delta=2
+[2026-07-02 11:10:08] [DecoderTftLiveTrade] Submitted BUY 2 @ 2018.80 | ack_status=DRY
+[2026-07-02 11:15:11] [DecoderTftLiveTrade] 2026-07-02 11:10:00 | close=2017.10 | raw=+0.4025 | processed=+0.4617 | current=2 | target=2 | delta=0
+[2026-07-02 11:20:16] [DecoderTftLiveTrade] 2026-07-02 11:15:00 | close=2016.70 | raw=+0.4196 | processed=+0.4747 | current=2 | target=2 | delta=0
+[2026-07-02 11:25:19] [DecoderTftLiveTrade] 2026-07-02 11:20:00 | close=2017.20 | raw=+0.3586 | processed=+0.4186 | current=2 | target=2 | delta=0
+[2026-07-02 11:30:22] [DecoderTftLiveTrade] 2026-07-02 11:25:00 | close=2017.40 | raw=+0.3613 | processed=+0.4169 | current=2 | target=2 | delta=0
+[2026-07-02 13:05:15] [DecoderTftLiveTrade] 2026-07-02 13:00:00 | close=2014.00 | raw=+0.5065 | processed=+0.5189 | current=2 | target=3 | delta=1
+[2026-07-02 13:05:15] [DecoderTftLiveTrade] Submitted BUY 1 @ 2015.50 | ack_status=DRY
+[2026-07-02 13:10:18] [DecoderTftLiveTrade] 2026-07-02 13:05:00 | close=2013.70 | raw=+0.4273 | processed=+0.4484 | current=3 | target=2 | delta=-1
+[2026-07-02 13:10:18] [DecoderTftLiveTrade] Submitted SELL 1 @ 2012.20 | ack_status=DRY
+[2026-07-02 13:15:21] [DecoderTftLiveTrade] 2026-07-02 13:10:00 | close=2014.40 | raw=+0.1941 | processed=+0.2425 | current=2 | target=1 | delta=-1
+[2026-07-02 13:15:21] [DecoderTftLiveTrade] Submitted SELL 1 @ 2012.90 | ack_status=DRY
+[2026-07-02 13:20:24] [DecoderTftLiveTrade] 2026-07-02 13:15:00 | close=2014.20 | raw=+0.0009 | processed=+0.0000 | current=1 | target=0 | delta=-1
+[2026-07-02 13:20:24] [DecoderTftLiveTrade] Submitted SELL 1 @ 2012.70 | ack_status=DRY
+[2026-07-02 13:25:27] [DecoderTftLiveTrade] 2026-07-02 13:20:00 | close=2014.00 | raw=-0.1414 | processed=-0.1840 | current=0 | target=0 | delta=0
+[2026-07-02 13:30:29] [DecoderTftLiveTrade] 2026-07-02 13:25:00 | close=2012.70 | raw=-0.2044 | processed=-0.2370 | current=0 | target=0 | delta=0
+[2026-07-02 13:35:03] [DecoderTftLiveTrade] 2026-07-02 13:30:00 | close=2013.60 | raw=-0.4647 | processed=-0.4380 | current=0 | target=-2 | delta=-2
+[2026-07-02 13:35:03] [DecoderTftLiveTrade] Submitted SELL 2 @ 2012.10 | ack_status=DRY
+[2026-07-02 13:40:06] [DecoderTftLiveTrade] 2026-07-02 13:35:00 | close=2013.60 | raw=-0.6093 | processed=-0.5301 | current=-2 | target=-3 | delta=-1
+[2026-07-02 13:40:06] [DecoderTftLiveTrade] Submitted SELL 1 @ 2012.10 | ack_status=DRY
+[2026-07-02 13:45:09] [DecoderTftLiveTrade] 2026-07-02 13:40:00 | close=2013.10 | raw=-0.6594 | processed=-0.5584 | current=-3 | target=-3 | delta=0
+[2026-07-02 13:50:11] [DecoderTftLiveTrade] 2026-07-02 13:45:00 | close=2013.80 | raw=-0.7315 | processed=-0.6027 | current=-3 | target=-3 | delta=0
+[2026-07-02 13:55:15] [DecoderTftLiveTrade] 2026-07-02 13:50:00 | close=2008.50 | raw=-0.4579 | processed=-0.4142 | current=-3 | target=-2 | delta=1
+[2026-07-02 13:55:15] [DecoderTftLiveTrade] Submitted BUY 1 @ 2010.00 | ack_status=DRY
+[2026-07-02 14:00:18] [DecoderTftLiveTrade] 2026-07-02 13:55:00 | close=2007.80 | raw=-0.4039 | processed=-0.3826 | current=-2 | target=-2 | delta=0
+[2026-07-02 14:05:21] [DecoderTftLiveTrade] 2026-07-02 14:00:00 | close=2008.10 | raw=-0.5249 | processed=-0.4659 | current=-2 | target=-2 | delta=0
+[2026-07-02 14:10:24] [DecoderTftLiveTrade] 2026-07-02 14:05:00 | close=2007.30 | raw=-0.5610 | processed=-0.4924 | current=-2 | target=-2 | delta=0
+[2026-07-02 14:15:03] [DecoderTftLiveTrade] 2026-07-02 14:10:00 | close=2004.80 | raw=-0.4137 | processed=-0.3903 | current=-2 | target=-2 | delta=0
+[2026-07-02 14:20:07] [DecoderTftLiveTrade] 2026-07-02 14:15:00 | close=2008.80 | raw=-0.7013 | processed=-0.6111 | current=-2 | target=-3 | delta=-1
+[2026-07-02 14:20:07] [DecoderTftLiveTrade] Submitted SELL 1 @ 2007.30 | ack_status=DRY
+[2026-07-02 14:25:10] [DecoderTftLiveTrade] 2026-07-02 14:20:00 | close=2012.50 | raw=-0.8390 | processed=-0.7466 | current=-3 | target=-4 | delta=-1
+[2026-07-02 14:25:10] [DecoderTftLiveTrade] Submitted SELL 1 @ 2011.00 | ack_status=DRY
+[2026-07-02 14:30:13] [DecoderTftLiveTrade] 2026-07-02 14:25:00 | close=2011.70 | raw=-0.7202 | processed=-0.6987 | current=-4 | target=0 | delta=4
+[2026-07-02 14:30:13] [DecoderTftLiveTrade] Submitted BUY 4 @ 2013.20 | ack_status=DRY
+[2026-07-02 14:50:08] [DecoderTftLiveTrade] Stopped by user.
+[2026-07-02 14:50:08] [DecoderTftLiveTrade] Done.

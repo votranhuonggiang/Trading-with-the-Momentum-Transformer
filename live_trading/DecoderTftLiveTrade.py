@@ -40,6 +40,25 @@ POSITION_LABEL = {-1: "SHORT", 0: "FLAT", 1: "LONG"}
 _VN_TZ = "Asia/Ho_Chi_Minh"
 
 
+def _completed_5m_bars(df: pd.DataFrame, now: pd.Timestamp | None = None) -> pd.DataFrame:
+    if df.empty:
+        return df
+
+    current_time = pd.Timestamp.now(tz=_VN_TZ) if now is None else pd.Timestamp(now)
+    if current_time.tzinfo is not None:
+        current_time = current_time.tz_convert(_VN_TZ).tz_localize(None)
+    current_bucket_start = current_time.floor("5min")
+
+    timestamps = pd.to_datetime(df["timestamp"])
+    return df.loc[timestamps < current_bucket_start].reset_index(drop=True)
+
+
+def _gross_contract_return(contracts: int, price_change: float, close_price: float) -> float:
+    if close_price == 0.0:
+        return 0.0
+    return float(contracts) * float(price_change) / float(close_price)
+
+
 @dataclass
 class ThresholdState:
     current_normalized_position: float
@@ -291,8 +310,10 @@ class DecoderTftLiveTrade:
         costs = self._compute_costs(current_contracts_before, target_contracts, close_price)
         net_pnl_points = gross_pnl_points - float(costs["cost_points"])
         cost_return = 0.0 if close_price == 0 else float(costs["cost_vnd"]) / (close_price * self.contract_multiplier)
-        gross_return = 0.0 if close_price == 0 else (float(current_contracts_before) * price_change) / (
-            close_price * self.contract_multiplier
+        gross_return = _gross_contract_return(
+            current_contracts_before,
+            price_change,
+            close_price,
         )
         net_return = gross_return - cost_return
         self.cum_net_pnl_points += net_pnl_points
@@ -381,11 +402,12 @@ class DecoderTftLiveTrade:
         if df.empty:
             return df
         df["timestamp"] = pd.to_datetime(df["timestamp"])
-        return (
+        completed = (
             df.sort_values("timestamp")
             .drop_duplicates(subset="timestamp", keep="last")
             .reset_index(drop=True)
         )
+        return _completed_5m_bars(completed)
 
     def get_current_contracts(self) -> tuple[int, list[Position]]:
         positions = self.broker.get_open_positions()
