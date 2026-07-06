@@ -88,40 +88,7 @@ python src/evaluate.py --config configs/default.yaml
 
 ## Status
 
-Research pipeline is active. Current promoted scenario is `s10_validation_selection_stricter`.
-
-## Reproduce `s10`
-
-Configuration and code:
-- Scenario summary: `outputs/scenario_summaries/s10_validation_selection_stricter.md`
-- Scenario registry: `outputs/backtest_scenario_registry.csv`
-- Main config: `configs/default.yaml`
-
-Key `s10` settings:
-- `features.model_feature_subset = clean_trend`
-- `training.decoder_tft_valid_selection_turnover_lambda = 0.05`
-- `sequence_length = 156`
-- `hidden_size = 64`
-- `dropout = 0.2`
-- `learning_rate = 1e-4`
-- `batch_size = 64`
-
-Run order:
-1. `notebooks/03_baseline_backtest.ipynb`
-2. `notebooks/04_model_training.ipynb` or `notebooks/04_model_training_kaggle.ipynb`
-3. `notebooks/05_result_analysis.ipynb`
-
-Main output folder:
-- `outputs/vn30f1m_outputs_version1`
-
-Reference `decoder_tft` result for `s10`:
-- `total_return = 0.7308`
-- `sharpe_ratio = 4.0222`
-- `max_drawdown = -0.0602`
-- `turnover = 5295.84`
-
-Daily aggregated metrics exported by `05_result_analysis.ipynb`:
-- `outputs/vn30f1m_outputs_version1/tables/daily_metrics_summary.csv`
+Research pipeline is active. Current promoted artifacts are in `outputs/vn30f1m_outputs_version1/` and `live_trading/bundles/decoder_tft_main_branch_5m/`.
 
 ## Live Trading
 
