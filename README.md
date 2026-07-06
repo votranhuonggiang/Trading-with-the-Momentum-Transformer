@@ -129,29 +129,34 @@ python live_trading/DecoderTftLiveTrade.py
 
 Default behavior is dry-run unless `DECODER_TFT_DRY_RUN=false` is set.
 
-## Recent Live Dry-Run Performance
+## Recent Daily Live Dry-Run Performance
 
-The committed live-trading logs cover the last logged dry-run period:
+The committed live-trading logs cover recent daily dry-run sessions:
 
 ```text
 2026-06-25 09:25:00 to 2026-07-02 14:25:00
 ```
 
-These results are from dry-run logs in `live_trading/logs/`, not from the research backtest.
+These results are from `live_trading/logs/`, not from the research backtest. They should be read as daily live-run outcomes because the live runner is intended to be started each trading day:
 
-Summary across the logged period:
+```bash
+python live_trading/DecoderTftLiveTrade.py
+```
+
+The daily PnL values below are not a single continuous weekly portfolio return. They summarize what happened on each dry-run trading day after that day's decisions, turnover, and estimated execution costs.
+
+Operational totals across the logged daily sessions:
 
 - Trading days: 6
 - Processed bars: 250
 - Logged decisions: 250
 - Transactions: 94
 - Total turnover: 139 contracts
-- Gross PnL: `+19.10` points
-- Trading costs: `39.33` points, about `3,933,250` VND
-- Net PnL after costs: `-20.23` points
-- Ending cumulative net return in the dry-run log: `-1.2851%`
+- Total gross PnL points before costs: `+19.10`
+- Total estimated trading costs: `39.33` points, about `3,933,250` VND
+- Sum of daily net PnL points after costs: `-20.23`
 
-Daily net PnL from the dry-run equity curve:
+Daily dry-run performance:
 
 | Date | Bars | Transactions | Turnover | Gross PnL | Cost Points | Net PnL |
 |---|---:|---:|---:|---:|---:|---:|
@@ -162,7 +167,7 @@ Daily net PnL from the dry-run equity curve:
 | 2026-07-01 | 41 | 10 | 16 | 28.60 | 4.64 | 23.96 |
 | 2026-07-02 | 44 | 23 | 34 | -16.10 | 9.86 | -25.96 |
 
-The dry-run was positive before costs, but transaction costs more than offset the gross PnL during this short logged period. This is useful operational evidence for checking turnover, threshold behavior, and execution cost assumptions before enabling real order submission.
+For the logged daily sessions, gross points were positive in aggregate, but estimated transaction costs more than offset them. This is useful operational evidence for checking turnover, threshold behavior, and execution cost assumptions before enabling real order submission.
 
 ## Reproducibility Notes
 
