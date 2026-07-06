@@ -158,14 +158,14 @@ Operational totals across the logged daily sessions:
 
 Daily dry-run performance:
 
-| Date | Bars | Transactions | Turnover | Gross PnL | Cost Points | Net PnL |
-|---|---:|---:|---:|---:|---:|---:|
-| 2026-06-25 | 42 | 18 | 28 | 21.00 | 7.73 | 13.27 |
-| 2026-06-26 | 42 | 13 | 21 | -17.50 | 5.51 | -23.01 |
-| 2026-06-29 | 39 | 12 | 16 | 2.80 | 4.64 | -1.84 |
-| 2026-06-30 | 42 | 18 | 24 | 0.30 | 6.95 | -6.65 |
-| 2026-07-01 | 41 | 10 | 16 | 28.60 | 4.64 | 23.96 |
-| 2026-07-02 | 44 | 23 | 34 | -16.10 | 9.86 | -25.96 |
+| Date | Bars | Transactions | Turnover | Gross PnL | Cost Points | Net PnL | Net PnL x 100k VND |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 2026-06-25 | 42 | 18 | 28 | 21.00 | 7.73 | 13.27 | 1,327,000 |
+| 2026-06-26 | 42 | 13 | 21 | -17.50 | 5.51 | -23.01 | -2,301,000 |
+| 2026-06-29 | 39 | 12 | 16 | 2.80 | 4.64 | -1.84 | -184,000 |
+| 2026-06-30 | 42 | 18 | 24 | 0.30 | 6.95 | -6.65 | -665,000 |
+| 2026-07-01 | 41 | 10 | 16 | 28.60 | 4.64 | 23.96 | 2,396,000 |
+| 2026-07-02 | 44 | 23 | 34 | -16.10 | 9.86 | -25.96 | -2,596,000 |
 
 For the logged daily sessions, gross points were positive in aggregate, but estimated transaction costs more than offset them. This is useful operational evidence for checking turnover, threshold behavior, and execution cost assumptions before enabling real order submission.
 
