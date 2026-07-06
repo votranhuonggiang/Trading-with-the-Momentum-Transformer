@@ -134,7 +134,7 @@ Default behavior is dry-run unless `DECODER_TFT_DRY_RUN=false` is set.
 The committed live-trading logs cover recent daily dry-run sessions:
 
 ```text
-2026-06-25 09:25:00 to 2026-07-02 14:25:00
+2026-06-25 09:25:00 to 2026-07-06 14:25:00
 ```
 
 These results are from `live_trading/logs/`, not from the research backtest. They should be read as daily live-run outcomes because the live runner is intended to be started each trading day:
@@ -147,14 +147,14 @@ The daily PnL values below are not a single continuous weekly portfolio return. 
 
 Operational totals across the logged daily sessions:
 
-- Trading days: 6
-- Processed bars: 250
-- Logged decisions: 250
-- Transactions: 94
-- Total turnover: 139 contracts
-- Total gross PnL points before costs: `+19.10`
-- Total estimated trading costs: `39.33` points, about `3,933,250` VND
-- Sum of daily net PnL points after costs: `-20.23`
+- Trading days: 7
+- Processed bars: 280
+- Logged decisions: 280
+- Transactions: 100
+- Total turnover: 149 contracts
+- Total gross PnL points before costs: `+83.80`
+- Total estimated trading costs: `42.22` points, about `4,223,375` VND
+- Sum of daily net PnL points after costs: `+41.58`
 
 Daily dry-run performance:
 
@@ -166,6 +166,7 @@ Daily dry-run performance:
 | 2026-06-30 | 42 | 18 | 24 | 0.30 | 6.95 | -6.65 | -665,000 |
 | 2026-07-01 | 41 | 10 | 16 | 28.60 | 4.64 | 23.96 | 2,396,000 |
 | 2026-07-02 | 44 | 23 | 34 | -16.10 | 9.86 | -25.96 | -2,596,000 |
+| 2026-07-06 | 30 | 6 | 10 | 64.70 | 2.89 | 61.81 | 6,180,875 |
 
 For the logged daily sessions, gross points were positive in aggregate, but estimated transaction costs more than offset them. This is useful operational evidence for checking turnover, threshold behavior, and execution cost assumptions before enabling real order submission.
 
