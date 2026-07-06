@@ -129,6 +129,41 @@ python live_trading/DecoderTftLiveTrade.py
 
 Default behavior is dry-run unless `DECODER_TFT_DRY_RUN=false` is set.
 
+## Recent Live Dry-Run Performance
+
+The committed live-trading logs cover the last logged dry-run period:
+
+```text
+2026-06-25 09:25:00 to 2026-07-02 14:25:00
+```
+
+These results are from dry-run logs in `live_trading/logs/`, not from the research backtest.
+
+Summary across the logged period:
+
+- Trading days: 6
+- Processed bars: 250
+- Logged decisions: 250
+- Transactions: 94
+- Total turnover: 139 contracts
+- Gross PnL: `+19.10` points
+- Trading costs: `39.33` points, about `3,933,250` VND
+- Net PnL after costs: `-20.23` points
+- Ending cumulative net return in the dry-run log: `-1.2851%`
+
+Daily net PnL from the dry-run equity curve:
+
+| Date | Bars | Transactions | Turnover | Gross PnL | Cost Points | Net PnL |
+|---|---:|---:|---:|---:|---:|---:|
+| 2026-06-25 | 42 | 18 | 28 | 21.00 | 7.73 | 13.27 |
+| 2026-06-26 | 42 | 13 | 21 | -17.50 | 5.51 | -23.01 |
+| 2026-06-29 | 39 | 12 | 16 | 2.80 | 4.64 | -1.84 |
+| 2026-06-30 | 42 | 18 | 24 | 0.30 | 6.95 | -6.65 |
+| 2026-07-01 | 41 | 10 | 16 | 28.60 | 4.64 | 23.96 |
+| 2026-07-02 | 44 | 23 | 34 | -16.10 | 9.86 | -25.96 |
+
+The dry-run was positive before costs, but transaction costs more than offset the gross PnL during this short logged period. This is useful operational evidence for checking turnover, threshold behavior, and execution cost assumptions before enabling real order submission.
+
 ## Reproducibility Notes
 
 After pulling this branch, another user should be able to rerun the notebooks and regenerate the research outputs using the committed data, config, source code, and notebooks. They can also load the committed live bundle and run the live-trading code in dry-run mode after setting local environment variables.
